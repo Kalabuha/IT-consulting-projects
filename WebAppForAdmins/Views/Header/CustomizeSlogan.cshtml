@@ -1,0 +1,89 @@
+﻿@model SloganViewModel
+
+@{
+    ViewData["Title"] = "Настроить слоганы";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Настроика слоганов</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Слоганы отображаются в заголовке главной страницы. Выбор слогана осуществляется случайным образом, он производится из числа
+            выбранных. В их число можно включить любое количество слоганов. Чтобы произвести отбор слоганов достаточно выбрать
+            в списке ниже требуемые слоганы и нажать "Подтвердить выбор слоганов". Если список отбранных слоганов будет пуст, тогда
+            в заголовке главной страницы будет отображаться слоган по умолчанию.
+        </p>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.DefaultSloganContent))
+    {
+        <div class="content-block-standart-indent">
+            <p class="large-text font-family-2 gold-text paragraph">
+                Слоган по умолчанию: @Model.DefaultSloganContent
+            </p>
+        </div>
+    }
+
+    <form asp-area="" asp-controller="Header" asp-action="SelectSlogans" method="post">
+        <div class="content-block-standart-indent preset-content-block">
+            <div class="span-prompt">
+                <span class="large-text font-family-2 black-text">Все имеющиеся слоганы</span>
+            </div>
+            <div class="select-list-block scroll-y-block select-block-height-2 content-block-inner">
+                <ul class="select-list">
+                    @if (Model.Slogans != null)
+                    {
+                        foreach (SloganModel slogan in Model.Slogans)
+                        {
+                            var forLabelSloganContent = $"sloganId-{slogan.Id}";
+
+                            <li class="select-list-item">
+                                <div class="slogan-select-list-block-item">
+                                    @if (slogan.IsUsed)
+                                    {
+                                        <input class="select-point" type="checkbox" name="id" id="@forLabelSloganContent" value="@slogan.Id" checked />
+                                    }
+                                    else
+                                    {
+                                        <input class="select-point" type="checkbox" name="id" id="@forLabelSloganContent" value="@slogan.Id" />
+                                    }
+
+                                    <label class="large-text font-family-2 black-text" for="@forLabelSloganContent">
+                                        @slogan.Slogan
+                                    </label>
+
+
+                                    <div class="select-list-button-block">
+                                        <a class="button low-button link-a-button" asp-area="" asp-controller="Header" asp-action="EditSlogan" asp-route-id="@slogan.Id">
+                                            <span class="large-text font-family-2 black-text">&#9209;</span>
+                                        </a>
+
+                                        <a class="button low-button link-a-button" asp-area="" asp-controller="Header" asp-action="DeleteSlogan" asp-route-id="@slogan.Id">
+                                            <span class="large-text font-family-2 black-text">&#10006;</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+            <div class="content-block-inner">
+                <button class="button high-button" type="submit">
+                    <span class="large-text font-family-2 black-text">Подтвердить выбор слоганов</span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="content-block-standart-indent preset-content-block">
+        <a class="button high-button link-a-button button-create-slogan" asp-area="" asp-controller="Header" asp-action="CreateSlogan">
+            <span class="large-text font-family-2 black-text">Создать слоган</span>
+        </a>
+    </div>
+</div>

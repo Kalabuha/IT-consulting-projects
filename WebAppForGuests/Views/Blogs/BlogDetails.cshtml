@@ -1,0 +1,35 @@
+﻿@model BlogsViewModel
+
+@{
+    ViewData["Title"] = "Blog";
+}
+
+<div class="header-block header-block-blog">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    @if (Model != null && Model.SelectedBlog != null)
+    {
+        BlogModel blog = Model.SelectedBlog;
+
+        <div class="main-content-common">
+            <div class="main-content-block main-content-color-block">
+                <h1 class="h1-text text-in-center">@blog.BlogTitle</h1>
+                <p class="paragraph">@blog.ShortBlogDescription</p>
+            </div>
+
+            <div class="main-content-block main-content-color-block">
+                <p class="paragraph">@blog.PublicationDate.ToString("dd.MM.yyyy")</p>
+                <img class="blog-image-details" src="@blog.BlogImageAsString" alt="blog image" />
+                <p class="paragraph">@blog.LongBlogDescription</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p class="paragraph">Блог не подгрузился, увы.</p>
+    }
+</div>

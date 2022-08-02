@@ -1,0 +1,85 @@
+﻿@model ApplicationsFilterViewModel
+
+<form id="RequestFilterForm" class="form-filter" asp-action="Filter" asp-controller="Applications" method="post">
+    <div class="buttons-panel">
+        <div class="buttons-panel-block buttons-panel-wide-block x-expandable">
+            <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                <span class="large-text font-family-2 black-text">&#129095; Статусы заявок</span>
+            </button>
+            <div class="select select-block block-absolute-max-width x-expandable-block">
+                <ul class="select-list">
+                    @foreach (var status in Enum.GetValues<ApplicationStatus>())
+                    {
+                        var currentId = $"RequestedStatuses_{status.ToString()}";
+                        var name = @Html.NameFor(p => p.RequestedStatuses);
+                        <li class="select-list-item">
+                            <div class="select-list-item-block">
+                                @if (status == ApplicationStatus.Initial)
+                                {
+                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" checked />
+                                }
+                                else
+                                {
+                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" />
+                                }
+
+                                <label class="text font-family-2 black-text select-label" for="@currentId">@status.TranslateApplicationStatusToDisplayPluralString()</label>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="buttons-panel-block buttons-panel-wide-block x-expandable">
+            <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                <span class="large-text font-family-2 black-text">&#129095; Указать период</span>
+            </button>
+            <div class="select select-block block-absolute-max-width x-expandable-block">
+                <ul class="select-list">
+                    @foreach (var period in Enum.GetValues<DateTimePeriod>())
+                    {
+                        var currentId = $"RequestedPeriods_{period.ToString()}";
+                        var name = @Html.NameFor(p => p.RequestedPeriod);
+                        var nameStartPeriod = @Html.NameFor(p => p.StartTimePeriod);
+                        var nameEndPeriod = @Html.NameFor(p => p.EndTimePeriod);
+                        <li class="select-list-item">
+                            <div class="select-list-item-block">
+                                @if (period == DateTimePeriod.Day)
+                                {
+                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" checked />
+                                }
+                                else
+                                {
+                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" />
+                                }
+
+                                @if (period != DateTimePeriod.SelectedPeriodDateTime)
+                                {
+                                    <label class="text font-family-2 black-text select-label" for="@currentId">@period.TranslateDateTimePeriodToDisplayString()</label>
+                                }
+                                else
+                                {
+                                    <div class="select-list-item-mini-block">
+                                        <label class="text font-family-2 black-text select-label" for="@nameStartPeriod">От:</label>
+                                        <input class="select-input-field" type="date" name="@nameStartPeriod" id="StartDateTiem" />
+                                    </div>
+                                    <div class="select-list-item-mini-block">
+                                        <label class="text font-family-2 black-text select-label" for="@nameEndPeriod">До:</label>
+                                        <input class="select-input-field" type="date" name="@nameEndPeriod" id="EndDateTiem" />
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+        <div class="buttons-panel-block buttons-panel-narrow-block">
+            <button class="button high-button button-max-width" type="submit">
+                <span class="large-text font-family-2 black-text">Поиск</span>
+            </button>
+        </div>
+    </div>
+</form>

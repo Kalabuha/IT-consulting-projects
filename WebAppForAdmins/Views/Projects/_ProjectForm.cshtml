@@ -1,0 +1,68 @@
+﻿@model ProjectModel
+@{
+    var state = ViewData.ModelState;
+    var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
+}
+<input asp-for="Id" type="hidden" />
+<input asp-for="CustomerCompanyLogoAsDataImage" type="hidden" />
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="span-prompt">
+        <span class="large-text font-family-2 black-text">Заголовок проекта</span>
+    </div>
+
+    <textarea asp-for="ProjectTitle" class="middle-text font-family-2 text-area-max-width-resize-vertical project-text-area-title" 
+        disabled="@disabled" placeholder="Вводи заголовок сюда"></textarea>
+
+    <div class="error-message-block">
+        <span asp-validation-for="ProjectTitle" class="middle-text font-family-2 red-text"></span>
+    </div>
+</div>
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="project-content">
+        <div class="project-block-description">
+            <div class="span-prompt">
+                <span class="large-text font-family-2 black-text">Описание проекта</span>
+            </div>
+
+            <textarea asp-for="ProjectDescription" class="middle-text font-family-2 text-area-max-width-resize-vertical project-text-area-description" 
+                disabled="@disabled" placeholder="Вводи описание сюда"></textarea>
+
+            <div class="error-message-block">
+                <span asp-validation-for="ProjectDescription" class="middle-text font-family-2 red-text"></span>
+            </div>
+
+        </div>
+        <div class="project-block-logo-and-link">
+            <div class="span-prompt">
+                <span class="large-text font-family-2 black-text">Логотип</span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.CustomerCompanyLogoAsDataImage))
+            {
+                <div class="project-block-logo-image">
+                    <img class="project-logo-image" src="@Model.CustomerCompanyLogoAsDataImage" alt="logo" />
+                </div>
+            }
+
+            @if (!disabled)
+            {
+                <div class="project-block-insert-image">
+                    <input asp-for="CustomerCompanyLogoAsFormFile" class="input-image" type="file" 
+                        accept="image/jpeg,image/png" />
+                </div>
+            }
+
+            <div class="span-prompt">
+                <span class="large-text font-family-2 black-text">Ссылка</span>
+            </div>
+            <div class="project-block-link">
+                <input asp-for="LinkToCustomerSite" class="text font-family-2 project-input-text-title" type="text" disabled="@disabled" />
+            </div>
+        </div>
+    </div>
+    <div class="project-published-block">
+        <input asp-for="IsPublished" id="IsProjectPublished" class="select-point" disabled="@disabled" />
+        <label class="middle-text font-family-2 black-text" for="IsProjectPublished">&#10084; Опубликовать проект</label>
+    </div>
+</div>

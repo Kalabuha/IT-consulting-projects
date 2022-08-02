@@ -1,0 +1,106 @@
+﻿@model MenuViewModel
+
+@{
+    ViewData["Title"] = "Настроить меню";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Изменить меню</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Содержание меню можно выбрать из списка сохранённых или создать новое меню. Содержимое пунктов меню не должно превышать 12 символов.
+            Пустые строки не допускаются. Если в списке не будет ни одного созданного меню, в гостевом сайте будет отображаться меню по умолчанию.
+            Также если не будет выбрано меню в качестве используемого, будет отображаться меню по умолчанию. Зелёным цветом выделено
+            действующее в данный момент меню.
+        </p>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="large-text font-family-2 gold-text paragraph">
+            Меню по умолчанию: @nameof(MenuModel.Main), @nameof(MenuModel.Services), @nameof(MenuModel.Projects), @nameof(MenuModel.Blogs), @nameof(MenuModel.Contacts).
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Header" asp-action="SelectMenu" method="post">
+        <div class="content-block-standart-indent preset-content-block">
+            <div class="span-prompt">
+                <span class="large-text font-family-2 black-text">Все доступные меню</span>
+            </div>
+            <div class="select-list-block scroll-y-block select-block-height-2 content-block-inner">
+                <ul class="select-list">
+                    @if (Model.Menus != null)
+                    {
+                        foreach (MenuModel menu in Model.Menus)
+                        {
+                            var forLabelMenuContent = $"menuId-{menu.Id}";
+
+                            <li class="select-list-item">
+                                <div class="menu-select-list-block-item">
+                                    @if (menu.IsPublished)
+                                    {
+                                        <input class="select-point" type="radio" name="id" id="@forLabelMenuContent" value="@menu.Id" checked />
+                                        <label class="large-text font-family-2 green-text" for="@forLabelMenuContent">
+                                            @menu.Main&nbsp;&nbsp;@menu.Services&nbsp;&nbsp;@menu.Projects&nbsp;&nbsp;@menu.Blogs&nbsp;&nbsp;@menu.Contacts
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <input class="select-point" type="radio" name="id" id="@forLabelMenuContent" value="@menu.Id" />
+                                        <label class="large-text font-family-2 black-text" for="@forLabelMenuContent">
+                                            @menu.Main&nbsp;&nbsp;@menu.Services&nbsp;&nbsp;@menu.Projects&nbsp;&nbsp;@menu.Blogs&nbsp;&nbsp;@menu.Contacts
+                                        </label>
+                                    }
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+            <div class="content-block-inner">
+                <button class="button high-button" type="submit" >
+                    <span class="large-text font-family-2 black-text">Выбрать меню</span>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            При нажатии "Удалить" будет удалено используемое меню. Рекомендуется после удаления установить новое меню в качестве используемого.
+            Изменения также вносятся в используемое меню. После создания новое меню не устанавливаетя в качестве используемого, при необходимости
+            это нужно сделать после создания. Используемым считается то, которое выделено зелёным цветом.
+        </p>
+    </div>
+
+     <div class="content-block-standart-indent preset-content-block">
+         <div class="buttons-panel">
+             <div class="buttons-panel-block">
+                <form asp-area="" asp-controller="Header" asp-action="EditUsedMenu" method="get">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="submit">
+                        <span class="large-text font-family-2 black-text">&#10084; Изменить</span>
+                    </button>
+                </form>
+             </div>
+
+             <div class="buttons-panel-block">
+                <form asp-area="" asp-controller="Header" asp-action="DeleteUsedMenuPost" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="submit">
+                        <span class="large-text font-family-2 black-text">&#10006; Удалить</span>
+                    </button>
+                </form>
+             </div>
+
+             <div class="buttons-panel-block">
+                <form asp-area="" asp-controller="Header" asp-action="CreateMenu" method="get">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="submit">
+                        <span class="large-text font-family-2 black-text">&#9209; Создать</span>
+                    </button>
+                </form>
+             </div>
+         </div>
+    </div>
+</div>

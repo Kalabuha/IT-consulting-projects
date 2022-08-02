@@ -1,0 +1,18 @@
+﻿@model SloganModel
+
+@{
+    bool disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
+}
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="IsUsed" type="hidden" />
+
+<div class="content-block-inner">
+    <div class="span-prompt">
+        <label asp-for="Slogan" class="large-text font-family-2 black-text label-margin">Содержание слогана</label>
+    </div>
+
+    <input asp-for="Slogan" type="text" class="input-text-field large-text font-family-2 black-text" disabled="@disabled"/>
+
+    <span asp-validation-for="Slogan" class="middle-text font-family-2 red-text"></span>
+</div>

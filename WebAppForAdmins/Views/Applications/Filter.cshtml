@@ -1,0 +1,61 @@
+﻿@model ApplicationsViewModel
+
+@if (Model != null && Model.Applications != null && Model.Applications.Count > 0)
+{
+    <div class="content-block">
+        <p class="biggest-text font-family-2 white-text">Найдено заявок: @Model.Applications.Count</p>
+    </div>
+
+    <div class="content-block">
+        <table class="line-table">
+            <thead class="line-table-thead">
+                <tr class="line-table-head-row">
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">№&nbsp</span></th>
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Время</span></th>
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Имя</span></th>
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">e-mail</span></th>
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Текст</span></th>
+                    <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Статус</span></th>
+                </tr>
+            </thead>
+            <tbody class="line-table-body">
+                @foreach (var application in Model.Applications)
+                {
+                    <tr class="line-table-body-row">
+                        <td class="line-table-body-cell cell-text-center">
+                            <p class="middle-text font-family-2 black-text">@application.Number</p>
+                        </td>
+                        <td class="line-table-body-cell">
+                            <p class="text font-family-2 black-text">@application.DateReceiptApplication.ToString("dd.MM.yyyy")</p>
+                        </td>
+                        <td class="line-table-body-cell">
+                            <p class="text font-family-2 black-text cut-long-text">@application.GuestName</p>
+                        </td>
+                        <td class="line-table-body-cell">
+                            <p class="text font-family-2 black-text cut-long-text">@application.GuestEmail</p>
+                        </td>
+                        <td class="line-table-body-cell">
+                            <div class="table-body-cell-block">
+                                <p class="text font-family-2 black-text cut-long-text">@application.GuestApplicationText</p>
+                                <button class="text black-text table-button-narrow" type="button">&nbsp&#129095;&nbsp</button>
+                            </div>
+                        </td>
+                        <td class="line-table-body-cell">
+                            <button class="text font-family-2 black-text table-button-wide" type="button">
+                                @application.Status.TranslateApplicationStatusToDisplaySingularString()
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+else
+{
+    <div class="content-block">
+        <p class="biggest-text font-family-2 white-text">Заявки не найдены. Попробуте изменить условия поиска.</p>
+    </div>
+
+}

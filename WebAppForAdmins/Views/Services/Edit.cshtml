@@ -1,0 +1,29 @@
+﻿@model ServiceModel
+
+@{
+    ViewData["Title"] = "Изменить услугу";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Изменить услугу</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Пустые строки не допускаются. Заголовок не должен превышать 150 символов. Описание услуги не должно превышать 1500 символов.
+            Для того чтобы услуга отображалась на сайте для клиентов, её необходимо опубликовать.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Services" asp-action="EditPost" enctype="multipart/form-data" method="post">
+
+        <partial name="_ServiceForm.cshtml" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Изменить услугу</span>
+            </button>
+        </div>
+    </form>
+</div>

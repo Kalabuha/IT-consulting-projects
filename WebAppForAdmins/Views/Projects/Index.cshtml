@@ -1,0 +1,90 @@
+﻿@model ProjectsViewModel
+
+@{
+    ViewData["Title"] = "Проекты";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Проекты</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Для детального просмотра проекта необходимо нажать "Изменить". Просматривая детали проекта можно не только изменить данные,
+            но и сделать проект видимым в гостевом сайте или скрыть его. Удаление же приведёт к тому, что данные станут недоступными.
+            Если необходимо скрыть проект без удаления, нажмите "Изменить" и отключите его публикацию.
+        </p>
+    </div>
+
+    <div class="content-block-small-indent preset-content-block">
+        <ul class="list-items-wrap">
+            @if (Model.Projects != null)
+            {
+                @foreach (ProjectModel project in Model.Projects)
+                {
+                    <li class="project-item-wrap">
+                        <div class="project-card">
+                            <div class="project-card-details">
+                                <div class="project-card-details-logo">
+                                    <img class="project-logo-img" src="@project.CustomerCompanyLogoAsDataImage" alt="company logo" />
+                                </div>
+
+                                <div class="project-card-details-link">
+                                    @if (string.IsNullOrEmpty(project.LinkToCustomerSite))
+                                    {
+                                        <span class="text font-family-2 gold-text">Ссылка отсутствует</span>
+                                    }
+                                    else
+                                    {
+                                        <a class="text font-family-2 gold-text link-project-company" href="@project.LinkToCustomerSite" target="_blank">
+                                            @project.LinkToCustomerSite
+                                        </a>
+                                    }
+                                </div>
+
+                                <div class="project-card-details-title">
+                                    <p class="text font-family-2 white-text paragraph-2">
+                                        @project.ProjectTitle
+                                    </p>
+                                </div>
+
+                                <div class="project-card-details-is-published">
+                                    @if (project.IsPublished)
+                                    {
+                                        <span class="large-text font-family-2 green-text">Опубликован</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="large-text font-family-2 blue-text">Не опубликован</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="project-card-control">
+                                <div class="project-card-control-buttons">
+                                    @*Edit*@
+                                    <a class="button low-button link-a-button" asp-area="" asp-controller="Projects" asp-action="Edit" asp-route-id="@project.Id">
+                                        <span class="middle-text font-family-2 black-text">&#9209; Изменить</span>
+                                    </a>
+                                    @*delete*@
+                                    <a class="button low-button link-a-button" asp-area="" asp-controller="Projects" asp-action="Delete" asp-route-id="@project.Id">
+                                        <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+
+            <li class="project-item-wrap item-wrap-last">
+                <div class="project create-project-block">
+                    <a asp-area="" asp-controller="Projects" asp-action="Create">
+                        <span class="large-text font-family-2 gold-text">Создать новый</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

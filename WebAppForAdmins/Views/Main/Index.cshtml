@@ -1,0 +1,213 @@
+﻿@model MainViewModel
+
+@{
+    ViewData["Title"] = "Main";
+}
+
+<div id="containerContent" class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Главная</h1>
+    </div>
+
+    @{
+        int selectedPresetId = Model.SelectedPreset != null ? Model.SelectedPreset.Id : 0;
+    }
+
+    <div class="content-block-standart-indent">
+        <div class="buttons-panel">
+            @*Выбрать пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="SelectPresetForm" asp-area="" asp-controller="Main" asp-action="SelectPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#129095; Выбрать пресет</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height scroll-x-y-block">
+                            @if (Model.Presets != null)
+                            {
+                                <ul class="select-list">
+                                    @foreach (MainPagePresetModel presetModel in Model.Presets)
+                                    {
+                                        var forLabelPresetId = $"preset-{presetModel.Id}";
+
+                                        <li class="select-list-item">
+                                            @if (presetModel.IsPublished)
+                                            {
+                                                <div class="select-list-item-block">
+                                                    <input class="select-point" type="radio" name="id" id="@forLabelPresetId" value="@presetModel.Id" checked />
+                                                    <label class="middle-text bolder font-family-2 green-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="select-list-item-block">
+                                                    <input class="select-point" type="radio" name="id" id="@forLabelPresetId" value="@presetModel.Id" />
+                                                    <label class="middle-text font-family-2 black-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
+                                                </div>
+                                            }
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*Опубликовать пресет*@
+            <div class="buttons-panel-block">
+                <form id="CreatePresetForm" asp-area="" asp-controller="Main" asp-action="PublishSelectedPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width" type="submit" name="id" value="@selectedPresetId">
+                        <span class="large-text font-family-2 black-text">&#10084; Опубликовать</span>
+                    </button>
+                </form>
+            </div>
+
+            @*Удалить пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="DeletePresetForm" asp-area="" asp-controller="Main" asp-action="DeleteSelectedPreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#10006; Удалить</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height">
+                            <p class="text font-family-2 black-text paragraph">
+                                Вы уверены, что хотите удалить текущий пресет? При удалении данные, используемые этим
+                                пресетом, не удалятся. Чтобы удалить данные воспользуйтесь панелью кнопок
+                                соответствующих блоков данных.
+                            </p>
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit" name="id" value="@selectedPresetId">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*Создать пресет*@
+            <div class="buttons-panel-block x-expandable">
+                <form id="UpdatePresetForm" asp-area="" asp-controller="Main" asp-action="CreatePreset" method="post">
+                    <button class="button high-button text-align-left button-max-width x-expand" type="button">
+                        <span class="large-text font-family-2 black-text">&#9209; Создать</span>
+                    </button>
+                    <div class="select block-absolute-max-width x-expandable-block">
+                        <div class="select-block select-block-height">
+                            <div class="text-align-center content-block-inner">
+                                <span class="middle-text font-family-2 black-text">Введите название:</span>
+                            </div>
+                            <div class="text-align-center content-block-inner">
+                                <span class="text font-family-2 black-text">Не более 40 символов</span>
+                            </div>
+                            <textarea class="middle-text font-family-2 input-preset-name-textarea" name="model.PresetName"></textarea>
+                        </div>
+                        <div class="block-select-preset-button-block">
+                            <button class="button low-button button-max-width" type="submit">
+                                <span class="large-text font-family-2 black-text">Подтвердить</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            На&nbsp;главной странице гостевого сайта отображается опубликованный пресет. Чтобы поменять его необходимо
+            выбрать другой пресет и&nbsp;нажать кнопку &laquo;Опубликовать&raquo;. Изменения&nbsp;же, которые вы&nbsp;
+            вносите в&nbsp;выбраном пресете, вступают в&nbsp;силу сразу для этого пресета, включая и&nbsp;опубликованный.
+            Поэтому для эксперементов лучше создать новый или использовать один из&nbsp;неопубликованных.
+        </p>
+    </div>
+
+    @{
+        bool IsHasPreset = false;
+        MainPagePresetModel? selectedPreset = null;
+    }
+
+    @if (selectedPresetId > 0 && Model.Presets != null)
+    {
+        selectedPreset = Model.Presets.FirstOrDefault(p => p.Id == selectedPresetId);
+        IsHasPreset = selectedPreset != null;
+    }
+
+    @if (IsHasPreset)
+    {
+        <div class="content-block-standart-indent">
+            <h2 class="h2-standart-page font-family-1 gold-text">Название пресета: @selectedPreset!.PresetName</h2>
+        </div>
+
+        <div class="content-block-standart-indent">
+            <div class="is-published-or-not-block">
+                @if (selectedPreset.IsPublished)
+                {
+                    <span class="biggest-text font-family-2 green-text">Опубликован</span>
+                }
+                else
+                {
+                    <span class="biggest-text font-family-2 blue-text">Не опубликован</span>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content-block-standart-indent">
+            <h2 class="h2-standart-page font-family-1 gold-text">Внимание! Пресет в данный момент не выбран</h2>
+        </div>
+
+        <div class="content-block-standart-indent">
+            <p class="middle-text font-family-2 gold-text paragraph">
+                В&nbsp;данный момент пресет не&nbsp;выбран. Используются данные по&nbsp;умолчанию. Изменять данные по&nbsp;умолчанию запрещено.
+                Необходимо выбрать один из&nbsp;неопубликованных или создать новый. Для создания нового пресета нажмите кнопку &laquo;Создать&raquo;.
+            </p>
+        </div>
+    }
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("TextBlock", "Main", new { id = selectedPresetId })"></div>
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("ImageBlock", "Main", new { id = selectedPresetId })"></div>
+
+    <div class="main-block x-reloadable"
+         data-load-action="@Url.Action("ActionBlock", "Main", new { id = selectedPresetId })"></div>
+</div>
+
+@section Scripts
+{
+<script>
+    $(function() {
+        $(".x-reloadable").each(function() {
+            var self = $(this);
+
+            // перехват отправки форм из компонента
+            self.on("submit", function(e) {
+                // запретить браузеру самому отправлять форму
+                e.preventDefault();
+
+                // мы тут сами разберёмся с отправкой
+                $(this).ajaxSubmit({
+                    success: function(responseHtml) {
+                        self.html(responseHtml);
+                    }
+                });
+
+                // запретить браузеру самому отправлять форму (альтернативно)
+                return false;
+            });
+
+            // загрузить кусок в div
+            var url = self.data("load-action");
+            self.load(url);
+        });
+    });
+</script>
+}

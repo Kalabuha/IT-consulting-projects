@@ -1,0 +1,43 @@
+﻿@model BlogsViewModel
+
+@{
+    ViewData["Title"] = "Blogs";
+    ViewBag.PageH1 ??= nameof(MenuModel.Blogs);
+}
+
+<div class="header-block header-block-blogs">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    <div class="main-content-block main-content-color-block">
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
+    </div>
+
+    <div class="main-content-block main-content-color-block">
+        @if (Model != null && Model.Blogs != null && Model.Blogs.Count != 0)
+        {
+            <ul class="list-blogs">
+                @foreach (BlogModel blog in Model.Blogs)
+                {
+                    <li class="blog-item">
+                        <a class="link-blog-item" asp-area="" asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@blog.Id">
+                            <div class="blog-card">
+                                <p class="blog-publication-Date">@blog.PublicationDate.ToString("yyyy.MM.dd")</p>
+                                <img class="blog-image" src="@blog.BlogImageAsString" alt="drive-logo" />
+                                <h2 class="blog-title">@blog.BlogTitle</h2>
+                                <p class="blog-short-description">@blog.ShortBlogDescription</p>
+                            </div>
+                        </a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="paragraph">Блогов пока нет. Обратитесь к администратору, скажите ему пусть он их добавит.</p>
+        }
+    </div>
+</div>

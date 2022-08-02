@@ -1,0 +1,29 @@
+﻿@model ServiceModel
+
+@{
+    ViewData["Title"] = "Удалить услугу";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Изменить услугу</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Вы уверены, что хотите удалить эту услугу? Удаление приведёт к потере данных. Если необходимо скрыть услугу без потери данных,
+            можно перейти к изменению по клавише "Изменить" и отменить публикацию услуги. Потом в любой момент можно будет опубликовать её снова.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Services" asp-action="DeletePost" enctype="multipart/form-data" method="post">
+
+        <partial name="_ServiceForm.cshtml" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Удалить услугу</span>
+            </button>
+        </div>
+    </form>
+</div>

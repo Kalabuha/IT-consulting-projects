@@ -1,0 +1,34 @@
+﻿@model MenuModel
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="IsPublished" type="hidden" />
+
+<div class="content-block-inner">
+    <label asp-for="Main" class="middle-text font-family-2 black-text label-margin">Главная страница</label>
+    <input asp-for="Main" type="text" class="input-text-field middle-text font-family-2 black-text" />
+    <span asp-validation-for="Main" class="middle-text font-family-2 red-text"></span>
+</div>
+
+<div class="content-block-inner">
+    <label asp-for="Projects" class="middle-text font-family-2 black-text label-margin">Страница проектов</label>
+    <input asp-for="Projects" type="text" class="input-text-field middle-text font-family-2 black-text" />
+    <span asp-validation-for="Projects" class="middle-text font-family-2 red-text"></span>
+</div>
+
+<div class="content-block-inner">
+    <label asp-for="Services" class="middle-text font-family-2 black-text label-margin">Страница услуг</label>
+    <input asp-for="Services" type="text" class="input-text-field middle-text font-family-2 black-text" />
+    <span asp-validation-for="Services" class="middle-text font-family-2 red-text"></span>
+</div>
+
+<div class="content-block-inner">
+    <label asp-for="Blogs" class="middle-text font-family-2 black-text label-margin">Страница блогов</label>
+    <input asp-for="Blogs" type="text" class="input-text-field middle-text font-family-2 black-text" />
+    <span asp-validation-for="Blogs" class="middle-text font-family-2 red-text"></span>
+</div>
+
+<div class="content-block-inner">
+    <label asp-for="Contacts" class="middle-text font-family-2 black-text label-margin" >Страница контактов</label>
+    <input asp-for="Contacts" type="text" class="input-text-field middle-text font-family-2 black-text" />
+    <span asp-validation-for="Contacts" class="middle-text font-family-2 red-text"></span>
+</div>

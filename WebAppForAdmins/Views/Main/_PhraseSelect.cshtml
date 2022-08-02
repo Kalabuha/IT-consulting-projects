@@ -1,0 +1,56 @@
+﻿@model PhraseSelectViewModel
+
+<div class="select-block-inner">
+    <p class="text font-family-2 black-text paragraph">
+        Фразу можно выбрать из списка или создать новую. Если фраза используется одним из пресетов,
+        то её удаление будет прервано. Чтобы удалить фразу, необходимо сначала убрать её из всех пресетов.
+    </p>
+</div>
+
+<div class="select-block-inner">
+    <div class="select-list-block scroll-y-block">
+        <ul class="select-list">
+            @foreach (MainPagePhraseModel phrase in Model.Phrases)
+            {
+                var labelForPhraseId = $"phrase-{phrase.Id}";
+
+                <li class="select-list-item">
+                    <div class="select-list-item-block">
+                        @if (phrase.Id == Model.SelectedPhraseId)
+                        {
+                            <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" checked />
+                            <label class="text font-family-2 green-text bolder select-label" for="@labelForPhraseId">@phrase.Phrase</label>
+                        }
+                        else
+                        {
+                            <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" />
+                            <label class="text font-family-2 black-text select-label" for="@labelForPhraseId">@phrase.Phrase</label>
+                        }
+                    </div>
+                </li>
+            }
+            <li class="select-list-item">
+                <div class="select-list-item-block">
+                    <input class="select-point" type="radio" name="presetElementId" id="phrase-remove" value="-1" />
+                    <label class="text font-family-2 blue-text bolder select-label" for="phrase-remove">Убрать фразу</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="select-block-inner">
+    <div class="buttons-panel-left">
+        <button class="button low-button button-basis-1" type="submit" name="action" value="select-phrase">
+            <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+        </button>
+        <button class="button low-button button-basis-1" type="submit" name="action" value="delete-phrase">
+            <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+        </button>
+        <button class="button low-button button-basis-1" type="submit" name="action" value="create-phrase">
+            <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
+        </button>
+    </div>
+</div>
+
+

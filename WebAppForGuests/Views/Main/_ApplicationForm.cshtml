@@ -1,0 +1,31 @@
+﻿@model ApplicationModel
+
+<form id="CreateApplicationForm" class="form create-application" asp-area="" asp-controller="Main" asp-action="SubmitApplication" method="post">
+    <input asp-for="Id" type="hidden" />
+    <input asp-for="Status" type="hidden" />
+    <input asp-for="DateReceiptApplication" type="hidden" value="@DateTime.Now" />
+
+    <div class="form-block-guest">
+        <label asp-for="GuestName" class="form-label">Имя</label>
+        <input asp-for="GuestName" type="text" class="form-text-field required" />
+        <span class="application-error-message">@ViewBag.NameErrorMessage</span>
+    </div>
+
+    <div class="form-block-empty"></div>
+
+    <div class="form-block-guest">
+        <label asp-for="GuestEmail" class="form-label">E-mail</label>
+        <input asp-for="GuestEmail" type="email" class="form-text-field required" />
+        <span class="application-error-message">@ViewBag.EmailErrorMessage</span>
+    </div>
+
+    <div class="form-block-text">
+        <label asp-for="GuestApplicationText" class="form-label">Текст сообщения</label>
+        <textarea asp-for="GuestApplicationText" class="form-text-field form-textarea-field required"></textarea>
+        <span class="application-error-message">@ViewBag.MessageErrorMessage</span>
+    </div>
+
+    <div class="form-block-button">
+        <input class="button-link paragraph-large-text white-text" type="submit" value="Отправить" />
+    </div>
+</form>

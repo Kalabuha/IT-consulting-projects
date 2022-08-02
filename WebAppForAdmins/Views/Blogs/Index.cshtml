@@ -1,0 +1,110 @@
+﻿@model BlogsViewModel
+
+@{
+    ViewData["Title"] = "Блоги";
+}
+
+<div class="container-content-common blog-create-container-content">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Блоги</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Для изменения блога нажмите "Изменить". Просматривая блог можно не только изменить данные, но и сделать блог видимым в гостевом
+            сайте или скрыть его. Удаление же приведёт к тому, что данные станут недоступными. Изображение не является обязательным. Если
+            в блоге не установлено изображение, оно не будет отображаться в гостевом сайте.
+        </p>
+    </div>
+
+    <div class="blogs">
+        <ul class="list-items-blogs">
+            @if (Model.Blogs != null && Model.Blogs.Count > 0)
+            {
+                @foreach (BlogModel blog in Model.Blogs)
+                {
+                    <li class="blog-item-wrap">
+                        <div class="content-block-small-indent blog-card-details">
+                            <div class="content-block-small-indent preset-content-block">
+                                <div class="blog-block blog-card-details-title">
+                                    <h2 class="h2-standart-page font-family-1 black-text">
+                                        @blog.BlogTitle
+                                    </h2>
+                                </div>
+
+                                <div class="blog-block blog-card-details-short-description">
+                                    <p class="text font-family-2 black-text paragraph">
+                                        @blog.ShortBlogDescription
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="preset-content-block">
+                                <div class="blog-block blog-card-details-date">
+                                    <span class="middle-text font-family-2 black-text">@blog.PublicationDate.ToString("dd.MM.yyyy")</span>
+                                </div>
+
+                                <div class="blog-block blog-card-details-img">
+                                    @if (!string.IsNullOrEmpty(blog.BlogImageAsString))
+                                    {
+                                        <img class="blog-available-img" src="@blog.BlogImageAsString" alt="blog image" />
+                                    }
+                                    else
+                                    {
+                                        <div class="blog-img-not-available">
+                                            <span class="large-text font-family-2 black-text">Изображение отсутствует</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="blog-block blog-card-details-long-description">
+                                    <p class="text font-family-2 black-text paragraph">
+                                        @blog.LongBlogDescription
+                                    </p>
+                                </div>
+
+                                <div class="is-published-or-not-block">
+                                    @if (blog.IsPublished)
+                                    {
+                                        <span class="large-text font-family-2 green-text">Опубликован</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="large-text font-family-2 blue-text">Не опубликован</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-block-standart-indent blog-card-control">
+                            <div class="blog-card-control-buttons">
+                                @*Edit*@
+                                <a class="button low-button link-a-button" asp-area="" asp-controller="Blogs" asp-action="Edit" asp-route-id="@blog.Id">
+                                    <span class="middle-text font-family-2 black-text">&#9209; Изменить</span>
+                                </a>
+                                @*delete*@
+                                <a class="button low-button link-a-button" asp-area="" asp-controller="Blogs" asp-action="Delete" asp-route-id="@blog.Id">
+                                    <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="blog-item-wrap">
+                    <div class="no-blogs-block">
+                        <span class="large-text font-family-2 gold-text paragraph">Блогов пока нету. Попробуйте добавить, для этого нажмите "Создать новый блог" </span>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="create-blog-button-block">
+    <a class="button high-button link-a-button" asp-area="" asp-controller="Blogs" asp-action="Create">
+        <span class="large-text font-family-2 black-text">Создать новый блог</span>
+    </a>
+</div>

@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Заявки";
+}
+
+<div id="containerContent" class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Заявки</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <div class="filter">
+            <partial name="_FilterForm" />
+        </div>
+    </div>
+
+    <div class="content-block-standart-indent content-block-relative">
+        <img class="robots-img" src="/img/objects/robots-1.png" alt="robots" />
+    </div>
+
+    <div id="RequestFilterResult">
+        <div class="content-block-standart-indent content-block-relative">
+            <p class="biggest-text font-family-2 white-text">Настройте условия поиска и нажмите "Поиск"</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script>
+    $(function() {
+        $("#RequestFilterForm").ajaxForm({
+            success: function(response) {
+                $("#RequestFilterResult").html(response);
+            }
+        });       
+    });
+</script>
+}

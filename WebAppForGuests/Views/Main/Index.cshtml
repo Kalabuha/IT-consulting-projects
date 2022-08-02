@@ -1,0 +1,80 @@
+﻿@model MainPageViewModel
+
+@{
+    ViewData["Title"] = "Home";
+    ViewBag.PageH1 ??= nameof(MenuModel.Main);
+
+    string? text = Model.Text?.Text;
+    string? image = Model.Image?.Image;
+    string? button = Model.Button?.Button;
+    string? phrase = Model.Phrase?.Phrase;
+    string? action = Model.Action?.Action;
+}
+
+<div class="header-block header-block-home">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    <div class="main-content-block main-content-color-block">
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
+
+        @if (!string.IsNullOrEmpty(text))
+        {
+            <p class="paragraph">
+                @text
+            </p>
+        }
+    </div>
+
+    @if (!string.IsNullOrEmpty(image))
+    {
+        <div class="main-content-block main-content-block-image" style="background-image: url('@image')">
+            <div class="content-block-image-button">
+                @if (!string.IsNullOrEmpty(button))
+                {
+                    <a class="button-main-page span-large white-text" href="#submit-your-application">@button</a>
+                }
+            </div>
+            <div class="content-block-image-phrase">
+                @if (!string.IsNullOrEmpty(phrase))
+                {
+                    <span class="phrase-main-page span-mega-large white-text">@phrase</span>
+                }
+            </div>
+        </div>
+    }
+
+    <div id="submit-your-application" class="main-content-block main-content-color-block">
+        <h2 class="h2-text text-in-center">@action</h2>
+
+        <partial name="_ApplicationForm" model="@Model.Application" />
+        
+    </div>
+</div>
+
+@section Scripts {
+<script defer>
+    let form = document.getElementById('CreateApplicationForm');
+    let submit = form.querySelector('[type=submit]');
+
+    let validateForm = function() {
+        let requiredInputs = form.querySelectorAll('.required');
+        let isValid = true;
+        for(input of requiredInputs) {
+            if(input.value.length == 0) {
+                isValid = false;
+            }
+        }
+        submit.disabled = !isValid;
+    }
+
+    form.onkeyup = function(event) {
+        validateForm();
+    }
+
+    validateForm();
+</script>
+}

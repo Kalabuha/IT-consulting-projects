@@ -1,0 +1,40 @@
+﻿@model ProjectsViewModel
+
+@{
+    ViewData["Title"] = "Project";
+}
+
+<div class="header-block header-block-project">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+@if (Model != null && Model.SelectedProject != null)
+{
+    ProjectModel project = Model.SelectedProject;
+
+    string linkToCustomerSite = project.LinkToCustomerSite ?? "#";
+
+    <div class="main-content-common">
+        <div class="main-content-block main-content-color-block overflow-break-word-hidden">
+            <h1 class="h1-text text-in-center">@project.ProjectTitle</h1>
+        </div>
+
+        <div class="main-content-block main-content-color-block">
+            <div class="main-content-block-project-details-text overflow-break-word-hidden">
+                <p class="paragraph">@project.ProjectDescription</p>
+            </div>
+
+            <div class="main-content-block-project-details-logo">
+                <a class="link-project-logo" href="@linkToCustomerSite" target="_blank">
+                    <img class="img-project-logo" src="@project.CustomerCompanyLogoAsDataImage" alt="project-logo" />
+                </a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1 class="white-text h1-text">Проект не подгрузился</h1>
+}

@@ -1,0 +1,44 @@
+html{
+  font-size: 0;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('../img/backgrounds/body-background.jpg');
+  background-color: rgb(41, 41, 41);
+  background-size: 100% auto;
+}
+  
+a {
+  text-decoration: none;
+}
+
+a::selection {
+  background-color:goldenrod;
+}
+
+p::selection {
+  background-color: goldenrod;
+}
+
+span::selection {
+  background-color: goldenrod;
+}
+
+label::selection {
+  background-color: goldenrod;
+}
+
+h1::selection {
+  background-color: goldenrod;
+}
+
+h2::selection {
+  background-color: goldenrod;
+}
+
+h3::selection {
+  background-color: goldenrod;
+}

@@ -1,0 +1,55 @@
+﻿@model ProjectsViewModel
+
+@{
+    ViewData["Title"] = "Projects";
+    ViewBag.PageH1 ??= nameof(MenuModel.Projects);
+}
+
+<div class="header-block header-block-projects">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    <div class="main-content-block main-content-color-block">
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
+    </div>
+
+    <div class="main-content-block main-content-color-block">
+        @if (Model != null && Model.Projects != null && Model.Projects.Count != 0)
+        {
+            <ul class="list-projects">
+                @for (int i = 0, imageNumber = 1; i < Model.Projects.Count; i++)
+                {
+                    ProjectModel project = Model.Projects[i];
+
+                    string backgroundDirectoryPath = "../img/background-img/";
+
+                    string nameCardLogoBackground = $"project-card-logo-background-{imageNumber}.jpg";
+                    string nameCardCaptionBackground = $"project-card-caption-background-{imageNumber}.jpg";
+
+                    <li class="project-item">
+                        <a class="link-project-item" asp-area="" asp-controller="Projects" asp-action="ProjectDetails" asp-route-id="@project.Id">
+                            <div class="project-card">
+                                <div class="project-card-logo" style="background-image: url('@string.Format(backgroundDirectoryPath + nameCardLogoBackground)')">
+                                    <img class="project-logo-img" src="@project.CustomerCompanyLogoAsDataImage" alt="project logo">
+                                </div>
+
+                                <div class="project-card-caption overflow-break-word-hidden" style="background-image: url('@string.Format(backgroundDirectoryPath + nameCardCaptionBackground)')">
+                                    <p class="title-text white-text">@project.ProjectTitle</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+
+                    imageNumber = imageNumber == 8 ? 1 : imageNumber + 1;
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="paragraph">Проектов пока нет. Обратитесь к администратору, скажите ему пусть он их добавит.</p>
+        }
+    </div>
+</div>

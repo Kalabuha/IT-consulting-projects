@@ -1,0 +1,44 @@
+﻿@model ServiceModel
+
+@{
+    var state = ViewData.ModelState;
+    var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
+}
+
+<input asp-for="Id" type="hidden" />
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="service-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Название услуги</span>
+        </div>
+
+        <textarea asp-for="ServiceName" class="biggest-text font-family-2 text-area-max-width-resize-vertical service-text-area-name"
+                  disabled="@disabled" placeholder="Вводи название сюда"></textarea>
+
+        <div class="error-message-block">
+            <span asp-validation-for="ServiceName" class="middle-text font-family-2 red-text"></span>
+        </div>
+    </div>
+
+    <div class="service-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Описание услуги</span>
+        </div>
+
+        <textarea asp-for="ServiceDescription" class="middle-text font-family-2 text-area-max-width-resize-vertical service-text-area-description"
+                  disabled="@disabled" placeholder="Вводи описание сюда"></textarea>
+
+        <div class="error-message-block">
+            <span asp-validation-for="ServiceDescription" class="middle-text font-family-2 red-text"></span>
+        </div>
+    </div>
+
+    <div class="service-block">
+        <div class="blog-published-block">
+            <input asp-for="IsPublished" id="IsServicePublished" class="select-point" disabled="@disabled" />
+            <label class="middle-text font-family-2 black-text" for="IsServicePublished">&#10084; Опубликовать услугу</label>
+        </div>
+    </div>
+</div>
+

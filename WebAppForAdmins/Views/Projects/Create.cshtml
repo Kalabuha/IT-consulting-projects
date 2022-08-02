@@ -1,0 +1,32 @@
+﻿@model ProjectModel
+
+@{
+    ViewData["Title"] = "Создать проект";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Создать проект</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Введите заголовок, описание проекта, ссылку на сайт заказчика, и установите логотип заказчика. В описании проекта и в загаловке
+            пустая строка не допускается. Заголовок не должен превышать 150 символов. Логотип и ссылка не являются обязательными.
+            Если логотип не будет установлен, проекту будет присвоен логотип NewRetroWave по умолчанию. Логотип рекомендуется устанавливать
+            в формате png с прозрачным фоном. Длина описания не должна превышать 5000 символов. Длина ссылки не должна превышать 300 символов.
+            Публикуя проект вы сделаете его видимым на сайте для клиентов.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Projects" asp-action="CreatePost" enctype="multipart/form-data" method="post">
+
+        <partial name="_ProjectForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Создать проект</span>
+            </button>
+        </div>
+    </form>
+</div>

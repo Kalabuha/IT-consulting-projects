@@ -1,0 +1,74 @@
+﻿@model ContactsViewModel
+
+@{
+    ViewData["Title"] = "Contacts";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Контакты</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            На странице контактов гостевого сайта отображается выбранная карточка контактов. Выбранная карточка выделена зелёным цветом.
+            Чтобы выбрать другую крточку необходимо перейти в настройки интересующей карточки, кликнув на неё, и установить ...
+        </p>
+    </div>
+
+    <div class="content-block-small-indent preset-content-block">
+        <ul class="list-items-wrap">
+            @if (Model.Contacts != null)
+            {
+                @foreach (ContactModel contact in Model.Contacts)
+                {
+                    string borderColor;
+                    if (contact.IsPublished)
+                    {
+                        borderColor = "border-color: rgb(21, 157, 21);";
+                    }
+                    else
+                    {
+                        borderColor = "border-color: mediumblue;";
+                    }
+
+                    <li class="contact-item-wrap">
+                        <a asp-area="" asp-controller="Contacts" asp-action="Edit" asp-route-id="@contact.Id">
+                            <div class="contact-card-details" style="@borderColor">
+                                <div class="contact-card-details-table">
+                                    <div class="contact-card-details-table-block">
+                                        <span class="text font-family-2 black-text">@contact.Address</span>
+                                    </div>
+                                    <div class="contact-card-details-table-block">
+                                        <span class="text font-family-2 black-text">@contact.Postcode</span>
+                                    </div>
+                                    <div class="contact-card-details-table-block">
+                                        <span class="text font-family-2 black-text">@contact.Phone</span>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(@contact.Fax))
+                                    {
+                                        <div class="contact-card-details-table-block">
+                                            <span class="text font-family-2 black-text">@contact.Fax</span>
+                                        </div>
+                                    }
+                                </div>
+
+                                <div class="contact-card-details-map">
+                                    <img class="project-logo-img" src="@contact.MapAsString" alt="map" />
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                }
+            }
+
+            <li class="contact-item-wrap item-wrap-last">
+                <a asp-area="" asp-controller="Contacts" asp-action="Create">
+                    <div class="contact-card-details create-contact-block">
+                        <span class="large-text font-family-2 black-text">Создать новый контакт</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

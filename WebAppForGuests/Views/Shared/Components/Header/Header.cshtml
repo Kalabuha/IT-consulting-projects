@@ -1,0 +1,65 @@
+﻿@model HeaderViewModel
+
+@{
+    string main;
+    string services;
+    string projects;
+    string blogs;
+    string contacts;
+    string slogan;
+
+    if (Model != null)
+    {
+        main = Model.Menu.Main;
+        services = Model.Menu.Services;
+        projects = Model.Menu.Projects;
+        blogs = Model.Menu.Blogs;
+        contacts = Model.Menu.Contacts;
+        slogan = Model.Slogan.Slogan;
+    }
+    else
+    {
+        main = nameof(MenuModel.Main);
+        services = nameof(MenuModel.Services);
+        projects = nameof(MenuModel.Projects);
+        blogs = nameof(MenuModel.Blogs);
+        contacts = nameof(MenuModel.Contacts);
+        slogan = nameof(SloganModel.Slogan);
+    }
+}
+
+<div class="userbar">
+    <div class="left-userbar">
+        <p class="white-text music-player">Retrowave</p>
+    </div>
+
+    <div class="rigth-userbar">
+        <p class="white-text user-name">Synthwave</p>
+    </div>
+</div>
+
+<nav class="navbar">
+    <div class="navbar-main">
+        <ul class="navbar-list">
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Main" asp-action="Index">@main</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Services" asp-action="Index">@services</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Projects" asp-action="Index">@projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Blogs" asp-action="Index">@blogs</a>
+            </li>
+            <li class="nav-item">
+                <a class="white-text nav-link" asp-area="" asp-controller="Contacts" asp-action="Index">@contacts</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar-slogan">
+        <span class="span-large white-text slogan">@slogan</span>
+    </div>
+</nav>

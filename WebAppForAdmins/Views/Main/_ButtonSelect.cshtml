@@ -1,0 +1,62 @@
+﻿@model ButtonSelectViewModel
+
+<div class="select-block-inner">
+    <p class="text font-family-2 black-text paragraph">
+        Кнопку можно выбрать из списка или создать новую. Если кнопка используется одним из пресетов,
+        то её удаление будет прервано. Чтобы удалить кнопку, необходимо сначала убрать её из всех пресетов.
+    </p>
+</div>
+
+<form id="SelectButtonForm" asp-area="" asp-controller="Main" asp-action="SelectButtonForCurrentPreset" asp-route-id="@Model.CurrentPresetId" method="post">
+    <div class="select-block-inner">
+        <div class="select-list-block scroll-y-block">
+            <ul class="select-list">
+                @foreach (MainPageButtonModel button in Model.Buttons)
+                {
+                    var labelForButtonId = $"button-{button.Id}";
+
+                    <li class="select-list-item">
+                        <div class="select-list-item-block">
+                            @if (button.Id == Model.SelectedButtonId)
+                            {
+                                <input class="select-point" type="radio" name="model.Id" id="@labelForButtonId" value="@button.Id" checked />
+                                <label class="text font-family-2 green-text bolder select-label" for="@labelForButtonId">@button.Button</label>
+                            }
+                            else
+                            {
+                                <input class="select-point" type="radio" name="model.Id" id="@labelForButtonId" value="@button.Id" />
+                                <label class="text font-family-2 black-text select-label" for="@labelForButtonId">@button.Button</label>
+                            }
+                        </div>
+                    </li>
+                }
+                <li class="select-list-item">
+                    <div class="select-list-item-block">
+                        <input class="select-point" type="radio" name="model.Id" id="button-remove" value="-1" />
+                        <label class="text font-family-2 blue-text bolder select-label" for="button-remove">Убрать кнопку</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="buttons-panel-left">
+        <div class="button-basis-1">
+            <button class="button low-button button-max-width" type="submit">
+                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+            </button>
+        </div>
+
+        @*        <div class="button-basis-1">
+            <button class="button low-button button-max-width" type="submit">
+            <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+            </button>
+            </div>
+
+            <div class="button-basis-1">
+            <button class="button low-button button-max-width" type="submit">
+            <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
+            </button>
+            </div>*@
+    </div>
+</form>

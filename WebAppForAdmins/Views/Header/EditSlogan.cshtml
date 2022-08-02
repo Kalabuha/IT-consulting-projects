@@ -1,0 +1,30 @@
+﻿@model SloganModel
+
+@{
+    ViewData["Title"] = "Изменить слоган";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Изменить слоган</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Пустое поле не допускается. Длина слогана не должна превышать 24 символа.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Header" asp-action="EditSloganPost" method="post">
+        <div class="content-block-standart-indent preset-content-block">
+
+            <div class="content-block-inner-2">
+                <partial name="_SloganForm" model="@Model" />
+            </div>
+
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Подтвердить изменения слогана</span>
+            </button>
+        </div>
+    </form>
+</div>

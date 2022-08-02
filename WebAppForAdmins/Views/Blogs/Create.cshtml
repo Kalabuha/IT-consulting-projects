@@ -1,0 +1,32 @@
+﻿@model BlogModel
+
+@{
+    ViewData["Title"] = "Создать блог";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Создать блог</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Заполните форму нового блога. Начальное описание, это короткое описание блога, которое отображается в карточке блога в списке всех блогов.
+            Пустые строки не допускаются. Заголовок не должен превышать 150 символов. Начальное описание не должно превышать 500 символов.
+            Изображение блога не является обязательным. Изображение может иметь различный формат. Не рекомендуется использовать формат, слишком
+            отличающийся от 16X9. Длина основного описания не должна превышать 6000 символов. Для того чтобы блог отображался на сайте для клиентов,
+            его необходимо опубликовать.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Blogs" asp-action="CreatePost" enctype="multipart/form-data" method="post">
+
+        <partial name="_BlogForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Создать блог</span>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,126 @@
+﻿@model ImageBlockViewModel
+
+@if (Model != null)
+{
+    int presetId = ViewBag.PresetId != null ? ViewBag.PresetId : 0;
+
+    var imageSelectViewModel = Model.ImageSelectViewModel;
+    var buttonSelectViewModel = Model.ButtonSelectViewModel;
+    var phraseSelectViewModel = Model.PhraseSelectViewModel;
+
+    MainPageImageModel? selectedImage = imageSelectViewModel.Images.FirstOrDefault(i => i.Id == imageSelectViewModel.SelectedImageId);
+    MainPageButtonModel? selectedButton = buttonSelectViewModel.Buttons.FirstOrDefault(b => b.Id == buttonSelectViewModel.SelectedButtonId);
+    MainPagePhraseModel? selectedPhrase = phraseSelectViewModel.Phrases.FirstOrDefault(p => p.Id == phraseSelectViewModel.SelectedPhraseId);
+
+    string imageUrl;
+    string imageAvailableOrNotStyleClass;
+    string displayBlockOrNoneStyle;
+
+    @if (selectedImage != null)
+    {
+        imageUrl = selectedImage.Image;
+        imageAvailableOrNotStyleClass = "preset-content-img-image-available";
+        displayBlockOrNoneStyle = "display: none;";
+    }
+    else
+    {
+        imageUrl = string.Empty;
+        imageAvailableOrNotStyleClass = "preset-content-img-image-not-available";
+        displayBlockOrNoneStyle = "";
+
+        <div class="content-block-small-indent">
+            <p class="middle-text font-family-2 gold-text paragraph">
+                Если изображение отсутствует, элементы внутни него отображаться на&nbsp;странице сайта не&nbsp;будут,
+                как и&nbsp;весь блок целиком. Если вам необходимо сделать так, чтобы блок и внутренние элементы
+                отображались, добавтье изображение.
+            </p>
+        </div>
+    }
+
+    <div class="content-block-small-indent preset-content-img @imageAvailableOrNotStyleClass" style="background-image: url('@imageUrl');">
+        <div class="preset-content-img-button-block">
+
+            @{
+                string buttonContent;
+                string buttonAvailableOrNotStyleClass;
+            }
+
+            @if (selectedButton != null)
+            {
+                buttonContent = selectedButton.Button;
+                buttonAvailableOrNotStyleClass = "preset-button-shell-button-available";
+            }
+            else
+            {
+                buttonContent = "Кнопка отсутствует";
+                buttonAvailableOrNotStyleClass = "preset-button-shell-button-not-available";
+            }
+
+            <div class="preset-button-shell @buttonAvailableOrNotStyleClass">
+                <span class="preset-button-content biggest-text font-family-2 white-text">@buttonContent</span>
+            </div>
+        </div>
+
+        <div class="preset-content-img-image-missing-block" style="@displayBlockOrNoneStyle">
+            <span class="biggest-text font-family-2 white-text">Изображение отсутствует</span>
+        </div>
+
+        <div class="preset-content-img-phrase-block">
+            @{
+                string presetPhraseContent;
+                string presetPhraseContentStyles;
+            }
+            @if (selectedPhrase != null)
+            {
+                presetPhraseContent = selectedPhrase.Phrase;
+                presetPhraseContentStyles = "";
+            }
+            else
+            {
+                presetPhraseContent = "Фраза отсутствует";
+                presetPhraseContentStyles = "outline: 5px dashed #4e00a0;";
+            }
+            <div class="preset-phrase-shell" style="@presetPhraseContentStyles">
+                <span class="preset-phrase-content mega-text font-family-2 white-text">@presetPhraseContent</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <div class="buttons-panel">
+            <div class="buttons-panel-block x-expandable">
+                <button class="button high-button button-max-width x-expand" type="button">
+                    <span class="large-text font-family-2 black-text">Изменить блок изображения</span>
+                </button>
+                <div class="select select-block x-expandable-block">
+                    <div class="x-tabs">
+                        <div class="select-block-inner">
+                            <div class="buttons-panel-left">
+                                <button class="button low-button button-basis-1 x-activate x-active" type="button">
+                                    <span class="large-text font-family-2 black-text">Изображение</span>
+                                </button>
+                                <button class="button low-button button-basis-1 x-activate" type="button">
+                                    <span class="large-text font-family-2 black-text">Кнопка</span>
+                                </button>
+                                <button class="button low-button button-basis-1 x-activate" type="button">
+                                    <span class="large-text font-family-2 black-text">Фраза</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="x-activatable x-active">
+                            <partial name="_ImageSelect" model="@imageSelectViewModel" />
+                        </div>
+                        <div class="x-activatable">
+                            <partial name="_ButtonSelect" model="@buttonSelectViewModel" />
+                        </div>
+                        <div class="x-activatable">
+                            <partial name="_PhraseSelect" model="@phraseSelectViewModel" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

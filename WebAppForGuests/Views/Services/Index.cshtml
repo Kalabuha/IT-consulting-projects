@@ -1,0 +1,43 @@
+﻿@model ServicesViewModel
+
+@{
+    ViewData["Title"] = "Services";
+    ViewBag.PageH1 ??= nameof(MenuModel.Services);
+}
+
+<div class="header-block header-block-services">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    <div class="main-content-block main-content-color-block">
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
+    </div>
+
+    <div class="main-content-block main-content-color-block">
+        @if (Model != null && Model.Services != null && Model.Services.Count != 0)
+        {
+            <ul class="list-services">
+                @foreach (ServiceModel service in Model.Services)
+                {
+                    <li class="service-item collapsable">
+                        <div class="service-collapse-block-button collapse collapse-expanded-hide">
+                            <h2 class="white-text service-title-text-collapse">@service.ServiceName</h2>
+                        </div>
+
+                        <div class="service-expand-block collapse-expanded-show">
+                            <h2 class="service-title-text-expand collapse">@service.ServiceName</h2>
+                            <p class="paragraph">@service.ServiceDescription</p>
+                        </div>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="paragraph">Услуг пока нет. Обратитесь к администратору, скажите ему пусть он их добавит.</p>
+        }
+    </div>
+</div>

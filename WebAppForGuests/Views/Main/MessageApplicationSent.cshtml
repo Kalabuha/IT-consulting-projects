@@ -1,0 +1,39 @@
+﻿@model ApplicationModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Application sent</title>
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RetroWaveProfi.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="background-message-application-sent">
+        <div class="main-content-common">
+            <div class="main-content-block main-content-dialog-message">
+                @if (Model != null)
+                {
+                    <p class="paragraph-large-text">Заявка отправлена</p>
+                    <p class="paragraph-large-text">номер вашей заявки: @Model.Number</p>
+                }
+                else
+                {
+                    <p class="paragraph-large-text">Произошёл сбой</p>
+                    <p class="paragraph-large-text">заявка не была отправлена</p>
+                    <p class="paragraph-large-text">Попробуйте снова.</p>
+                }
+                <a class="button-link paragraph-large-text white-text" asp-area="" asp-controller="Main" asp-action="Index">
+                    Вернуться назад
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

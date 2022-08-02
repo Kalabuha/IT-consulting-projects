@@ -1,0 +1,56 @@
+﻿@model ContactsViewModel
+
+@{
+    ViewData["Title"] = "Contacts";
+    ViewBag.PageH1 ??= nameof(MenuModel.Contacts);
+}
+
+<div class="header-block header-block-contacts">
+    <a class="link-drive-logo" asp-area="" asp-controller="Home" asp-action="Index">
+        <img class="drive-logo" src="/img/logos/drive-radio-logo.png" alt="drive-logo" />
+    </a>
+</div>
+
+<div class="main-content-common">
+    <div class="main-content-block main-content-color-block">
+        <h1 class="h1-text text-in-center">@ViewBag.PageH1</h1>
+    </div>
+
+    <div class="main-content-block main-content-color-block">
+        @if (Model != null && Model.Contact != null)
+        {
+            ContactModel contact = Model.Contact;
+
+            <div class="contacts-block">
+                <div class="contacts-text-block">
+                    <table class="contacts-table">
+                        <tr class="contacts-table-row">
+                            <td class="contacts-table-cell-left"><p class="contacts-text">Адрес:</p></td>
+                            <td class="contacts-table-cell-rigth"><p class="contacts-text">@contact.Address</p></td>
+                        </tr>
+                        <tr>
+                            <td class="contacts-table-cell-left"><p class="contacts-text">Индекс:</p></td>
+                            <td class="contacts-table-cell-rigth"><p class="contacts-text">@contact.Postcode</p></td>
+                        </tr>
+                        <tr>
+                            <td class="contacts-table-cell-left"><p class="contacts-text">Телефон:</p></td>
+                            <td class="contacts-table-cell-rigth"><p class="contacts-text">@contact.Phone</p></td>
+                        </tr>
+                        <tr>
+                            <td class="contacts-table-cell-left"><p class="contacts-text">Факс:</p></td>
+                            <td class="contacts-table-cell-rigth"><p class="contacts-text">@contact.Fax</p></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="contacts-map-block">
+                    <img class="map-img" src="@contact.MapAsString" alt="map" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <p class="paragraph">Контакты не указаны. Обратитесь к администратору, скажите ему пусть он их добавит.</p>
+        }
+    </div>
+</div>

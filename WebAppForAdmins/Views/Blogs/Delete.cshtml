@@ -1,0 +1,30 @@
+﻿@model BlogModel
+
+@{
+    ViewData["Title"] = "Удалить блог";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Удалить блог</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Вы уверены, что хотите удалить этот блог? Удаление приведёт к потере данных. Если необходимо скрыть блог без потери данных,
+            можно перейти к изменению блога по клавише "Изменить" и отменить публикацию блога. Потом в любой момент можно будет
+            опубликовать его снова.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Blogs" asp-action="DeletePost" enctype="multipart/form-data" method="post">
+
+        <partial name="_BlogForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Удалить блог</span>
+            </button>
+        </div>
+    </form>
+</div>

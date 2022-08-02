@@ -1,0 +1,94 @@
+﻿@model ServicesViewModel
+
+@{
+    ViewData["Title"] = "Услуги";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Услуги</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Для изменения услуги нажмите "Изменить". Просматривая услугу можно не только изменить данные, но и сделать её видимой в гостевом
+            сайте или скрыть её. Удаление же приведёт к тому, что данные станут недоступными.
+        </p>
+    </div>
+
+    @if (Model.Services != null)
+    {
+        <div class="content-block-standart-indent">
+            <span class="large-text font-family-2 gold-text paragraph">Всего услуг: @Model.Services.Count</span>
+        </div>
+    }
+
+    <div class="services preset-content-block">
+        <ul class="list-items-services">
+            @if (Model.Services != null && Model.Services.Count > 0)
+            {
+                @foreach (ServiceModel service in Model.Services)
+                {
+                    <li class="service-item-wrap">
+                        <div class="service-card">
+                            <div class="service-card-details">
+                                <div class="service-card-title">
+                                    <span class="biggest-text font-family-1 white-text service-card-title-span">@service.ServiceName</span>
+                                </div>
+
+                                <div class="service-card-description">
+                                    <div class="word-wrap-block">
+                                        <p class="middle-text font-family-2 black-text paragraph">
+                                            @service.ServiceDescription
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="service-card-is-Published">
+                                    @if (service.IsPublished)
+                                    {
+                                        <span class="large-text font-family-2 green-text">Опубликована</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="large-text font-family-2 blue-text">Не опубликована</span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="service-card-control-buttons">
+                                <div class="service-card-control-button-block">
+                                    <a class="button low-button link-a-button" asp-area="" asp-controller="Services" asp-action="Edit" asp-route-id="@service.Id">
+                                        <span class="middle-text font-family-2 black-text">&#9209; Изменить</span>
+                                    </a>
+                                </div>
+
+                                <div class="service-card-control-button-block">
+                                    <a class="button low-button link-a-button" asp-area="" asp-controller="Services" asp-action="Delete" asp-route-id="@service.Id">
+                                        <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+            else
+            {
+                <li class="service-item-wrap">
+                    <div class="no-service-block">
+                        <span class="large-text font-family-2 gold-text paragraph">Услуг пока нету. Попробуйте добавить, для этого нажмите "Создать новую услугу"</span>
+                    </div>
+                </li>
+            }
+
+            <li class="service-item-wrap">
+                <div class="create-services-button-block">
+                    <a class="button high-button link-a-button" asp-area="" asp-controller="Services" asp-action="Create">
+                        <span class="large-text font-family-2 black-text">Создать новую услугу</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

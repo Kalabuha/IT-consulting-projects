@@ -1,0 +1,26 @@
+﻿[
+  {
+    "Slogan": "Yippee-ki-yay",
+    "IsUsed": true
+  },
+
+  {
+    "Slogan": "What a lovely day!",
+    "IsUsed": true
+  },
+
+  {
+    "Slogan": "Мир, дружба, жвачка!",
+    "IsUsed": false
+  },
+
+  {
+    "Slogan": "Force be with you",
+    "IsUsed": true
+  },
+
+  {
+    "Slogan": "The Flame guide your way",
+    "IsUsed": true
+  }
+]

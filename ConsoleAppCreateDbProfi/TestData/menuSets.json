@@ -1,0 +1,19 @@
+﻿[
+  {
+    "Main": "Главная",
+    "Services": "Услуги",
+    "Projects": "Проекты",
+    "Blogs": "Блоги",
+    "Contacts": "Контакты",
+    "IsPosted": false
+  },
+
+  {
+    "Main": "Хлавная",
+    "Services": "Услухи",
+    "Projects": "Пруехты",
+    "Blogs": "Блуохи",
+    "Contacts": "Хонтахты",
+    "IsPosted": true
+  }
+]

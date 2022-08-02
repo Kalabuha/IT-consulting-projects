@@ -1,0 +1,51 @@
+﻿@model HeaderViewModel
+
+@{
+    ViewData["Title"] = "Заголовок";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Заголовок</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Ниже представлен внешний вид заголовка гостевого сайта. Он состоит из меню навигации по сайту и слогана.
+            Для того чтобы настроить меню или слоган необходимо нажать соответствующую клавишу. Изображение, представленное здесь,
+            используется для примера. На каждой странице гостевого сайта используются свои изображения.
+        </p>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <div class="header-block-menu-slogan">
+            <div class="header-block-menu-slogan-container-buttons">
+                <a class="button low-button link-a-button" asp-area="" asp-controller="Header" asp-action="CustomizeMenu">
+                    <span class="middle-text font-family-2 black-text">Меню</span>
+                </a>
+
+                <a class="button low-button link-a-button" asp-area="" asp-controller="Header" asp-action="CustomizeSlogan">
+                    <span class="middle-text font-family-2 black-text">Слоган</span>
+                </a>
+            </div>
+
+            <div class="header-block-menu-slogan-container-content">
+                <div class="header-menu-block">
+                    <span class="large-text font-family-2 white-text text-shadow">@Model.UsedMenu.Main</span>
+                    <span class="large-text font-family-2 white-text text-shadow">@Model.UsedMenu.Services</span>
+                    <span class="large-text font-family-2 white-text text-shadow">@Model.UsedMenu.Projects</span>
+                    <span class="large-text font-family-2 white-text text-shadow">@Model.UsedMenu.Blogs</span>
+                    <span class="large-text font-family-2 white-text text-shadow">@Model.UsedMenu.Contacts</span>
+                </div>
+
+                <div class="header-slogan-block">
+                    <span class="biggest-text font-family-2 white-text text-shadow">@Model.RandomSlogan.Slogan</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="robot-peeking-out-container">
+    <img class="robot-peeking-out-img" src="\img\objects\robot-1.png" alt="Robot peeking out" />
+</div>

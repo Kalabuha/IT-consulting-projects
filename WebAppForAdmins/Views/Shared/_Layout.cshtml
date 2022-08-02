@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Profi admin</title>
+    <link rel="stylesheet" href="~/css/normalize.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/jquery.modal.min.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <header class="header">
+                <h1 class="font-family-1 black-text profi">Profi</h1>
+                <nav class="navbar">
+                    <ul class="navbar-list">
+                        @if (true)
+                        {
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Applications" asp-action="Index">Заявки</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Header" asp-action="Index">Заголовок</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Main" asp-action="Index">Главная</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Blogs" asp-action="Index">Блоги</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Contacts" asp-action="Index">Контакты</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="SignUp">Sign up</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </header>
+
+            <main role="main" class="main">
+                <div class="userbar">
+                    <div class="userbar-block-logo">
+                        <img class="ldr-logo" src="/img/objects/ldr-logo.jpg" alt="love death & robots" />
+                    </div>
+                    <div class="userbar-block-username">
+                        <p class="font-family-2 userbar-text white-text">Пользователь: kalabuha</p>
+                    </div>
+                </div>
+                <div class="container-content">
+                    @RenderBody()
+                </div>
+            </main>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <p class="biggest-text font-family-2 white-text">FOOTER</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="~/js/jquery-3.6.0.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.form.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.modal.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

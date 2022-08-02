@@ -1,0 +1,87 @@
+﻿@model BlogModel
+
+@{
+    var state = ViewData.ModelState;
+    var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
+    var removal = ViewBag.IsImageRemovalAvailable != null && ViewBag.IsImageRemovalAvailable;
+}
+
+<input asp-for="Id" type="hidden" />
+<input asp-for="BlogImageAsString" type="hidden" />
+<input asp-for="PublicationDate" type="hidden" />
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="blog-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Заголовок блога</span>
+        </div>
+
+        <textarea asp-for="BlogTitle" class="biggest-text font-family-2 text-area-max-width-resize-vertical blog-text-area-title"
+                  disabled="@disabled" placeholder="Вводи заголовок сюда"></textarea>
+
+        <div class="error-message-block">
+            <span asp-validation-for="BlogTitle" class="middle-text font-family-2 red-text"></span>
+        </div>
+    </div>
+
+    <div class="blog-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Начальное описание блога</span>
+        </div>
+
+        <textarea asp-for="ShortBlogDescription" class="middle-text font-family-2 text-area-max-width-resize-vertical blog-text-area-short"
+                  disabled="@disabled" placeholder="Вводи начальное описание сюда"></textarea>
+
+        <div class="error-message-block">
+            <span asp-validation-for="ShortBlogDescription" class="middle-text font-family-2 red-text"></span>
+        </div>
+    </div>
+</div>
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="blog-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Изображение блога</span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.BlogImageAsString))
+        {
+            <div class="blog-block blog-card-details-img">
+                <img class="blog-available-img" src="@Model.BlogImageAsString" alt="blog image" />
+            </div>
+        }
+
+        @if (!disabled)
+        {
+            <div class="blog-input-image-block">
+                <input asp-for="BlogImageAsFormFile" class="input-image" type="file" accept="image/jpeg,image/png" />
+
+                @if (removal)
+                {
+                    <div class="blog-remove-image">
+                        <input asp-for="IsRemoveImage" id="IsBlogRemoveImage" class="select-point" disabled="@disabled" />
+                        <label class="middle-text font-family-2 black-text" for="IsBlogRemoveImage">&#10006; Убрать изображение</label>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="blog-block">
+        <div class="span-prompt">
+            <span class="large-text font-family-2 black-text">Основное описание блога</span>
+        </div>
+
+        <textarea asp-for="LongBlogDescription" class="middle-text font-family-2 text-area-max-width-resize-vertical blog-text-area-long"
+                  disabled="@disabled" placeholder="Вводи описание сюда"></textarea>
+
+        <div class="error-message-block">
+            <span asp-validation-for="LongBlogDescription" class="middle-text font-family-2 red-text"></span>
+        </div>
+    </div>
+
+    <div class="blog-published-block">
+        <input asp-for="IsPublished" id="IsBlogPublished" class="select-point" disabled="@disabled" />
+        <label class="middle-text font-family-2 black-text" for="IsBlogPublished">&#10084; Опубликовать блог</label>
+    </div>
+</div>
