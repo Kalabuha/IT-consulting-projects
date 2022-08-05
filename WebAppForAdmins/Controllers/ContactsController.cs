@@ -2,7 +2,7 @@
 using Resources.Models;
 using Services.Converters;
 using Services.Interfaces;
-using WebAppForAdmins.Models;
+using WebAppForAdmins.Models.Contacts;
 
 namespace WebAppForAdmins.Controllers
 {
@@ -43,13 +43,28 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(ContactModel model)
         {
+            if (model.MapAsFormFile == null)
+            {
+                ModelState.AddModelError("MapAsString", "Изображение карты не установлено");
+            }
+
+            if (!CheckPostcodeValidation(model.Postcode))
+            {
+                ModelState.AddModelError("Postcode", "Некорректный почтовый индекс");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(nameof(Create), model);
             }
 
             var data = model.ContactModelToData();
-            await _contactService.AddContactToDbAsync(data);
+            var id = await _contactService.AddContactToDbAsync(data);
+
+            if (data.IsPublished)
+            {
+                await _contactService.PublishContact(id);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -72,6 +87,11 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPost(ContactModel model)
         {
+            if (!CheckPostcodeValidation(model.Postcode))
+            {
+                ModelState.AddModelError("Postcode", "Некорректный почтовый индекс");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(nameof(Edit), model);
@@ -79,6 +99,11 @@ namespace WebAppForAdmins.Controllers
 
             var data = model.ContactModelToData();
             await _contactService.EditContactToDbAsync(data);
+
+            if (data.IsPublished)
+            {
+                await _contactService.PublishContact(data.Id);
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -103,6 +128,17 @@ namespace WebAppForAdmins.Controllers
         {
             await _contactService.RemoveContactToDbAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool CheckPostcodeValidation(int postcode)
+        {
+            var postCodeLength = postcode.ToString().Length;
+            if (postcode == 0 || postCodeLength != 6)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

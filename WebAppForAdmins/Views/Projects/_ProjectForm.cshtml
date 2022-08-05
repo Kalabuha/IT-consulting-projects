@@ -1,8 +1,10 @@
 ﻿@model ProjectModel
+
 @{
     var state = ViewData.ModelState;
     var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
 }
+
 <input asp-for="Id" type="hidden" />
 <input asp-for="CustomerCompanyLogoAsDataImage" type="hidden" />
 

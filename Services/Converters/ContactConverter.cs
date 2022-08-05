@@ -51,16 +51,27 @@ namespace Services.Converters
 
         public static ContactData ContactModelToData(this ContactModel model)
         {
-            return new ContactData
+            if (model.MapAsFormFile != null)
+            {
+                model.MapAsString = DataConverter.ReadBytesFromFormFile(model.MapAsFormFile);
+            }
+
+            var data = new ContactData
             {
                 Id = model.Id,
                 Address = model.Address,
                 Postcode = model.Postcode,
                 Phone = model.Phone,
                 Fax = model.Fax,
-                MapAsString = model.MapAsString,
                 IsPublished = model.IsPublished,
             };
+
+            if (!string.IsNullOrEmpty(model.MapAsString))
+            {
+                data.MapAsString = model.MapAsString;
+            }
+
+            return data;
         }
     }
 }

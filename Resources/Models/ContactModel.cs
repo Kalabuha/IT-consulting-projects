@@ -1,11 +1,11 @@
-﻿using Resources.Models.Base;
+﻿using Microsoft.AspNetCore.Http;
+using Resources.Models.Base;
 using System.ComponentModel.DataAnnotations;
 
 namespace Resources.Models
 {
     public class ContactModel : BaseModel
     {
-        [Required(ErrorMessage = "Почтоый индекс обязателен")]
         public int Postcode { get; set; }
 
         [Required(ErrorMessage = "Адрес обязателен")]
@@ -19,7 +19,9 @@ namespace Resources.Models
         [StringLength(20, ErrorMessage = "Длина номера факса не должна превышать 20 символов")]
         public string? Fax { get; set; }
 
-        public string MapAsString { get; set; } = default!;
+        public IFormFile? MapAsFormFile { get; set; }
+
+        public string? MapAsString { get; set; }
 
         public bool IsPublished { get; set; }
     }

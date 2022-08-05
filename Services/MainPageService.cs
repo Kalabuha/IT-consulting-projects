@@ -64,7 +64,7 @@ namespace Services
             return presetData;
         }
 
-        public async Task PublishPreset(int id)
+        public async Task PublishPresetAsync(int id)
         {
             var entity = await _presetRepository.GetEntity(id);
             if (entity == null)
@@ -83,7 +83,7 @@ namespace Services
             await _presetRepository.UpdateEntityAsync(entity);
         }
 
-        public async Task<int> CreatePreset(MainPagePresetData data)
+        public async Task<int> CreatePresetAsync(MainPagePresetData data)
         {
             var entity = new MainPagePresetEntity()
             {
@@ -94,7 +94,7 @@ namespace Services
             return entity.Id;
         }
 
-        public async Task UpdatePreset(MainPagePresetData data)
+        public async Task UpdatePresetAsync(MainPagePresetData data)
         {
             var entity = await _presetRepository.GetEntity(data.Id);
             if (entity == null)
@@ -113,7 +113,7 @@ namespace Services
             await _presetRepository.UpdateEntityAsync(entity);
         }
 
-        public async Task DeletePreset(MainPagePresetData data)
+        public async Task DeletePresetAsync(MainPagePresetData data)
         {
             var entity = await _presetRepository.GetEntity(data.Id);
             if (entity == null)
@@ -241,6 +241,78 @@ namespace Services
             }
 
             return elementDatas.Select(e => (TMainPageData)e).ToList();
+        }
+
+        public async Task CreateElementAsync<TMainPageData>(TMainPageData data) where TMainPageData : BaseData
+        {
+            BaseData baseData = data;
+            if (typeof(TMainPageData) == typeof(MainPageActionData))
+            {
+                var actionData = (MainPageActionData)baseData;
+                var actionEntity = actionData.ActionDataToEntity();
+                await _actionRepository.AddEntityAsync(actionEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageButtonData))
+            {
+                var buttonData = (MainPageButtonData)baseData;
+                var buttonEntity = buttonData.ButtonDataToEntity();
+                await _buttonRepository.AddEntityAsync(buttonEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageImageData))
+            {
+                var imageData = (MainPageImageData)baseData;
+                var imageEntity = imageData.ImageDataToEntity();
+                await _imageRepository.AddEntityAsync(imageEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPagePhraseData))
+            {
+                var phraseData = (MainPagePhraseData)baseData;
+                var phraseEntity = phraseData.PhraseDataToEntity();
+                await _phraseRepository.AddEntityAsync(phraseEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageTextData))
+            {
+                var textData = (MainPageTextData)baseData;
+                var textEntity = textData.TextDataToEntity();
+                await _textRepository.AddEntityAsync(textEntity);
+            }
+            else
+            {
+                throw new ApplicationException("Неизвестная модель");
+            }
+        }
+
+        public async Task DeleteElementAsync<TMainPageData>(int id) where TMainPageData : BaseData
+        {
+            if (typeof(TMainPageData) == typeof(MainPageActionData))
+            {
+                var actionEntity = await _actionRepository.GetEntity(id);
+                if (actionEntity != null) await _actionRepository.RemoveEntityAsync(actionEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageButtonData))
+            {
+                var buttonEntity = await _buttonRepository.GetEntity(id);
+                if (buttonEntity != null) await _buttonRepository.RemoveEntityAsync(buttonEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageImageData))
+            {
+                var imageEntity = await _imageRepository.GetEntity(id);
+                if (imageEntity != null) await _imageRepository.RemoveEntityAsync(imageEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPagePhraseData))
+            {
+                var phraseEntity = await _phraseRepository.GetEntity(id);
+                if (phraseEntity != null) await _phraseRepository.RemoveEntityAsync(phraseEntity);
+            }
+            else if (typeof(TMainPageData) == typeof(MainPageTextData))
+            {
+                var textEntity = await _textRepository.GetEntity(id);
+                if (textEntity != null) await _textRepository.RemoveEntityAsync(textEntity);
+            }
+            else
+            {
+                throw new ApplicationException("Неизвестная модель");
+            }
         }
 
         public async Task<MainPageTextData> GetDefaultMainPageTextData()

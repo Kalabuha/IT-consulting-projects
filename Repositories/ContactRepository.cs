@@ -17,5 +17,14 @@ namespace Repositories
 
             return contacts;
         }
+
+        public async Task<ContactEntity[]> GetAllPublishedContactEntitiesAsync()
+        {
+            var contacts = await Context.Contacts
+                .Where(c => c.IsPublishedOnMainPage)
+                .ToArrayAsync();
+
+            return contacts;
+        }
     }
 }

@@ -2,7 +2,7 @@
 using Resources.Models;
 using Services.Converters;
 using Services.Interfaces;
-using WebAppForAdmins.Models;
+using WebAppForAdmins.Models.Services;
 
 namespace WebAppForAdmins.Controllers
 {

@@ -1,1 +1,28 @@
-﻿
+﻿@model ContactModel
+
+@{
+    ViewData["Title"] = "Удалить контакт";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Удалить контакт</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Вы уверены, что хотите удалить этот контакт? При удалении данные этого контакта будут потеряны.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Contacts" asp-action="DeletePost" method="post">
+
+        <partial name="_ContactForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button">
+                <span class="large-text font-family-2 black-text">&#10006; Подтвердить удаление</span>
+            </button>
+        </div>
+    </form>
+</div>

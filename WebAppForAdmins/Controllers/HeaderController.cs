@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
-using WebAppForAdmins.Models;
+using WebAppForAdmins.Models.Header;
 using Services.Converters;
 using Resources.Models;
 

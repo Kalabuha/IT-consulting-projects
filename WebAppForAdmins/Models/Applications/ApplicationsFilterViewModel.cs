@@ -1,6 +1,6 @@
 ﻿using Resources.Enums;
 
-namespace WebAppForAdmins.Models
+namespace WebAppForAdmins.Models.Applications
 {
     public class ApplicationsFilterViewModel
     {

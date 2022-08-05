@@ -9,14 +9,21 @@
         <h1 class="font-family-1 h1-standart-page gold-text">Создать контакт</h1>
     </div>
 
-    <div class="content-block-standart-indent">
+    <div class="content-block-small-indent">
         <p class="middle-text font-family-2 gold-text paragraph">
-
+            Адрес, почтовый индекс и номер телефона являются обязательными. Почтовый индекс должен содержать 6 цифр.
+            Изображение карты также является обязательным. Карту рекомендуется устанавливать в формате 4X3.
         </p>
     </div>
 
-    <div class="content-block-small-indent preset-content-block">
-        <div class="">
+    <form asp-area="" asp-controller="Contacts" asp-action="CreatePost" enctype="multipart/form-data" method="post">
+
+        <partial name="_ContactForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Создать контакт</span>
+            </button>
         </div>
-    </div>
+    </form>
 </div>

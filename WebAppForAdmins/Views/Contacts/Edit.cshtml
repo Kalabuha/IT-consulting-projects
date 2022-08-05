@@ -1,1 +1,35 @@
-﻿
+﻿@model ContactModel
+
+@{
+    ViewData["Title"] = "Изменить контакт";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Изменить контакт</h1>
+    </div>
+
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Адрес, почтовый индекс и номер телефона являются обязательными. Почтовый индекс должен содержать 6 цифр.
+            Изображение карты также является обязательным. Карту рекомендуется устанавливать в формате 4X3.
+        </p>
+    </div>
+
+    <form asp-area="" asp-controller="Contacts" asp-action="EditPost" enctype="multipart/form-data" method="post">
+
+        <partial name="_ContactForm" model="@Model" />
+
+        <div class="content-block-standart-indent project-content-submit-block">
+            <button class="button high-button" type="submit">
+                <span class="large-text font-family-2 black-text">Сохранить изменения</span>
+            </button>
+            <button class="button high-button" type="reset">
+                <span class="large-text font-family-2 black-text">Сбросить изменения</span>
+            </button>
+            <button class="button high-button">
+                <span class="large-text font-family-2 black-text">&#10006; Удалить контакт</span>
+            </button>
+        </div>
+    </form>
+</div>

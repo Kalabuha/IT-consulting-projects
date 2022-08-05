@@ -300,7 +300,7 @@
 }
 
 .button-basis-1 {
-    flex: 0 1 180px;
+    flex: 0 0 130px;
 }
 
 .buttons-panel-block {
@@ -416,7 +416,7 @@
     box-sizing: border-box;
     padding-left: 8px;
     padding-right: 8px;
-    margin-bottom: 8px;
+    margin: 0;
 }
 
 .text-area-max-width-resize-vertical {
@@ -566,6 +566,7 @@
 
 .table-body-cell-block {
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -576,6 +577,10 @@
 
 .select-block-height {
     height: 220px;
+}
+
+.select-block-max-height-1 {
+    max-height: 200px;
 }
 
 .select-block-max-height-2 {
@@ -747,6 +752,11 @@
     height: 70px;
     background-color: #4e00a0;
     border-radius: 15px;
+}
+
+.main-page-text-area {
+    min-height: 50px;
+    max-height: 300px;
 }
 
 .final-block {
@@ -1066,15 +1076,88 @@
     flex: 1 0 auto;
 }
 
+.contact-map-img-index {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .create-contact-block {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.project-logo-img {
-    max-width: 100%;
-    max-height: 100%;
+.contact-map-img {
+    width: 480px;
+    max-height: 360px;
+}
+
+.contact-map-empty-img {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 360px;
+    width: 480px;
+    border: 4px dashed black;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-content-block-data {
+    flex: 1 0 auto;
+}
+
+.contact-content-block-map {
+    flex: 0 1 auto;
+}
+
+.contact-block-data {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.contact-block-data-promts {
+    width: 80px;
+    flex: 0 1 auto;
+}
+
+.contact-block-data-inputs {
+    flex: 1 0 auto;
+}
+
+.cell-text-data-rigth {
+    display: flex;
+    justify-content: right;
+}
+
+.cell-data-filled-height {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.cell-data-empty-height {
+    height: 40px;
+}
+
+.contact-block-add-map {
+    height: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.contact-block-map-empty-height {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 30px;
 }
 
 /* COLLAPSABLE */

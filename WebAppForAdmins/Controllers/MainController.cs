@@ -5,6 +5,7 @@ using Services.Interfaces;
 using Resources.Models;
 using Resources.Datas;
 using Services.Converters;
+using WebAppForAdmins.Models.Main;
 
 namespace WebAppForAdmins.Controllers
 {
@@ -19,6 +20,7 @@ namespace WebAppForAdmins.Controllers
             _mainPageService = mainPageService;
         }
 
+        #region Контроллеры пресетов
         [HttpGet]
         public async Task<IActionResult> Index(int? id)
         {
@@ -58,7 +60,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (id > 0)
             {
-                await _mainPageService.PublishPreset(id);
+                await _mainPageService.PublishPresetAsync(id);
             }
 
             return RedirectToAction(nameof(Index));
@@ -75,7 +77,7 @@ namespace WebAppForAdmins.Controllers
                     return NotFound();
                 }
 
-                await _mainPageService.DeletePreset(data);
+                await _mainPageService.DeletePresetAsync(data);
             }
 
             return RedirectToAction(nameof(Index));
@@ -90,19 +92,89 @@ namespace WebAppForAdmins.Controllers
             }
 
             var data = model.MainPagePresetModelToData();
-            var id = await _mainPageService.CreatePreset(data);
+            var id = await _mainPageService.CreatePresetAsync(data);
 
             return RedirectToAction(nameof(Index), new { id });
         }
+        #endregion
 
+        #region Текстовый блок (TextBlock)
         [HttpGet]
-        public async Task<IActionResult> ActionBlock(int id)
+        public async Task<IActionResult> TextBlock(int id)
         {
-            var viewModel = await GetActionSelectViewModelAsync(id);
-
+            var viewModel = await GetTextBlockViewModelAsync(id);
             return PartialView(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SelectTextForCurrentPreset(TextForCurrentPresetModel model)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
+            if (presetData != null)
+            {
+                var textData = await _mainPageService.GetElementDataByIdAsync<MainPageTextData>(model.SelectedTextId);
+                if (textData != null)
+                {
+                    presetData.TextId = textData.Id;
+                    await _mainPageService.UpdatePresetAsync(presetData);
+                }
+            }
+
+            var viewModel = await GetTextBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(TextBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveTextForCurrentPreset(int presetId)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
+
+            if (presetData != null)
+            {
+                presetData.TextId = null;
+                await _mainPageService.UpdatePresetAsync(presetData);
+            }
+
+            var viewModel = await GetTextBlockViewModelAsync(presetId);
+
+            return PartialView(nameof(TextBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateText(CreateTextModel model)
+        {
+            if (!(string.IsNullOrEmpty(model.TextContent) || string.IsNullOrWhiteSpace(model.TextContent)))
+            {
+                model.TextContent = model.TextContent.Trim();
+                if (model.TextContent.Length <= 4000)
+                {
+                    var textData = new MainPageTextData()
+                    {
+                        Text = model.TextContent!
+                    };
+
+                    await _mainPageService.CreateElementAsync(textData);
+                }
+            }
+
+            var viewModel = await GetTextBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(TextBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteText(TextForCurrentPresetModel model)
+        {
+            if (model.SelectedTextId > 0)
+            {
+                await _mainPageService.DeleteElementAsync<MainPageTextData>(model.SelectedTextId);
+            }
+
+            var viewModel = await GetTextBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(TextBlock), viewModel);
+        }
+        #endregion
+
+        #region Блок изображения (ImageBlock)
         [HttpGet]
         public async Task<IActionResult> ImageBlock(int id)
         {
@@ -110,6 +182,7 @@ namespace WebAppForAdmins.Controllers
 
             return PartialView(viewModel);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> SelectButtonForCurrentPreset(MainPageButtonModel model, int id)
@@ -122,73 +195,124 @@ namespace WebAppForAdmins.Controllers
             if (preset != null && buttonData != null)
             {
                 preset.ButtonId = buttonData.Id;
-                await _mainPageService.UpdatePreset(preset);
+                await _mainPageService.UpdatePresetAsync(preset);
             }
 
             return PartialView(buttonData);
         }
+        #endregion
 
+        #region Блок с призывом к действию (ActionBlock)
         [HttpGet]
-        public async Task<IActionResult> TextBlock(int id)
+        public async Task<IActionResult> ActionBlock(int id)
         {
-            var viewModel = await GetTextSelectViewModelAsync(id);
+            var viewModel = await GetActionBlockViewModelAsync(id);
 
             return PartialView(viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> SelectTextForCurrentPreset(int id, int presetId)
+        [HttpPost]
+        public async Task<IActionResult> SelectActionForCurrentPreset(ActionForCurrentPresetModel model)
         {
-            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
-            var textData = await _mainPageService.GetElementDataByIdAsync<MainPageTextData>(id);
-
-            if (presetData != null && textData != null)
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
+            if (presetData != null)
             {
-                presetData.TextId = textData.Id;
-                await _mainPageService.UpdatePreset(presetData);
+                var actionData = await _mainPageService.GetElementDataByIdAsync<MainPageActionData>(model.SelectedActionId);
+                if (actionData != null)
+                {
+                    presetData.ActionId = actionData.Id;
+                    await _mainPageService.UpdatePresetAsync(presetData);
+                }
             }
 
-            var viewModel = await GetTextSelectViewModelAsync(presetId);
-
-            return PartialView(viewModel);
+            var viewModel = await GetActionBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ActionBlock), viewModel);
         }
 
-
-
-
-
-
-
-
-        private async Task<TextSelectViewModel> GetTextSelectViewModelAsync(int presetId)
+        [HttpPost]
+        public async Task<IActionResult> RemoveActionForCurrentPreset(int presetId)
         {
-            var textSelectViewModel = new TextSelectViewModel();
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
+            if (presetData != null)
+            {
+                presetData.ActionId = null;
+                await _mainPageService.UpdatePresetAsync(presetData);
+            }
+
+            var viewModel = await GetActionBlockViewModelAsync(presetId);
+            return PartialView(nameof(ActionBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAction(CreateActionModel model)
+        {
+            if (!(string.IsNullOrEmpty(model.ActionContent) || string.IsNullOrWhiteSpace(model.ActionContent)))
+            {
+                model.ActionContent = model.ActionContent.Trim();
+                if (model.ActionContent.Length <= 60)
+                {
+                    var actionData = new MainPageActionData()
+                    {
+                        Action = model.ActionContent!
+                    };
+
+                    await _mainPageService.CreateElementAsync(actionData);
+                }
+            }
+
+            var viewModel = await GetActionBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ActionBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAction(ActionForCurrentPresetModel model)
+        {
+            if (model.SelectedActionId > 0)
+            {
+                await _mainPageService.DeleteElementAsync<MainPageActionData>(model.SelectedActionId);
+            }
+
+            var viewModel = await GetActionBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ActionBlock), viewModel);
+        }
+        #endregion
+
+        #region Получение моделей для блоков текста, изображения и призвыа к действию
+        private async Task<TextBlockViewModel> GetTextBlockViewModelAsync(int presetId)
+        {
+            var textSelectViewModel = new TextBlockViewModel();
 
             if (presetId > 0)
             {
                 var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
-                if (presetData != null && presetData.TextId.HasValue)
+                if (presetData != null)
                 {
+                    var textDatas = await _mainPageService.GetAllElementDatasAsync<MainPageTextData>();
+                    if (presetData.TextId.HasValue)
+                    {
+                        textSelectViewModel.SelectedTextId = presetData.TextId.Value;
+                    }
+                    else
+                    {
+                        textSelectViewModel.SelectedTextId = 0;
+                        textDatas.Add(await _mainPageService.GetDefaultMainPageTextData());
+                    }
+
+                    var textModels = textDatas.Select(t => t.TextDataToModel())
+                        .ToList();
                     textSelectViewModel.CurrentPresetId = presetId;
-                    textSelectViewModel.SelectedTextId = presetData.TextId.Value;
+                    textSelectViewModel.Texts = textModels;
+
+                    return textSelectViewModel;
                 }
-
-                var textDatas = await _mainPageService.GetAllElementDatasAsync<MainPageTextData>();
-                var textModels = textDatas.Select(t => t.TextDataToModel())
-                    .ToList();
-
-                textSelectViewModel.Texts = textModels;
             }
-            else
-            {
-                var defaultMainPageTextData = await _mainPageService.GetDefaultMainPageTextData();
-                var defaultMainPageTextModel = defaultMainPageTextData.TextDataToModel();
 
-                textSelectViewModel.SelectedTextId = 0;
-                textSelectViewModel.CurrentPresetId = 0;
+            var defaultMainPageTextData = await _mainPageService.GetDefaultMainPageTextData();
+            var defaultMainPageTextModel = defaultMainPageTextData.TextDataToModel();
 
-                textSelectViewModel.Texts = new List<MainPageTextModel> { defaultMainPageTextModel };
-            }
+            textSelectViewModel.SelectedTextId = 0;
+            textSelectViewModel.CurrentPresetId = 0;
+            textSelectViewModel.Texts = new List<MainPageTextModel> { defaultMainPageTextModel };
 
             return textSelectViewModel;
         }
@@ -238,39 +362,45 @@ namespace WebAppForAdmins.Controllers
             return viewModel;
         }
 
-        private async Task<ActionSelectViewModel> GetActionSelectViewModelAsync(int presetId)
+        private async Task<ActionBlockViewModel> GetActionBlockViewModelAsync(int presetId)
         {
-            var actionSelectViewModel = new ActionSelectViewModel();
+            var actionSelectViewModel = new ActionBlockViewModel();
 
             if (presetId > 0)
             {
                 var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
-                if (presetData != null && presetData.ActionId.HasValue)
+                if (presetData != null)
                 {
+                    var actionDatas = await _mainPageService.GetAllElementDatasAsync<MainPageActionData>();
+                    if (presetData.ActionId.HasValue)
+                    {
+                        actionSelectViewModel.SelectedActionId = presetData.ActionId.Value;
+                    }
+                    else
+                    {
+                        actionSelectViewModel.SelectedActionId = 0;
+                        actionDatas.Add(await _mainPageService.GetDefaultMainPageActionData());
+                    }
+
+                    var actionModels = actionDatas.Select(a => a.ActionDataToModel())
+                        .ToList();
                     actionSelectViewModel.CurrentPresetId = presetId;
-                    actionSelectViewModel.SelectedActionId = presetData.ActionId.Value;
+                    actionSelectViewModel.Actions = actionModels;
+
+                    return actionSelectViewModel;
                 }
-
-                var actionDatas = await _mainPageService.GetAllElementDatasAsync<MainPageActionData>();
-                var actionModels = actionDatas.Select(a => a.ActionDataToModel())
-                    .ToList();
-
-                actionSelectViewModel.Actions = actionModels;
             }
-            else
-            {
-                var defaultMainPageActionData = await _mainPageService.GetDefaultMainPageActionData();
-                var defaultMainPageActionModel = defaultMainPageActionData.ActionDataToModel();
 
-                actionSelectViewModel.SelectedActionId = 0;
-                actionSelectViewModel.CurrentPresetId = 0;
+            var defaultMainPageActionData = await _mainPageService.GetDefaultMainPageActionData();
+            var defaultMainPageActionModel = defaultMainPageActionData.ActionDataToModel();
 
-                actionSelectViewModel.Actions = new List<MainPageActionModel> { defaultMainPageActionModel };
-            }
+            actionSelectViewModel.SelectedActionId = 0;
+            actionSelectViewModel.CurrentPresetId = 0;
+            actionSelectViewModel.Actions = new List<MainPageActionModel> { defaultMainPageActionModel };
 
             return actionSelectViewModel;
         }
-
+        #endregion
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

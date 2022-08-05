@@ -1,4 +1,4 @@
-﻿namespace WebAppForAdmins.Models
+﻿namespace WebAppForAdmins.Models.Main
 {
     public class ImageBlockViewModel
     {

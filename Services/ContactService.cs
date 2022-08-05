@@ -1,5 +1,4 @@
 ﻿using Repositories.Interfaces;
-using Resources.Models;
 using Resources.Datas;
 using Services.Converters;
 using Services.Interfaces;
@@ -39,11 +38,32 @@ namespace Services
             return contact?.ContactEntityToData();
         }
 
-        public async Task AddContactToDbAsync(ContactData data)
+        public async Task PublishContact(int id)
+        {
+            var entity = await _contactRepository.GetEntity(id);
+            if (entity == null)
+            {
+                return;
+            }
+
+            var publishEntities = await _contactRepository.GetAllPublishedContactEntitiesAsync();
+            foreach (var publishEntity in publishEntities)
+            {
+                publishEntity.IsPublishedOnMainPage = false;
+                await _contactRepository.UpdateEntityAsync(publishEntity);
+            }
+
+            entity.IsPublishedOnMainPage = true;
+            await _contactRepository.UpdateEntityAsync(entity);
+        }
+
+        public async Task<int> AddContactToDbAsync(ContactData data)
         {
             var entity = data.ContactDataToEntity();
 
             await _contactRepository.AddEntityAsync(entity);
+
+            return entity.Id;
         }
 
         public async Task EditContactToDbAsync(ContactData data)

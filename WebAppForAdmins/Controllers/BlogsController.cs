@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAppForAdmins.Models;
+using WebAppForAdmins.Models.Blogs;
 using Services.Interfaces;
 using Resources.Models;
 using Services.Converters;

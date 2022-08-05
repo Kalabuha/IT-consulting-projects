@@ -1,6 +1,6 @@
 ﻿using Resources.Models;
 
-namespace WebAppForAdmins.Models
+namespace WebAppForAdmins.Models.Contacts
 {
     public class ContactsViewModel
     {

@@ -184,30 +184,150 @@
 @section Scripts
 {
 <script>
+    function LoadXReloadable($div) {
+        // загрузить кусок в div
+        var url = $div.data("load-action");
+        $div.load(url);
+    }
+
     $(function() {
         $(".x-reloadable").each(function() {
-            var self = $(this);
-
-            // перехват отправки форм из компонента
-            self.on("submit", function(e) {
-                // запретить браузеру самому отправлять форму
-                e.preventDefault();
-
-                // мы тут сами разберёмся с отправкой
-                $(this).ajaxSubmit({
-                    success: function(responseHtml) {
-                        self.html(responseHtml);
-                    }
-                });
-
-                // запретить браузеру самому отправлять форму (альтернативно)
-                return false;
-            });
-
-            // загрузить кусок в div
-            var url = self.data("load-action");
-            self.load(url);
+            LoadXReloadable($(this));
         });
+
+        $(".x-reloadable").on("submit", ".x-reloadable-form", function(e) {
+            // запретить браузеру самому отправлять форму
+            e.preventDefault();
+
+            var $form = $(this);
+            var $xReloadable = $form.closest(".x-reloadable");
+
+            // мы тут сами разберёмся с отправкой
+            $form.ajaxSubmit({
+                success: function(responseHtml) {
+                    $xReloadable.html(responseHtml);
+                }
+            });
+        });
+
+        $(".x-reloadable").on("click", ".x-app-text-block .x-url-button", function() {
+            let $btn = $(this);
+            let $myBlock = $btn.closest(".x-app-text-block");
+            let $selectedText = $myBlock.find("input[name=SelectedTextId]:checked");
+
+            let currentPresetId = $myBlock.data("current-preset-id");
+            let actionUrl = $btn.data("action-url");
+
+            let action = $btn.data("action");
+
+            if(action == "select") {
+                let selectedTextId = $selectedText.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedTextId: selectedTextId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if(action == "remove") {
+                let selectedTextId = $selectedText.val();
+                $.post(
+                    actionUrl,
+                    {
+                        presetId: currentPresetId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "delete") {
+                let selectedTextId = $selectedText.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedTextId: selectedTextId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "create") {
+                let $textAreaCreateText = $(".x-text-area-created-text");
+                let textAreaCreateTextContent = $textAreaCreateText.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        TextContent: textAreaCreateTextContent
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else {
+                alert ("Запрос не обработан!");
+            }
+        });
+
+        $(".x-reloadable").on("click", ".x-app-action-block .x-url-button", function() {
+            let $btn = $(this);
+            let $myBlock = $btn.closest(".x-app-action-block");
+            let $selectedAction = $myBlock.find("input[name=SelectedActionId]:checked");
+
+            let currentPresetId = $myBlock.data("current-preset-id");
+            let actionUrl = $btn.data("action-url");
+
+            let action = $btn.data("action");
+
+            if(action == "select") {
+                let selectedActionId = $selectedAction.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedActionId: selectedActionId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if(action == "remove") {
+                let selectedActionId = $selectedAction.val();
+                $.post(
+                    actionUrl,
+                    {
+                        presetId: currentPresetId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "delete") {
+                let selectedActionId = $selectedAction.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedActionId: selectedActionId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "create") {
+                let $inputCreateAction = $(".x-input-created-action");
+                let inputCreateActionContent = $inputCreateAction.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        ActionContent: inputCreateActionContent
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else {
+                alert ("Запрос не обработан!");
+            }
+        });
+
     });
 </script>
 }

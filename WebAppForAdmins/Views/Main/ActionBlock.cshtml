@@ -1,7 +1,18 @@
-﻿@model ActionSelectViewModel
+﻿@model ActionBlockViewModel
 
 @{
+    //Здесь всегда должна быть модель. Если её нет, это аварийный случай.
     MainPageActionModel? selectedActionModel = Model.Actions.FirstOrDefault(a => a.Id == Model.SelectedActionId);
+}
+
+@if (Model.SelectedActionId == 0)
+{
+    <div class="content-block-small-indent">
+        <p class="middle-text font-family-2 gold-text paragraph">
+            Внимание! В данный момент призыв к действию не установлен, используются данные по умолчанию. Эти же данные будут отображаться
+            на странице гостевого сайта. Менять или удалять их недопустимо. Чтобы установить другую строку произведите выбор из списка.
+        </p>
+    </div>
 }
 
 <div class="content-block-small-indent preset-content-block">
@@ -9,6 +20,12 @@
         <div class="input-block-header">
             @if (selectedActionModel != null)
             {
+                @*id = 0 Только у объекта по умолчанию. Он не должен отображаться в списке ниже*@
+                if (selectedActionModel.Id == 0)
+                {
+                    Model.Actions.Remove(selectedActionModel);
+                }
+
                 <span class="biggest-text font-family-2 black-text">@selectedActionModel.Action</span>
             }
             else
@@ -49,64 +66,72 @@
             <button class="button high-button button-max-width x-expand" type="button">
                 <span class="large-text font-family-2 black-text">Изменить блок ввода</span>
             </button>
-            <div class="select select-block x-expandable-block">
+            <div class="select select-block x-expandable-block x-app-action-block" data-current-preset-id="@Model.CurrentPresetId">
                 <div class="select-block-inner">
                     <p class="text font-family-2 black-text paragraph">
                         Призыв к действию можно выбрать из списка или создать новый. Выбранный для текущего пресета призыв выделен зелёным цветом.
-                        Если призыв используется одним из пресетов, то его удаление будет прервано. Чтобы удалить призыв необходимо
-                        убрать его из всех пресетов. Если призыв к действию не будет установлен, то на главной странице будет отображаться призыв по умолчанию.
+                        Если призыв не установлен, на главной странице будет отображаться строка по умолчанию. Чтобы удалить текст
+                        необходимо выбрать его в списке и нажать "Удалить". Внимание, при удалении записи у всех пресетов, которые использут
+                        удаляемый текст, он сбросится.
                     </p>
                 </div>
 
-                <form asp-area="" asp-controller="Main" asp-action="SelectTextForCurrentPreset" method="post">
-                    <div class="select-block-inner">
-                        <div class="select-list-block select-block-max-height-2 scroll-y-block">
-                            <ul class="select-list">
-                                @foreach (MainPageActionModel action in Model.Actions)
-                                {
-                                    var labelForActionId = $"action-{action.Id}";
+                <div class="select-block-inner">
+                    <div class="select-list-block select-block-max-height-1 scroll-y-block">
+                        <ul class="select-list">
+                            @foreach (MainPageActionModel action in Model.Actions)
+                            {
+                                var isSelected = action.Id == Model.SelectedActionId;
+                                var labelClassName = isSelected ? "green-text" : "black-text";
+                                var labelForActionId = $"action-{action.Id}";
 
-                                    <li class="select-list-item">
-                                        <div class="select-list-item-block">
-                                            @if (action.Id == Model.SelectedActionId)
-                                            {
-                                                <input class="select-point" type="radio" name="id" id="@labelForActionId" value="@action.Id" checked />
-                                                <label class="text font-family-2 green-text bolder select-label" for="@labelForActionId">@action.Action</label>
-                                            }
-                                            else
-                                            {
-                                                <input class="select-point" type="radio" name="id" id="@labelForActionId" value="@action.Id" />
-                                                <label class="text font-family-2 black-text select-label" for="@labelForActionId">@action.Action</label>
-                                            }
-                                        </div>
-                                    </li>
-                                }
                                 <li class="select-list-item">
                                     <div class="select-list-item-block">
-                                        <input class="select-point" type="radio" name="id" id="action-remove" value="-1" />
-                                        <label class="text font-family-2 blue-text bolder select-label" for="action-remove">Убрать призыв к действию</label>
+                                        <input type="radio" name="SelectedActionId"
+                                           class="select-point" id="@labelForActionId" value="@action.Id" checked="@isSelected" />
+                                        <label class="text font-family-2 select-label @labelClassName" for="@labelForActionId">@action.Action</label>
                                     </div>
                                 </li>
-                            </ul>
-                        </div>
+                            }
+                        </ul>
                     </div>
-
-                    <div class="select-block-inner">
-                        <div class="buttons-panel-left">
-                            <button class="button low-button button-basis-1" type="submit" name="presetId" value="@Model.CurrentPresetId">
-                                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+                </div>
 
                 <div class="select-block-inner">
                     <div class="buttons-panel-left">
-                        <button class="button low-button button-basis-1" type="submit" name="id" value="delete-phrase">
+                        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
+                                data-action-url="@Url.Action("SelectActionForCurrentPreset", "Main")">
+                            <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+                        </button>
+
+                        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
+                                data-action-url="@Url.Action("DeleteAction", "Main")">
                             <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
                         </button>
-                        <button class="button low-button button-basis-1" type="submit" name="action" value="create-phrase">
-                            <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
+
+                        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
+                                data-action-url="@Url.Action("RemoveActionForCurrentPreset", "Main")">
+                            <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="select-block-inner">
+                    <p class="text font-family-2 black-text paragraph">
+                        Чтобы создать новый призыв к действию введите его в поле ниже и нажмите "Создать". Пустая строка не допускается,
+                        длина не должна превышать 60 символов.
+                    </p>
+                </div>
+
+                <div class="select-block-inner">
+                    <input type="text" class="text font-family-2 black-text input-text-field x-input-created-action" />
+                </div>
+
+                <div class="select-block-inner">
+                    <div class="buttons-panel-left">
+                        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="create"
+                                data-action-url="@Url.Action("CreateAction", "Main")">
+                            <span class="middle-text font-family-2 black-text">&#10010; Создать</span>
                         </button>
                     </div>
                 </div>

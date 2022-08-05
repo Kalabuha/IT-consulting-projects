@@ -1,11 +1,12 @@
 ﻿using Resources.Models;
 
-namespace WebAppForAdmins.Models
+namespace WebAppForAdmins.Models.Main
 {
-    public class TextSelectViewModel
+    public class TextBlockViewModel
     {
         public int CurrentPresetId { get; set; }
         public int SelectedTextId { get; set; }
         public IList<MainPageTextModel> Texts { get; set; } = default!;
+        public MainPageTextModel? CreatedText { get; set; }
     }
 }

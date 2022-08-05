@@ -1,8 +1,8 @@
 ﻿using Resources.Models;
 
-namespace WebAppForAdmins.Models
+namespace WebAppForAdmins.Models.Main
 {
-    public class ActionSelectViewModel
+    public class ActionBlockViewModel
     {
         public int CurrentPresetId { get; set; }
         public int SelectedActionId { get; set; }

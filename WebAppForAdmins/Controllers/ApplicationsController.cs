@@ -2,7 +2,7 @@
 using Resources.Models;
 using Resources.Enums;
 using Resources.Extensions;
-using WebAppForAdmins.Models;
+using WebAppForAdmins.Models.Applications;
 using Services.Interfaces;
 
 namespace WebAppForAdmins.Controllers

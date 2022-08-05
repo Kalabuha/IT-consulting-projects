@@ -1,1 +1,93 @@
-﻿
+﻿@model ContactModel
+
+@{
+    var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
+}
+
+<input asp-for="Id" type="hidden" />
+
+<div class="content-block-standart-indent preset-content-block">
+    <div class="contact-content">
+        <div class="contact-content-block-data">
+            <div class="contact-block-data">
+                <div class="contact-block-data-promts">
+                    <div class="cell-data-filled-height cell-text-data-rigth">
+                        <span class="middle-text font-family-2 black-text">Адрес:</span>
+                    </div>
+                    <div class="cell-data-empty-height"></div>
+                    <div class="cell-data-filled-height cell-text-data-rigth">
+                        <span class="middle-text font-family-2 black-text">Индекс:</span>
+                    </div>
+                    <div class="cell-data-empty-height"></div>
+                    <div class="cell-data-filled-height cell-text-data-rigth">
+                        <span class="middle-text font-family-2 black-text">Телефон:</span>
+                    </div>
+                    <div class="cell-data-empty-height"></div>
+                    <div class="cell-data-filled-height cell-text-data-rigth">
+                        <span class="middle-text font-family-2 black-text">Факс:</span>
+                    </div>
+                    <div class="cell-data-empty-height"></div>
+                </div>
+
+                <div class="contact-block-data-inputs">
+                    <div class="cell-data-filled-height">
+                        <input class="input-text-field text font-family-2 black-text" asp-for="Address" type="text"
+                               disabled="@disabled" placeholder="Вводи адрес сюда" />
+                    </div>
+                    <div class="cell-data-empty-height">
+                        <span asp-validation-for="Address" class="text font-family-2 red-text"></span>
+                    </div>
+                    <div class="cell-data-filled-height">
+                        <input class="input-text-field text font-family-2 black-text" asp-for="Postcode" type="text"
+                               disabled="@disabled" placeholder="Вводи индекс сюда" />
+                    </div>
+                    <div class="cell-data-empty-height">
+                        <span asp-validation-for="Postcode" class="text font-family-2 red-text"></span>
+                    </div>
+                    <div class="cell-data-filled-height">
+                        <input class="input-text-field text font-family-2 black-text" asp-for="Phone" type="text"
+                               disabled="@disabled" placeholder="Вводи телефон сюда" />
+                    </div>
+                    <div class="cell-data-empty-height">
+                        <span asp-validation-for="Phone" class="text font-family-2 red-text"></span>
+                    </div>
+                    <div class="cell-data-filled-height">
+                        <input class="input-text-field text font-family-2 black-text" asp-for="Fax" type="text"
+                               disabled="@disabled" placeholder="Вводи факс сюда" />
+                    </div>
+                    <div class="cell-data-empty-height">
+                        <span asp-validation-for="Fax" class="text font-family-2 red-text"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-content-block-map">
+            <div class="contact-block-map">
+                @if (string.IsNullOrEmpty(Model.MapAsString))
+                {
+                    <div class="contact-map-empty-img">
+                        <span class="large-text font-family-2 black-text">Установите изображение карты</span>
+                    </div>
+                }
+                else
+                {
+                    <img class="contact-map-img" src="@Model.MapAsString" alt="map" />
+                }
+            </div>
+            <div class="contact-block-map-empty-height">
+                <span asp-validation-for="MapAsString" class="text font-family-2 red-text"></span>
+            </div>
+            <div class="contact-block-add-map">
+                <input asp-for="MapAsFormFile" class="input-image middle-text font-family-2 black-text" type="file" accept="image/jpeg,image/png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-block-published">
+        <input asp-for="IsPublished" id="IsContactPublished" class="select-point" disabled="@disabled" />
+        <label class="middle-text font-family-2 black-text" for="IsContactPublished">&#10084; Опубликовать контакт</label>
+    </div>
+</div>
+
+
