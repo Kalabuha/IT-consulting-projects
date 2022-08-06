@@ -7,7 +7,6 @@
 }
 
 <input asp-for="Id" type="hidden" />
-<input asp-for="BlogImageAsString" type="hidden" />
 <input asp-for="PublicationDate" type="hidden" />
 
 <div class="content-block-standart-indent preset-content-block">
@@ -44,17 +43,23 @@
             <span class="large-text font-family-2 black-text">Изображение блога</span>
         </div>
 
-        @if (!string.IsNullOrEmpty(Model.BlogImageAsString))
-        {
-            <div class="blog-block blog-card-details-img">
+        <div class="blog-block blog-card-details-img">
+            @if (!string.IsNullOrEmpty(Model.BlogImageAsString))
+            {
                 <img class="blog-available-img" src="@Model.BlogImageAsString" alt="blog image" />
-            </div>
-        }
+            }
+            else
+            {
+                <div class="blog-img-not-available">
+                    <span class="large-text font-family-2 black-text">Изображение не установлено</span>
+                </div>
+            }
+        </div>
 
         @if (!disabled)
         {
             <div class="blog-input-image-block">
-                <input asp-for="BlogImageAsFormFile" class="input-image" type="file" accept="image/jpeg,image/png" />
+                <input asp-for="BlogImageAsFormFile" class="middle-text font-family-2 black-text input-image" type="file" accept="image/jpeg,image/png" />
 
                 @if (removal)
                 {

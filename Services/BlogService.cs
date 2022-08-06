@@ -46,7 +46,6 @@ namespace Services
             data.PublicationDate = DateTime.Now;
 
             var entity = data.BlogDataToEntity();
-
             await _blogRepository.AddEntityAsync(entity);
         }
 
@@ -56,7 +55,6 @@ namespace Services
             if (entity == null) throw new ArgumentException($"Не найден блог {data.Id}.", nameof(data));
 
             data.BlogDataToEntity(entity);
-
             await _blogRepository.UpdateEntityAsync(entity);
         }
 

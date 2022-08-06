@@ -70,19 +70,30 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsImageRemovalAvailable = true;
 
+            var oldData = await _blogService.GetBlogByIdAsync(model.Id);
+            if (oldData == null)
+            {
+                return NotFound();
+            }
+
             if (!ModelState.IsValid)
             {
+                var oldModel = oldData.BlogDataToModel();
+                model.BlogImageAsString = oldModel.BlogImageAsString;
                 return View("Edit", model);
             }
 
+            var newData = model.BlogModelToData();
             if (model.IsRemoveImage)
             {
-                model.BlogImageAsString = null;
+                newData.BlogImageAsString = null;
+            }
+            else if (newData.BlogImageAsString == null)
+            {
+                newData.BlogImageAsString = string.Empty;
             }
 
-            var data = model.BlogModelToData();
-            await _blogService.EditBlogToDbAsync(data);
-
+            await _blogService.EditBlogToDbAsync(newData);
             return RedirectToAction(nameof(Index));
         }
 

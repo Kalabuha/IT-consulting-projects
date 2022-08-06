@@ -24,11 +24,22 @@ namespace Services.Converters
         {
             entity ??= new BlogEntity();
 
+            if (data.BlogImageAsString != string.Empty)
+            {
+                if (data.BlogImageAsString == null)
+                {
+                    entity.BlogImageAsArray64 = null;
+                }
+                else
+                {
+                    entity.BlogImageAsArray64 = Convert.FromBase64String(data.BlogImageAsString);
+                }
+            }
+
             entity.Id = data.Id;
             entity.Title = data.BlogTitle;
             entity.ShortBlogDescription = data.ShortBlogDescription;
             entity.LongBlogDescription = data.LongBlogDescription;
-            entity.BlogImageAsArray64 = string.IsNullOrEmpty(data.BlogImageAsString) ? null : Convert.FromBase64String(data.BlogImageAsString);
             entity.PublicationDate = data.PublicationDate;
             entity.IsPublished = data.IsPublished;
 
