@@ -1,62 +1,79 @@
-﻿@model ButtonSelectViewModel
+﻿@model ImageBlockViewModel
 
-<div class="select-block-inner">
-    <p class="text font-family-2 black-text paragraph">
-        Кнопку можно выбрать из списка или создать новую. Если кнопка используется одним из пресетов,
-        то её удаление будет прервано. Чтобы удалить кнопку, необходимо сначала убрать её из всех пресетов.
-    </p>
-</div>
+@if (Model.Buttons != null && Model.Buttons.Count > 0)
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            Содержание для кнопки можно выбрать из списка или создать новое. Если содержание для кнопки будет отсутствовать, она не будет
+            отображаться на странице гостевого сайта. При удалении содержания, оно сбросится у всех пресетов, которые его используют.
+        </p>
+    </div>
 
-<form id="SelectButtonForm" asp-area="" asp-controller="Main" asp-action="SelectButtonForCurrentPreset" asp-route-id="@Model.CurrentPresetId" method="post">
     <div class="select-block-inner">
         <div class="select-list-block scroll-y-block">
             <ul class="select-list">
                 @foreach (MainPageButtonModel button in Model.Buttons)
                 {
+                    var isSelected = button.Id == Model.SelectedButtonId;
+                    var labelClassName = isSelected ? "green-text" : "black-text";
                     var labelForButtonId = $"button-{button.Id}";
 
                     <li class="select-list-item">
                         <div class="select-list-item-block">
-                            @if (button.Id == Model.SelectedButtonId)
-                            {
-                                <input class="select-point" type="radio" name="model.Id" id="@labelForButtonId" value="@button.Id" checked />
-                                <label class="text font-family-2 green-text bolder select-label" for="@labelForButtonId">@button.Button</label>
-                            }
-                            else
-                            {
-                                <input class="select-point" type="radio" name="model.Id" id="@labelForButtonId" value="@button.Id" />
-                                <label class="text font-family-2 black-text select-label" for="@labelForButtonId">@button.Button</label>
-                            }
+                            <input type="radio" name="SelectedButtonId" class="select-point" id="@labelForButtonId" value="@button.Id" checked="@isSelected" />
+                            <label class="text font-family-2 select-label @labelClassName" for="@labelForButtonId">@button.Button</label>
                         </div>
                     </li>
                 }
-                <li class="select-list-item">
-                    <div class="select-list-item-block">
-                        <input class="select-point" type="radio" name="model.Id" id="button-remove" value="-1" />
-                        <label class="text font-family-2 blue-text bolder select-label" for="button-remove">Убрать кнопку</label>
-                    </div>
-                </li>
             </ul>
         </div>
     </div>
 
-    <div class="buttons-panel-left">
-        <div class="button-basis-1">
-            <button class="button low-button button-max-width" type="submit">
+    <div class="select-block-inner">
+        <div class="buttons-panel-left">
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
+                data-action-url="@Url.Action("SelectButtonForCurrentPreset", "Main")">
                 <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
             </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
+                data-action-url="@Url.Action("DeleteButton", "Main")">
+                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+            </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
+                data-action-url="@Url.Action("RemoveButtonForCurrentPreset", "Main")">
+                <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
+            </button>
         </div>
-
-        @*        <div class="button-basis-1">
-            <button class="button low-button button-max-width" type="submit">
-            <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
-            </button>
-            </div>
-
-            <div class="button-basis-1">
-            <button class="button low-button button-max-width" type="submit">
-            <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
-            </button>
-            </div>*@
     </div>
-</form>
+}
+else
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            В данный момент нет ни одного сохранённого содержания для кнопки, она не будет отображаться на странице гостевого сайта.
+            Чтобы установить какой-либо контент для кнопки вам необходимо первым делом создать его.
+        </p>
+    </div>
+}
+
+<div class="select-block-inner">
+    <p class="text font-family-2 black-text paragraph">
+        Чтобы создать новый контент для кнопки введите его в поле ниже и нажмите "Создать". Пустая строка не допускается,
+        длина не должна превышать 16 символов.
+    </p>
+</div>
+
+<div class="select-block-inner">
+    <input type="text" maxlength="16" class="text font-family-2 black-text input-text-field x-input-created-button" />
+</div>
+
+<div class="select-block-inner">
+    <div class="buttons-panel-left">
+        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="create"
+                data-action-url="@Url.Action("CreateButton", "Main")">
+            <span class="middle-text font-family-2 black-text">&#10010; Добавить</span>
+        </button>
+    </div>
+</div>

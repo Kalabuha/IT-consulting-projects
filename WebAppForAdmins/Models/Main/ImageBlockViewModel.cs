@@ -1,11 +1,31 @@
-﻿namespace WebAppForAdmins.Models.Main
+﻿using Resources.Models;
+
+namespace WebAppForAdmins.Models.Main
 {
     public class ImageBlockViewModel
     {
-        public ImageSelectViewModel ImageSelectViewModel { get; set; } = default!;
+        public int CurrentPresetId { get; set; }
+        public int SelectedImageId { get; set; }
+        public int SelectedPhraseId { get; set; }
+        public int SelectedButtonId { get; set; }
+        public IList<MainPageImageModel> Images { get; set; } = default!;
+        public IList<MainPagePhraseModel> Phrases { get; set; } = default!;
+        public IList<MainPageButtonModel> Buttons { get; set; } = default!;
 
-        public ButtonSelectViewModel ButtonSelectViewModel { get; set; } = default!;
+        public static ImageBlockViewModel CreateEmptyImageBlockViewModel()
+        {
+            var emptyImageBlockViewModel = new ImageBlockViewModel()
+            {
+                CurrentPresetId = 0,
+                SelectedImageId = 0,
+                SelectedPhraseId = 0,
+                SelectedButtonId = 0,
+                Images = new List<MainPageImageModel>(),
+                Phrases = new List<MainPagePhraseModel>(),
+                Buttons = new List<MainPageButtonModel>()
+            };
 
-        public PhraseSelectViewModel PhraseSelectViewModel { get; set; } = default!;
+            return emptyImageBlockViewModel;
+        }
     }
 }

@@ -165,17 +165,23 @@ namespace Services.Converters
             return new MainPageImageModel
             {
                 Id = data.Id,
-                Image = string.Format("data:image/jpg;base64,{0}", data.Image)
+                ImageAsString = string.Format("data:image/jpg;base64,{0}", data.Image)
             };
         }
 
         public static MainPageImageData ImageModelToData(this MainPageImageModel model)
         {
-            return new MainPageImageData
+            var data = new MainPageImageData
             {
-                Id = model.Id,
-                Image = model.Image,
+                Id = model.Id
             };
+
+            if (model.ImageAsFormFile != null)
+            {
+                data.Image = DataConverter.ReadBytesFromFormFile(model.ImageAsFormFile);
+            }
+
+            return data;
         }
 
         public static MainPagePhraseData PhraseEntityToData(this MainPagePhraseEntity entity)

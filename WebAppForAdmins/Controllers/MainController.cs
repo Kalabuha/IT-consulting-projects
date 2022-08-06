@@ -20,7 +20,7 @@ namespace WebAppForAdmins.Controllers
             _mainPageService = mainPageService;
         }
 
-        #region Контроллеры пресетов
+        #region Пресеты
         [HttpGet]
         public async Task<IActionResult> Index(int? id)
         {
@@ -182,23 +182,205 @@ namespace WebAppForAdmins.Controllers
 
             return PartialView(viewModel);
         }
+        #endregion
 
-
+        #region Блок изображения - изображение (ImageBlock - _ImageSelect)
         [HttpPost]
-        public async Task<IActionResult> SelectButtonForCurrentPreset(MainPageButtonModel model, int id)
+        public async Task<IActionResult> SelectImageForCurrentPreset(ImageForCurrentPresetModel model)
         {
-            ViewBag.PresetId = id;
-
-            var preset = await _mainPageService.GetPresetDataByIdAsync(id);
-            var buttonData = await _mainPageService.GetElementDataByIdAsync<MainPageButtonData>(model.Id);
-
-            if (preset != null && buttonData != null)
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
+            if (presetData != null)
             {
-                preset.ButtonId = buttonData.Id;
-                await _mainPageService.UpdatePresetAsync(preset);
+                var imageData = await _mainPageService.GetElementDataByIdAsync<MainPageImageData>(model.SelectedImageId);
+                if (imageData != null)
+                {
+                    presetData.ImageId = imageData.Id;
+                    await _mainPageService.UpdatePresetAsync(presetData);
+                }
             }
 
-            return PartialView(buttonData);
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImageForCurrentPreset(int presetId)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
+
+            if (presetData != null)
+            {
+                presetData.ImageId = null;
+                await _mainPageService.UpdatePresetAsync(presetData);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(presetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateImage(AddedImageModel model)
+        {
+            if (model != null && model.AddedImageAsFormFile != null)
+            {
+                var imageModel = new MainPageImageModel
+                {
+                    ImageAsFormFile = model.AddedImageAsFormFile,
+                };
+
+                var imageData = imageModel.ImageModelToData();
+
+                await _mainPageService.CreateElementAsync(imageData);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(ImageForCurrentPresetModel model)
+        {
+            if (model.SelectedImageId > 0)
+            {
+                await _mainPageService.DeleteElementAsync<MainPageImageData>(model.SelectedImageId);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+        #endregion
+
+        #region Блок изображения - кнопка (ImageBlock - _ButtonSelect)
+        [HttpPost]
+        public async Task<IActionResult> SelectButtonForCurrentPreset(ButtonForCurrentPresetModel model)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
+            if (presetData != null)
+            {
+                var buttonData = await _mainPageService.GetElementDataByIdAsync<MainPageButtonData>(model.SelectedButtonId);
+                if (buttonData != null)
+                {
+                    presetData.ButtonId = buttonData.Id;
+                    await _mainPageService.UpdatePresetAsync(presetData);
+                }
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveButtonForCurrentPreset(int presetId)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
+            if (presetData != null)
+            {
+                presetData.ButtonId = null;
+                await _mainPageService.UpdatePresetAsync(presetData);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(presetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateButton(CreateButtonModel model)
+        {
+            if (!(string.IsNullOrEmpty(model.ButtonContent) || string.IsNullOrWhiteSpace(model.ButtonContent)))
+            {
+                model.ButtonContent = model.ButtonContent.Trim();
+                if (model.ButtonContent.Length <= 16)
+                {
+                    var buttonData = new MainPageButtonData()
+                    {
+                        Button = model.ButtonContent!
+                    };
+
+                    await _mainPageService.CreateElementAsync(buttonData);
+                }
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteButton(ButtonForCurrentPresetModel model)
+        {
+            if (model.SelectedButtonId > 0)
+            {
+                await _mainPageService.DeleteElementAsync<MainPageButtonData>(model.SelectedButtonId);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+        #endregion
+
+        #region Блок изображения - фраза (ImageBlock - _PhraseSelect)
+        [HttpPost]
+        public async Task<IActionResult> SelectPhraseForCurrentPreset(PhraseForCurrentPresetModel model)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
+            if (presetData != null)
+            {
+                var phraseData = await _mainPageService.GetElementDataByIdAsync<MainPagePhraseData>(model.SelectedPhraseId);
+                if (phraseData != null)
+                {
+                    presetData.PhraseId = phraseData.Id;
+                    await _mainPageService.UpdatePresetAsync(presetData);
+                }
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemovePhraseForCurrentPreset(int presetId)
+        {
+            var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
+            if (presetData != null)
+            {
+                presetData.PhraseId = null;
+                await _mainPageService.UpdatePresetAsync(presetData);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(presetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreatePhrase(CreatePhraseModel model)
+        {
+            if (!(string.IsNullOrEmpty(model.PhraseContent) || string.IsNullOrWhiteSpace(model.PhraseContent)))
+            {
+                model.PhraseContent = model.PhraseContent.Trim();
+                if (model.PhraseContent.Length <= 44)
+                {
+                    var phraseData = new MainPagePhraseData()
+                    {
+                        Phrase = model.PhraseContent!
+                    };
+
+                    await _mainPageService.CreateElementAsync(phraseData);
+                }
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePhrase(PhraseForCurrentPresetModel model)
+        {
+            if (model.SelectedPhraseId > 0)
+            {
+                await _mainPageService.DeleteElementAsync<MainPagePhraseData>(model.SelectedPhraseId);
+            }
+
+            var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
+            return PartialView(nameof(ImageBlock), viewModel);
         }
         #endregion
 
@@ -319,45 +501,38 @@ namespace WebAppForAdmins.Controllers
 
         private async Task<ImageBlockViewModel> GetImageBlockViewModelAsync(int presetId)
         {
+            ImageBlockViewModel viewModel;
+
             var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
             if (presetData == null)
             {
-                return new ImageBlockViewModel();
+                viewModel = ImageBlockViewModel.CreateEmptyImageBlockViewModel();
             }
-
-            var allImageDatas = await _mainPageService.GetAllElementDatasAsync<MainPageImageData>();
-            var allImageModels = allImageDatas.Select(i => i.ImageDataToModel()).ToList();
-            var imageSelectViewModel = new ImageSelectViewModel
+            else
             {
-                CurrentPresetId = presetId,
-                SelectedImageId = presetData.ImageId.HasValue ? presetData.ImageId.Value : 0,
-                Images = allImageModels,
-            };
+                var allImageDatas = await _mainPageService.GetAllElementDatasAsync<MainPageImageData>();
+                var allImageModels = allImageDatas.Select(i => i.ImageDataToModel())
+                    .ToList();
 
-            var allButtonDatas = await _mainPageService.GetAllElementDatasAsync<MainPageButtonData>();
-            var allButtonModels = allButtonDatas.Select(b => b.ButtonDataToModel()).ToList();
-            var buttonSelectViewModel = new ButtonSelectViewModel
-            {
-                CurrentPresetId = presetId,
-                SelectedButtonId = presetData.ButtonId.HasValue ? presetData.ButtonId.Value : 0,
-                Buttons = allButtonModels,
-            };
+                var allButtonDatas = await _mainPageService.GetAllElementDatasAsync<MainPageButtonData>();
+                var allButtonModels = allButtonDatas.Select(b => b.ButtonDataToModel())
+                    .ToList();
 
-            var allPhraseDatas = await _mainPageService.GetAllElementDatasAsync<MainPagePhraseData>();
-            var allPhraseModels = allPhraseDatas.Select(p => p.PhraseDataToModel()).ToList();
-            var phraseSelectViewModel = new PhraseSelectViewModel
-            {
-                CurrentPresetId = presetId,
-                SelectedPhraseId = presetData.PhraseId.HasValue ? presetData.PhraseId.Value : 0,
-                Phrases = allPhraseModels,
-            };
+                var allPhraseDatas = await _mainPageService.GetAllElementDatasAsync<MainPagePhraseData>();
+                var allPhraseModels = allPhraseDatas.Select(p => p.PhraseDataToModel())
+                    .ToList();
 
-            var viewModel = new ImageBlockViewModel
-            {
-                ImageSelectViewModel = imageSelectViewModel,
-                ButtonSelectViewModel = buttonSelectViewModel,
-                PhraseSelectViewModel = phraseSelectViewModel,
-            };
+                viewModel = new ImageBlockViewModel
+                {
+                    CurrentPresetId = presetId,
+                    SelectedImageId = presetData.ImageId.HasValue ? presetData.ImageId.Value : 0,
+                    SelectedButtonId = presetData.ButtonId.HasValue ? presetData.ButtonId.Value : 0,
+                    SelectedPhraseId = presetData.PhraseId.HasValue ? presetData.PhraseId.Value : 0,
+                    Images = allImageModels,
+                    Phrases = allPhraseModels,
+                    Buttons = allButtonModels
+                };
+            }
 
             return viewModel;
         }

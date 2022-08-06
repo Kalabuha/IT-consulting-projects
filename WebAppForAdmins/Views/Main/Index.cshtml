@@ -29,22 +29,13 @@
                                     @foreach (MainPagePresetModel presetModel in Model.Presets)
                                     {
                                         var forLabelPresetId = $"preset-{presetModel.Id}";
+                                        var labelClassName = presetModel.IsPublished ? "green-text" : "black-text";
 
                                         <li class="select-list-item">
-                                            @if (presetModel.IsPublished)
-                                            {
-                                                <div class="select-list-item-block">
-                                                    <input class="select-point" type="radio" name="id" id="@forLabelPresetId" value="@presetModel.Id" checked />
-                                                    <label class="middle-text bolder font-family-2 green-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="select-list-item-block">
-                                                    <input class="select-point" type="radio" name="id" id="@forLabelPresetId" value="@presetModel.Id" />
-                                                    <label class="middle-text font-family-2 black-text select-label" for="@forLabelPresetId">@presetModel.PresetName</label>
-                                                </div>
-                                            }
+                                            <div class="select-list-item-block">
+                                                <input class="select-point" type="radio" name="id" id="@forLabelPresetId" value="@presetModel.Id" checked="@presetModel.IsPublished" />
+                                                <label class="middle-text bolder font-family-2 select-label @labelClassName" for="@forLabelPresetId">@presetModel.PresetName</label>
+                                            </div>
                                         </li>
                                     }
                                 </ul>
@@ -146,14 +137,23 @@
 
         <div class="content-block-standart-indent">
             <div class="is-published-or-not-block">
-                @if (selectedPreset.IsPublished)
-                {
-                    <span class="biggest-text font-family-2 green-text">Опубликован</span>
+                @{
+                    string publishedOrNotSpanClassName;
+                    string publishedOrNotSpanContent;
+
+                    if (selectedPreset.IsPublished)
+                    {
+                        publishedOrNotSpanClassName = "green-text";
+                        publishedOrNotSpanContent = "Опубликован";
+                    }
+                    else
+                    {
+                        publishedOrNotSpanClassName = "blue-text";
+                        publishedOrNotSpanContent = "Не опубликован";
+                    }
                 }
-                else
-                {
-                    <span class="biggest-text font-family-2 blue-text">Не опубликован</span>
-                }
+
+                <span class="biggest-text font-family-2 @publishedOrNotSpanClassName">@publishedOrNotSpanContent</span>
             </div>
         </div>
     }
@@ -165,19 +165,19 @@
 
         <div class="content-block-standart-indent">
             <p class="middle-text font-family-2 gold-text paragraph">
-                В&nbsp;данный момент пресет не&nbsp;выбран. Используются данные по&nbsp;умолчанию. Изменять данные по&nbsp;умолчанию запрещено.
+                В&nbsp;данный момент пресет не&nbsp;выбран. На главной странице будут отображаться данные по умолчанию. Изменять данные по&nbsp;умолчанию запрещено.
                 Необходимо выбрать один из&nbsp;неопубликованных или создать новый. Для создания нового пресета нажмите кнопку &laquo;Создать&raquo;.
             </p>
         </div>
     }
 
-    <div class="main-block x-reloadable"
+    <div class="main-block x-reloadable x-button-handler-text-block"
          data-load-action="@Url.Action("TextBlock", "Main", new { id = selectedPresetId })"></div>
 
-    <div class="main-block x-reloadable"
+    <div class="main-block x-reloadable x-button-handler-image-block"
          data-load-action="@Url.Action("ImageBlock", "Main", new { id = selectedPresetId })"></div>
 
-    <div class="main-block x-reloadable"
+    <div class="main-block x-reloadable x-button-handler-action-block"
          data-load-action="@Url.Action("ActionBlock", "Main", new { id = selectedPresetId })"></div>
 </div>
 
@@ -210,7 +210,8 @@
             });
         });
 
-        $(".x-reloadable").on("click", ".x-app-text-block .x-url-button", function() {
+        //Настроить текст
+        $(".x-button-handler-text-block").on("click", ".x-app-text-block .x-url-button", function() {
             let $btn = $(this);
             let $myBlock = $btn.closest(".x-app-text-block");
             let $selectedText = $myBlock.find("input[name=SelectedTextId]:checked");
@@ -232,7 +233,6 @@
                         LoadXReloadable($btn.closest(".x-reloadable"));
                     });
             } else if(action == "remove") {
-                let selectedTextId = $selectedText.val();
                 $.post(
                     actionUrl,
                     {
@@ -269,7 +269,177 @@
             }
         });
 
-        $(".x-reloadable").on("click", ".x-app-action-block .x-url-button", function() {
+        //Настроить изображение в блоке изображения
+        $(".x-button-handler-image-block").on("click", ".x-app-image-block .x-url-button", function() {
+            let $btn = $(this);
+            let $myBlock = $btn.closest(".x-app-image-block");
+            let $selectedImage = $myBlock.find("input[name=SelectedImageId]:checked");
+
+            let $myMainBlock = $myBlock.closest("div[data-current-preset-id]");
+            let currentPresetId = $myMainBlock.data("current-preset-id");
+
+            let actionUrl = $btn.data("action-url");
+            let action = $btn.data("action");
+
+            if(action == "select") {
+                let selectedImageId = $selectedImage.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedImageId: selectedImageId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if(action == "remove") {
+                $.post(
+                    actionUrl,
+                    {
+                        presetId: currentPresetId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "delete") {
+                let selectedImageId = $selectedImage.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedImageId: selectedImageId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else {
+                alert ("Запрос не обработан!");
+            }
+        });
+
+        //Настроить кнопку в блоке изображения
+        $(".x-button-handler-image-block").on("click", ".x-app-button-block .x-url-button", function() {
+            let $btn = $(this);
+            let $myBlock = $btn.closest(".x-app-button-block");
+            let $selectedButton = $myBlock.find("input[name=SelectedButtonId]:checked");
+
+            let $myMainBlock = $myBlock.closest("div[data-current-preset-id]");
+            let currentPresetId = $myMainBlock.data("current-preset-id");
+
+            let actionUrl = $btn.data("action-url");
+            let action = $btn.data("action");
+
+            if(action == "select") {
+                let selectedButtonId = $selectedButton.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedButtonId: selectedButtonId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if(action == "remove") {
+                let selectedButtonId = $selectedButton.val();
+                $.post(
+                    actionUrl,
+                    {
+                        presetId: currentPresetId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "delete") {
+                let selectedButtonId = $selectedButton.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedButtonId: selectedButtonId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "create") {
+                let $inputCreateButton = $(".x-input-created-button");
+                let inputCreateButtonContent = $inputCreateButton.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        ButtonContent: inputCreateButtonContent
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else {
+                alert ("Запрос не обработан!");
+            }
+        });
+
+        //Настроить фразу в блоке изображения
+        $(".x-button-handler-image-block").on("click", ".x-app-phrase-block .x-url-button", function() {
+            let $btn = $(this);
+            let $myBlock = $btn.closest(".x-app-phrase-block");
+            let $selectedPhrase = $myBlock.find("input[name=SelectedPhraseId]:checked");
+
+            let $myMainBlock = $myBlock.closest("div[data-current-preset-id]");
+            let currentPresetId = $myMainBlock.data("current-preset-id");
+
+            let actionUrl = $btn.data("action-url");
+            let action = $btn.data("action");
+
+            if(action == "select") {
+                let selectedPhraseId = $selectedPhrase.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedPhraseId: selectedPhraseId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if(action == "remove") {
+                $.post(
+                    actionUrl,
+                    {
+                        presetId: currentPresetId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "delete") {
+                let selectedPhraseId = selectedPhrase.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        SelectedPhraseId: selectedPhraseId
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else if (action == "create") {
+                let $inputCreatePhrase = $(".x-input-created-phrase");
+                let inputCreatePhraseContent = $inputCreatePhrase.val();
+                $.post(
+                    actionUrl,
+                    {
+                        CurrentPresetId: currentPresetId,
+                        PhraseContent: inputCreatePhraseContent
+                    },
+                    function(responseHtml) {
+                        LoadXReloadable($btn.closest(".x-reloadable"));
+                    });
+            } else {
+                alert ("Запрос не обработан!");
+            }
+        });
+
+        //Настроить призыв к действию
+        $(".x-button-handler-action-block").on("click", ".x-app-action-block .x-url-button", function() {
             let $btn = $(this);
             let $myBlock = $btn.closest(".x-app-action-block");
             let $selectedAction = $myBlock.find("input[name=SelectedActionId]:checked");
@@ -291,7 +461,6 @@
                         LoadXReloadable($btn.closest(".x-reloadable"));
                     });
             } else if(action == "remove") {
-                let selectedActionId = $selectedAction.val();
                 $.post(
                     actionUrl,
                     {

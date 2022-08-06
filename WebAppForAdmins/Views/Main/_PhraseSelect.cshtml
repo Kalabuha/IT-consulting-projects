@@ -1,54 +1,78 @@
-﻿@model PhraseSelectViewModel
+﻿@model ImageBlockViewModel
+
+@if (Model.Buttons != null && Model.Buttons.Count > 0)
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            Фразу можно выбрать из списка или создать новую. Если фраза будет отсутствовать, её блок не будет отображаться на странице гостевого
+            сайта. При удалении фразы, она сбросится у всех пресетов, которые её используют.
+        </p>
+    </div>
+
+    <div class="select-block-inner">
+        <div class="select-list-block scroll-y-block">
+            <ul class="select-list">
+                @foreach (MainPagePhraseModel phrase in Model.Phrases)
+                {
+                    var isSelected = phrase.Id == Model.SelectedPhraseId;
+                    var labelClassName = isSelected ? "green-text" : "black-text";
+                    var labelForPhraseId = $"phrase-{phrase.Id}";
+
+                    <li class="select-list-item">
+                        <div class="select-list-item-block">
+                            <input type="radio" name="SelectedPhraseId" class="select-point" id="@labelForPhraseId" value="@phrase.Id" checked="@isSelected" />
+                            <label class="text font-family-2 select-label @labelClassName" for="@labelForPhraseId">@phrase.Phrase</label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="select-block-inner">
+        <div class="buttons-panel-left">
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
+                data-action-url="@Url.Action("SelectPhraseForCurrentPreset", "Main")">
+                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+            </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
+                data-action-url="@Url.Action("DeletePhrase", "Main")">
+                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+            </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
+                data-action-url="@Url.Action("RemovePhraseForCurrentPreset", "Main")">
+                <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            В данный момент нет ни одной сохранённой фразы, её блок не будет отображаться на странице гостевого сайта.
+            Чтобы установить фразу вам необходимо первым делом её создать.
+        </p>
+    </div>
+}
 
 <div class="select-block-inner">
     <p class="text font-family-2 black-text paragraph">
-        Фразу можно выбрать из списка или создать новую. Если фраза используется одним из пресетов,
-        то её удаление будет прервано. Чтобы удалить фразу, необходимо сначала убрать её из всех пресетов.
+        Чтобы создать новую фразу введите её в поле ниже и нажмите "Создать". Пустая строка не допускается, длина не должна превышать 44 символов.
     </p>
 </div>
 
 <div class="select-block-inner">
-    <div class="select-list-block scroll-y-block">
-        <ul class="select-list">
-            @foreach (MainPagePhraseModel phrase in Model.Phrases)
-            {
-                var labelForPhraseId = $"phrase-{phrase.Id}";
-
-                <li class="select-list-item">
-                    <div class="select-list-item-block">
-                        @if (phrase.Id == Model.SelectedPhraseId)
-                        {
-                            <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" checked />
-                            <label class="text font-family-2 green-text bolder select-label" for="@labelForPhraseId">@phrase.Phrase</label>
-                        }
-                        else
-                        {
-                            <input class="select-point" type="radio" name="presetElementId" id="@labelForPhraseId" value="@phrase.Id" />
-                            <label class="text font-family-2 black-text select-label" for="@labelForPhraseId">@phrase.Phrase</label>
-                        }
-                    </div>
-                </li>
-            }
-            <li class="select-list-item">
-                <div class="select-list-item-block">
-                    <input class="select-point" type="radio" name="presetElementId" id="phrase-remove" value="-1" />
-                    <label class="text font-family-2 blue-text bolder select-label" for="phrase-remove">Убрать фразу</label>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <input type="text" maxlength="44" class="text font-family-2 black-text input-text-field x-input-created-phrase" />
 </div>
 
 <div class="select-block-inner">
     <div class="buttons-panel-left">
-        <button class="button low-button button-basis-1" type="submit" name="action" value="select-phrase">
-            <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
-        </button>
-        <button class="button low-button button-basis-1" type="submit" name="action" value="delete-phrase">
-            <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
-        </button>
-        <button class="button low-button button-basis-1" type="submit" name="action" value="create-phrase">
-            <span class="middle-text font-family-2 black-text">&#9209; Создать</span>
+        <button class="button low-button button-basis-1 x-url-button" type="button" data-action="create"
+                data-action-url="@Url.Action("CreatePhrase", "Main")">
+            <span class="middle-text font-family-2 black-text">&#10010; Добавить</span>
         </button>
     </div>
 </div>

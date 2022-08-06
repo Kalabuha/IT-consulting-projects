@@ -303,6 +303,10 @@
     flex: 0 0 130px;
 }
 
+.button-basis-2 {
+    flex: 0 0 180px;
+}
+
 .buttons-panel-block {
     position: relative;
     flex: 1 1 150px;
@@ -587,6 +591,10 @@
     max-height: 300px;
 }
 
+.select-block-max-height-3 {
+    max-height: 600px;
+}
+
 .block-select-preset-button-block {
     width: 100%;
 }
@@ -771,6 +779,10 @@
 
 .crash-image-robot {
     width: 40%;
+}
+
+.img-select-image {
+    max-width: 100%;
 }
 
 /* Projects */

@@ -1,5 +1,87 @@
-﻿@model ImageSelectViewModel
+﻿@model ImageBlockViewModel
 
-<div class="select-block">
-    <span class="middle-text font-family-2 black-text">Изменение изображения</span>
-</div>
+@if (Model.Images != null && Model.Images.Count > 0)
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            Изображение можно выбрать из списка или добавить новое. Выбранное для текущего пресета изображение выделено зелёным цветом.
+            Если изображение не будет установлено, этот блок на главной странице отображаться не будет. Внимание, после удаления изображения оно
+            сброситься у всех пресетов, которые его использут.
+        </p>
+    </div>
+
+    <div class="select-block-inner">
+        <div class="select-list-block select-block-max-height-3 scroll-y-block">
+            <ul class="select-list">
+                @{
+                    int count = 0;
+                }
+                @foreach (MainPageImageModel image in Model.Images)
+                {
+                    var isSelected = image.Id == Model.SelectedImageId;
+                    var labelClassName = isSelected ? "green-text" : "black-text";
+                    var labelForImageId = $"image-{image.Id}";
+
+                    <li class="select-list-item">
+                        <div class="select-list-item-block">
+                            <input type="radio" name="SelectedImageId" class="select-point" id="@labelForImageId" value="@image.Id" checked="@isSelected" />
+                            <label class="label-select-image" for="@labelForImageId">
+                                <img class="img-select-image" src="@image.ImageAsString" alt="IT consulting image @count++" />
+                            </label>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="select-block-inner">
+        <div class="buttons-panel-left">
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
+                data-action-url="@Url.Action("SelectImageForCurrentPreset", "Main")">
+                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+            </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
+                data-action-url="@Url.Action("DeleteImage", "Main")">
+                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+            </button>
+
+            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
+                data-action-url="@Url.Action("RemoveImageForCurrentPreset", "Main")">
+                <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <div class="select-block-inner">
+        <p class="text font-family-2 black-text paragraph">
+            В данный момент нет ни одного сохранённого изображения. Чтобы установить новое изображение вам необходимо его добавить.
+            Рекомендуется добавлять изображения в формате 16X9.
+        </p>
+    </div>
+}
+
+<form asp-area="" asp-controller="Main" asp-action="CreateImage" method="post">
+    <input asp-for="CurrentPresetId" type="hidden" />
+
+    <div class="select-block-inner">
+        <input type="file" class="middle-text font-family-2 black-text paragraph input-image" accept="image/jpeg,image/png" />
+    </div>
+
+    <div class="select-block-inner">
+        <div class="buttons-panel-left">
+            <button class="button low-button button-basis-1" type="submit">
+                <span class="middle-text font-family-2 black-text">&#10010; Добавить</span>
+            </button>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+

@@ -5,7 +5,7 @@
     MainPageTextModel? selectedTextModel = Model.Texts.FirstOrDefault(t => t.Id == Model.SelectedTextId);
 }
 
-@if (Model.SelectedTextId == 0)
+@if (Model.SelectedTextId == 0 && Model.CurrentPresetId > 0)
 {
     <div class="content-block-small-indent">
         <p class="middle-text font-family-2 gold-text paragraph">
@@ -46,54 +46,65 @@ else
                     <span class="large-text font-family-2 black-text">Изменить блок текста</span>
                 </button>
                 <div class="select select-block x-expandable-block x-app-text-block" data-current-preset-id="@Model.CurrentPresetId">
-                    <div class="select-block-inner">
-                        <p class="text font-family-2 black-text paragraph">
-                            Текст можно выбрать из списка или создать новый. Выбранный для текущего пресета текст выделен зелёным цветом.
-                            Если текст не будет установлен, на главной странице будет отображаться текст по умолчанию. Чтобы удалить текст
-                            необходимо выбрать его в списке и нажать "Удалить". Внимание, при удалении текста у пресетов, которые использут
-                            удаляемый текст, он сбросится.
-                        </p>
-                    </div>
+                    @if (Model.Texts != null && Model.Texts.Count > 0)
+                    {
+                        <div class="select-block-inner">
+                            <p class="text font-family-2 black-text paragraph">
+                                Текст можно выбрать из списка или создать новый. Выбранный для текущего пресета текст выделен зелёным цветом.
+                                Если текст не будет установлен, на главной странице будет отображаться текст по умолчанию. Чтобы удалить текст
+                                необходимо выбрать его в списке и нажать "Удалить". Внимание, при удалении текста у пресетов, которые использут
+                                удаляемый текст, он сбросится.
+                            </p>
+                        </div>
 
-                    <div class="select-block-inner">
-                        <div class="select-list-block select-block-max-height-2 scroll-y-block">
-                            <ul class="select-list">
-                                @foreach (MainPageTextModel text in Model.Texts)
-                                {
-                                    var isSelected = text.Id == Model.SelectedTextId;
-                                    var labelClassName = isSelected ? "green-text" : "black-text";
-                                    var labelForTextId = $"text-{text.Id}";
+                        <div class="select-block-inner">
+                            <div class="select-list-block select-block-max-height-2 scroll-y-block">
+                                <ul class="select-list">
+                                    @foreach (MainPageTextModel text in Model.Texts)
+                                    {
+                                        var isSelected = text.Id == Model.SelectedTextId;
+                                        var labelClassName = isSelected ? "green-text" : "black-text";
+                                        var labelForTextId = $"text-{text.Id}";
 
-                                    <li class="select-list-item">
-                                        <div class="select-list-item-block">
-                                            <input type="radio" name="SelectedTextId"
+                                        <li class="select-list-item">
+                                            <div class="select-list-item-block">
+                                                <input type="radio" name="SelectedTextId"
                                            class="select-point" id="@labelForTextId" value="@text.Id" checked="@isSelected" />
-                                            <label class="text font-family-2 bolder select-label @labelClassName" for="@labelForTextId">@text.Text</label>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
+                                                <label class="text font-family-2 bolder select-label @labelClassName" for="@labelForTextId">@text.Text</label>
+                                            </div>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="select-block-inner">
-                        <div class="buttons-panel-left">
-                            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
+                        <div class="select-block-inner">
+                            <div class="buttons-panel-left">
+                                <button class="button low-button button-basis-1 x-url-button" type="button" data-action="select"
                                 data-action-url="@Url.Action("SelectTextForCurrentPreset", "Main")">
-                                <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
-                            </button>
+                                    <span class="middle-text font-family-2 black-text">&#10084; Выбрать</span>
+                                </button>
 
-                            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
+                                <button class="button low-button button-basis-1 x-url-button" type="button" data-action="delete"
                                 data-action-url="@Url.Action("DeleteText", "Main")">
-                                <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
-                            </button>
+                                    <span class="middle-text font-family-2 black-text">&#10006; Удалить</span>
+                                </button>
 
-                            <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
+                                <button class="button low-button button-basis-1 x-url-button" type="button" data-action="remove"
                                 data-action-url="@Url.Action("RemoveTextForCurrentPreset", "Main")">
-                                <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
-                            </button>
+                                    <span class="middle-text font-family-2 black-text">&#9209; Убрать</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div class="select-block-inner">
+                            <p class="text font-family-2 black-text paragraph">
+                                В данный момент нет ни одного сохранённого текста. Чтобы установить какой-либо текст вам необходимо первым делом создать его.
+                            </p>
+                        </div>
+                    }
 
                     <div class="select-block-inner">
                         <p class="text font-family-2 black-text paragraph">
@@ -103,14 +114,14 @@ else
                     </div>
 
                     <div class="select-block-inner">
-                        <textarea class="text font-family-2 black-text text-area-max-width-resize-vertical main-page-text-area x-text-area-created-text"></textarea>
+                        <textarea class="text font-family-2 black-text text-area-max-width-resize-vertical main-page-text-area x-text-area-created-text" maxlength="4000"></textarea>
                     </div>
 
                     <div class="select-block-inner">
                         <div class="buttons-panel-left">
                             <button class="button low-button button-basis-1 x-url-button" type="button" data-action="create"
                                 data-action-url="@Url.Action("CreateText", "Main")">
-                                <span class="middle-text font-family-2 black-text">&#10010; Создать</span>
+                                <span class="middle-text font-family-2 black-text">&#10010; Добавить</span>
                             </button>
                         </div>
                     </div>

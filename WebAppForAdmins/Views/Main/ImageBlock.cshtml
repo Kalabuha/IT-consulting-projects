@@ -1,16 +1,10 @@
 ﻿@model ImageBlockViewModel
 
-@if (Model != null)
+@if (Model.CurrentPresetId > 0)
 {
-    int presetId = ViewBag.PresetId != null ? ViewBag.PresetId : 0;
-
-    var imageSelectViewModel = Model.ImageSelectViewModel;
-    var buttonSelectViewModel = Model.ButtonSelectViewModel;
-    var phraseSelectViewModel = Model.PhraseSelectViewModel;
-
-    MainPageImageModel? selectedImage = imageSelectViewModel.Images.FirstOrDefault(i => i.Id == imageSelectViewModel.SelectedImageId);
-    MainPageButtonModel? selectedButton = buttonSelectViewModel.Buttons.FirstOrDefault(b => b.Id == buttonSelectViewModel.SelectedButtonId);
-    MainPagePhraseModel? selectedPhrase = phraseSelectViewModel.Phrases.FirstOrDefault(p => p.Id == phraseSelectViewModel.SelectedPhraseId);
+    MainPageImageModel? selectedImage = Model.Images.FirstOrDefault(i => i.Id == Model.SelectedImageId);
+    MainPageButtonModel? selectedButton = Model.Buttons.FirstOrDefault(b => b.Id == Model.SelectedButtonId);
+    MainPagePhraseModel? selectedPhrase = Model.Phrases.FirstOrDefault(p => p.Id == Model.SelectedPhraseId);
 
     string imageUrl;
     string imageAvailableOrNotStyleClass;
@@ -18,7 +12,7 @@
 
     @if (selectedImage != null)
     {
-        imageUrl = selectedImage.Image;
+        imageUrl = selectedImage.ImageAsString;
         imageAvailableOrNotStyleClass = "preset-content-img-image-available";
         displayBlockOrNoneStyle = "display: none;";
     }
@@ -92,30 +86,30 @@
                 <button class="button high-button button-max-width x-expand" type="button">
                     <span class="large-text font-family-2 black-text">Изменить блок изображения</span>
                 </button>
-                <div class="select select-block x-expandable-block">
+                <div class="select select-block x-expandable-block" data-current-preset-id="@Model.CurrentPresetId">
                     <div class="x-tabs">
                         <div class="select-block-inner">
                             <div class="buttons-panel-left">
-                                <button class="button low-button button-basis-1 x-activate x-active" type="button">
+                                <button class="button low-button button-basis-2 x-activate x-active" type="button">
                                     <span class="large-text font-family-2 black-text">Изображение</span>
                                 </button>
-                                <button class="button low-button button-basis-1 x-activate" type="button">
+                                <button class="button low-button button-basis-2 x-activate" type="button">
                                     <span class="large-text font-family-2 black-text">Кнопка</span>
                                 </button>
-                                <button class="button low-button button-basis-1 x-activate" type="button">
+                                <button class="button low-button button-basis-2 x-activate" type="button">
                                     <span class="large-text font-family-2 black-text">Фраза</span>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="x-activatable x-active">
-                            <partial name="_ImageSelect" model="@imageSelectViewModel" />
+                        <div class="x-activatable x-active x-app-image-block">
+                            <partial name="_ImageSelect" />
                         </div>
-                        <div class="x-activatable">
-                            <partial name="_ButtonSelect" model="@buttonSelectViewModel" />
+                        <div class="x-activatable x-app-button-block">
+                            <partial name="_ButtonSelect" />
                         </div>
-                        <div class="x-activatable">
-                            <partial name="_PhraseSelect" model="@phraseSelectViewModel" />
+                        <div class="x-activatable x-app-phrase-block">
+                            <partial name="_PhraseSelect" />
                         </div>
                     </div>
                 </div>
@@ -123,4 +117,3 @@
         </div>
     </div>
 }
-
