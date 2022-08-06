@@ -364,10 +364,12 @@
 }
 
 .select-list-item {
+    width: 100%;
     margin-bottom: 12px;
 }
 
 .select-list-item:last-child {
+    width: 100%;
     margin-bottom: 0;
 }
 
@@ -375,6 +377,7 @@
     margin: 0;
     display: flex;
     justify-content: start;
+    width: 100%;
 }
 
 .select-point {
@@ -782,7 +785,15 @@
 }
 
 .img-select-image {
-    max-width: 100%;
+    width: 99%;
+}
+
+.img-select-image-selected {
+    outline: 8px rgb(21, 157, 21) solid;
+}
+
+.label-select-image {
+    width: 100%;
 }
 
 /* Projects */
@@ -1073,7 +1084,7 @@
 }
 
 .contact-card-details-table {
-    flex: 0 1 auto;
+    flex: 0 0 160px;
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -1085,7 +1096,10 @@
 }
 
 .contact-card-details-map {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .contact-map-img-index {

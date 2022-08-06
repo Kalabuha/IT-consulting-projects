@@ -27,9 +27,9 @@
             <button class="button high-button" type="reset">
                 <span class="large-text font-family-2 black-text">Сбросить изменения</span>
             </button>
-            <button class="button high-button">
+            <a class="button high-button link-a-button" asp-area="" asp-controller="Contacts" asp-action="Delete" asp-route-id="@Model.Id">
                 <span class="large-text font-family-2 black-text">&#10006; Удалить контакт</span>
-            </button>
+            </a>
         </div>
     </form>
 </div>

@@ -87,6 +87,12 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPost(ContactModel model)
         {
+            var oldData = await _contactService.GetContactDataByIdAsync(model.Id);
+            if (oldData == null)
+            {
+                return NotFound();
+            }
+
             if (!CheckPostcodeValidation(model.Postcode))
             {
                 ModelState.AddModelError("Postcode", "Некорректный почтовый индекс");
@@ -94,15 +100,17 @@ namespace WebAppForAdmins.Controllers
 
             if (!ModelState.IsValid)
             {
+                var oldModel = oldData.ContactDataToModel();
+                model.MapAsString = oldModel.MapAsString;
                 return View(nameof(Edit), model);
             }
 
-            var data = model.ContactModelToData();
-            await _contactService.EditContactToDbAsync(data);
+            var newData = model.ContactModelToData();
+            await _contactService.EditContactToDbAsync(newData);
 
-            if (data.IsPublished)
+            if (newData.IsPublished)
             {
-                await _contactService.PublishContact(data.Id);
+                await _contactService.PublishContact(newData.Id);
             }
 
             return RedirectToAction(nameof(Index));

@@ -19,14 +19,14 @@
                 @foreach (MainPageImageModel image in Model.Images)
                 {
                     var isSelected = image.Id == Model.SelectedImageId;
-                    var labelClassName = isSelected ? "green-text" : "black-text";
+                    var imageClassName = isSelected ? "img-select-image-selected" : string.Empty;
                     var labelForImageId = $"image-{image.Id}";
 
                     <li class="select-list-item">
                         <div class="select-list-item-block">
                             <input type="radio" name="SelectedImageId" class="select-point" id="@labelForImageId" value="@image.Id" checked="@isSelected" />
                             <label class="label-select-image" for="@labelForImageId">
-                                <img class="img-select-image" src="@image.ImageAsString" alt="IT consulting image @count++" />
+                                <img class="img-select-image @imageClassName" src="@image.ImageAsString" alt="IT consulting image @count++" />
                             </label>
                         </div>
                     </li>

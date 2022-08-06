@@ -24,12 +24,16 @@ namespace Services.Converters
         {
             entity ??= new ContactEntity();
 
+            if (!(string.IsNullOrEmpty(data.MapAsString) || string.IsNullOrWhiteSpace(data.MapAsString)))
+            {
+                entity.MapAsArray64 = Convert.FromBase64String(data.MapAsString);
+            }
+
             entity.Id = data.Id;
             entity.Address = data.Address;
             entity.Postcode = data.Postcode;
             entity.Phone = data.Phone;
             entity.Fax = data.Fax;
-            entity.MapAsArray64 = Convert.FromBase64String(data.MapAsString);
             entity.IsPublishedOnMainPage = false;
 
             return entity;
