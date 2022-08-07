@@ -8,8 +8,8 @@
 <input asp-for="Id" type="hidden" />
 
 <div class="content-block-standart-indent preset-content-block">
-    <div class="span-prompt">
-        <span class="large-text font-family-2 black-text">Заголовок проекта</span>
+    <div class="prompt-block">
+        <label asp-for="ProjectTitle" class="large-text font-family-2 black-text">Заголовок проекта</label>
     </div>
 
     <textarea asp-for="ProjectTitle" class="middle-text font-family-2 text-area-max-width-resize-vertical project-text-area-title" 
@@ -23,8 +23,8 @@
 <div class="content-block-standart-indent preset-content-block">
     <div class="project-content">
         <div class="project-block-description">
-            <div class="span-prompt">
-                <span class="large-text font-family-2 black-text">Описание проекта</span>
+            <div class="prompt-block">
+                <label asp-for="ProjectDescription" class="large-text font-family-2 black-text">Описание проекта</label>
             </div>
 
             <textarea asp-for="ProjectDescription" class="middle-text font-family-2 text-area-max-width-resize-vertical project-text-area-description" 
@@ -36,8 +36,8 @@
 
         </div>
         <div class="project-block-logo-and-link">
-            <div class="span-prompt">
-                <span class="large-text font-family-2 black-text">Логотип</span>
+            <div class="prompt-block">
+                <label class="large-text font-family-2 black-text">Логотип</label>
             </div>
             @if (!string.IsNullOrEmpty(Model.CustomerCompanyLogoAsDataImage))
             {
@@ -54,8 +54,8 @@
                 </div>
             }
 
-            <div class="span-prompt">
-                <span class="large-text font-family-2 black-text">Ссылка</span>
+            <div class="prompt-block">
+                <label asp-for="LinkToCustomerSite" class="large-text font-family-2 black-text">Ссылка</label>
             </div>
             <div class="project-block-link">
                 <textarea asp-for="LinkToCustomerSite" class="text font-family-2 black-text text-area-max-width-resize-vertical project-text-area-link-customer-site" 
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="project-published-block">
-        <input asp-for="IsPublished" id="IsProjectPublished" class="select-point" disabled="@disabled" />
-        <label class="middle-text font-family-2 black-text" for="IsProjectPublished">&#10084; Опубликовать проект</label>
+        <input asp-for="IsPublished" class="select-point" disabled="@disabled" />
+        <label asp-for="IsPublished" class="middle-text font-family-2 black-text">&#10084; Опубликовать проект</label>
     </div>
 </div>

@@ -229,7 +229,7 @@
 
 /* CONTENT */
 /* Common */
-.span-prompt {
+.prompt-block {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
@@ -458,6 +458,47 @@
 
 .overflow-wrap-break-word-block {
     overflow-wrap: break-word;
+}
+
+/* Account */
+.login-container {
+    padding: 30px 40px;
+}
+
+.login-block {
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 30px;
+    background-color: rgba(238, 238, 238, 0.6);
+}
+
+.login-img-part {
+    display: flex;
+    justify-content: space-around;
+}
+
+.login-part-block {
+    margin-bottom: 30px;
+}
+
+.login-part-block-2 {
+    margin-bottom: 56px;
+}
+
+.login-input-block {
+    margin-bottom: 5px;
+}
+
+.login-validation-block {
+    height: 25px;
+}
+
+.login-prompt-block {
+    margin-bottom: 10px;
+}
+
+.login-robot-img {
+    max-width: 400px;
 }
 
 /* Header */

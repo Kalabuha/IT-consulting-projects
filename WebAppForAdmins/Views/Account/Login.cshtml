@@ -1,9 +1,51 @@
-﻿@*@model*@
+﻿@model LoginViewModel
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Вход в систему";
 }
 
 <div class="container-content-common">
-    <h1 class="font-family-1 h1-standart-page gold-text">Вход в систему</h1>
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Вход в систему</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <div class="login-container">
+            <div class="login-block">
+                <form asp-area="" asp-controller="Account" asp-action="LoginPost" method="post">
+                    <div class="login-part-block login-img-part">
+                        <img class="login-robot-img" src="/img/objects/robots-2.png" alt="ldr robot" />
+                    </div>
+
+                    <div class="login-part-block">
+                        <div class="login-prompt-block">
+                            <label asp-for="Login" class="large-text font-family-2 black-text">Логин</label>
+                        </div>
+                        <div class="login-input-block">
+                            <input class="large-text font-family-2 black-text input-text-field" asp-for="Login" />
+                        </div>
+                        <div class="login-validation-block">
+                            <span class="middle-text font-family-2 red-text" asp-validation-for="Login"></span>
+                        </div>
+                    </div>
+
+                    <div class="login-part-block-2">
+                        <div class="login-prompt-block">
+                            <label asp-for="Password" class="large-text font-family-2 black-text">Пароль</label>
+                        </div>
+                        <div class="login-input-block">
+                            <input class="large-text font-family-2 black-text input-text-field" asp-for="Password" />
+                        </div>
+                        <div class="login-validation-block">
+                            <span class="middle-text font-family-2 red-text" asp-validation-for="Password"></span>
+                        </div>
+                    </div>
+
+                    <div class="buttons-panel-left">
+                        <input class="button button-basis-1 high-button large-text font-family-2 black-text" type="submit" value="Войти" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -7,6 +7,7 @@ using Resources.Enums;
 
 namespace Resources.Entities
 {
+    [Table("Users")]
     public class UserEntity : BaseEntity
     {
         [Column("Login"), Required, MaxLength(60)]

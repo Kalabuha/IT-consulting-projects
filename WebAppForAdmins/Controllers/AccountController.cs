@@ -1,12 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Repositories.Interfaces;
+using WebAppForAdmins.Models.Account;
+using Resources.Enums;
 
 namespace WebAppForAdmins.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public AccountController(UserRepository userRepository)
+        public AccountController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -18,18 +24,19 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> LoginPost(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View(nameof(Login), model);
             }
 
             var user = _userRepository.Login(model.Login, model.Password);
             if (user == null)
             {
-                ModelState.AddModelError("", "Логин или пароль неверный.");
-                return View(model);
+                ModelState.AddModelError("Login", "Неверный логин или пароль");
+                ModelState.AddModelError("Password", "Неверный логин или пароль");
+                return View(nameof(Login), model);
             }
 
             await Authenticate(user.Login, user.Role);

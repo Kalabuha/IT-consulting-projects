@@ -12,19 +12,19 @@
             <div class="contact-block-data">
                 <div class="contact-block-data-promts">
                     <div class="cell-data-filled-height cell-text-data-rigth">
-                        <span class="middle-text font-family-2 black-text">Адрес:</span>
+                        <label asp-for="Address" class="middle-text font-family-2 black-text">Адрес:</label>
                     </div>
                     <div class="cell-data-empty-height"></div>
                     <div class="cell-data-filled-height cell-text-data-rigth">
-                        <span class="middle-text font-family-2 black-text">Индекс:</span>
+                        <label asp-for="Postcode" class="middle-text font-family-2 black-text">Индекс:</label>
                     </div>
                     <div class="cell-data-empty-height"></div>
                     <div class="cell-data-filled-height cell-text-data-rigth">
-                        <span class="middle-text font-family-2 black-text">Телефон:</span>
+                        <label asp-for="Phone" class="middle-text font-family-2 black-text">Телефон:</label>
                     </div>
                     <div class="cell-data-empty-height"></div>
                     <div class="cell-data-filled-height cell-text-data-rigth">
-                        <span class="middle-text font-family-2 black-text">Факс:</span>
+                        <label asp-for="Fax" class="middle-text font-family-2 black-text">Факс:</label>
                     </div>
                     <div class="cell-data-empty-height"></div>
                 </div>
@@ -67,7 +67,7 @@
                 @if (string.IsNullOrEmpty(Model.MapAsString))
                 {
                     <div class="contact-map-empty-img">
-                        <span class="large-text font-family-2 black-text">Установите изображение карты</span>
+                        <label class="large-text font-family-2 black-text">Установите изображение карты</label>
                     </div>
                 }
                 else
@@ -85,8 +85,8 @@
     </div>
 
     <div class="contact-block-published">
-        <input asp-for="IsPublished" id="IsContactPublished" class="select-point" disabled="@disabled" />
-        <label class="middle-text font-family-2 black-text" for="IsContactPublished">&#10084; Опубликовать контакт</label>
+        <input asp-for="IsPublished" class="select-point" disabled="@disabled" />
+        <label asp-for="IsPublished" class="middle-text font-family-2 black-text">&#10084; Опубликовать контакт</label>
     </div>
 </div>
 

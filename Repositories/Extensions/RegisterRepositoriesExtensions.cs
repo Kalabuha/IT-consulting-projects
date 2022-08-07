@@ -7,6 +7,8 @@ namespace Repositories.Extensions
     {
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IUserRepository, UserRepository>();
+
             services.AddScoped<IHeaderMenuSetRepository, HeaderMenuSetRepository>();
             services.AddScoped<IHeaderSloganRepository, HeaderSloganRepository>();
 
