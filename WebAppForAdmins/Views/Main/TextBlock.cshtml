@@ -25,7 +25,9 @@
     }
 
     <div class="content-block-small-indent preset-content-block-text-available">
-        <p class="middle-text font-family-2 black-text paragraph">@selectedTextModel.Text</p>
+        <div class="preset-text-block overflow-wrap-break-word-block">
+            <p class="middle-text font-family-2 black-text paragraph">@selectedTextModel.Text</p>
+        </div>
     </div>
 }
 else
@@ -70,7 +72,7 @@ else
                                             <div class="select-list-item-block">
                                                 <input type="radio" name="SelectedTextId"
                                            class="select-point" id="@labelForTextId" value="@text.Id" checked="@isSelected" />
-                                                <label class="text font-family-2 bolder select-label @labelClassName" for="@labelForTextId">@text.Text</label>
+                                                <label class="text font-family-2 select-text-label overflow-wrap-break-word-block @labelClassName" for="@labelForTextId">@text.Text</label>
                                             </div>
                                         </li>
                                     }

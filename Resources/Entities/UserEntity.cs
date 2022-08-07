@@ -1,12 +1,13 @@
-﻿using Resources.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography;
 using System.Text;
+using Resources.Entities.Base;
+using Resources.Enums;
 
 namespace Resources.Entities
 {
-    public class UserEntity
+    public class UserEntity : BaseEntity
     {
         [Column("Login"), Required, MaxLength(60)]
         public string Login { get; set; } = default!;

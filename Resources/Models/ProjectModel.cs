@@ -17,7 +17,8 @@ namespace Resources.Models
         public IFormFile? CustomerCompanyLogoAsFormFile { get; set; }
         public string? CustomerCompanyLogoAsDataImage { get; set; }
 
-        public string? LinkToCustomerSite { get; set; } = default!;
+        [StringLength(300, ErrorMessage = "Слишком длинная ссылка")]
+        public string? LinkToCustomerSite { get; set; }
 
         public bool IsPublished { get; set; }
         

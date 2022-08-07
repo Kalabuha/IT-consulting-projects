@@ -70,8 +70,16 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPost(ProjectModel model)
         {
+            var oldData = await _projectService.GetProjectDataByIdAsync(model.Id);
+            if (oldData == null)
+            {
+                return NotFound();
+            }
+
             if (!ModelState.IsValid)
             {
+                var oldModel = oldData.ProjectDataToModel();
+                model.CustomerCompanyLogoAsDataImage = oldModel.CustomerCompanyLogoAsDataImage;
                 return View("Edit", model);
             }
 

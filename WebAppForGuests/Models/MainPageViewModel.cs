@@ -4,12 +4,14 @@ namespace WebAppForGuests.Models
 {
     public class MainPageViewModel
     {
-        public MainPageTextModel? Text { get; set; }
-        public MainPageImageModel? Image { get; set; }
-        public MainPageButtonModel? Button { get; set; }
-        public MainPagePhraseModel? Phrase { get; set; }
-        public MainPageActionModel? Action { get; set; }
+        public string PageH1 { get; set; } = default!;
 
-        public ApplicationModel Application { get; set; } = default!;
+        public MainPageTextModel TextModel { get; set; } = default!;
+        public MainPageImageModel? ImageModel { get; set; }
+        public MainPageButtonModel? ButtonModel { get; set; }
+        public MainPagePhraseModel? PhraseModel { get; set; }
+        public MainPageActionModel ActionModel { get; set; } = default!;
+
+        public ApplicationModel ApplicationModel { get; set; } = default!;
     }
 }

@@ -96,7 +96,7 @@
                             <div class="text-align-center content-block-inner">
                                 <span class="text font-family-2 black-text">Не более 40 символов</span>
                             </div>
-                            <textarea class="middle-text font-family-2 input-preset-name-textarea" name="model.PresetName"></textarea>
+                            <textarea class="middle-text font-family-2 input-preset-name-textarea" name="model.PresetName" maxlength="40"></textarea>
                         </div>
                         <div class="block-select-preset-button-block">
                             <button class="button low-button button-max-width" type="submit">
@@ -411,7 +411,7 @@
                         LoadXReloadable($btn.closest(".x-reloadable"));
                     });
             } else if (action == "delete") {
-                let selectedPhraseId = selectedPhrase.val();
+                let selectedPhraseId = $selectedPhrase.val();
                 $.post(
                     actionUrl,
                     {

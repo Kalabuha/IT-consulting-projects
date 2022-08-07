@@ -24,6 +24,8 @@ namespace DbContextProfi
         public DbSet<ServiceEntity> Services => Set<ServiceEntity>();
         public DbSet<BlogEntity> Blogs => Set<BlogEntity>();
         public DbSet<ContactEntity> Contacts => Set<ContactEntity>();
+
+        public DbSet<UserEntity> Users => Set<UserEntity>();
         #endregion
 
         public DbContextProfiСonnector(DbContextOptions<DbContextProfiСonnector> options) : base(options) { }

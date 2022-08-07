@@ -31,34 +31,31 @@ namespace WebAppForGuests.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var menuData = await _headerService.GetUsedMenuDataAsync();
-            ViewBag.PageH1 = menuData.Main;
-
             var viewModel = new MainPageViewModel();
+
+            var menuData = await _headerService.GetUsedMenuDataAsync();
+            viewModel.PageH1 = menuData.Main;
 
             var mainPagePreset = await _mainPageService.GetPublishedPresetDataAsync();
             if (mainPagePreset != null)
             {
                 var textData = await _mainPageService.GetElementDataByIdAsync<MainPageTextData>(mainPagePreset?.TextId);
-                viewModel.Text = textData?.TextDataToModel();
-
                 var imageData = await _mainPageService.GetElementDataByIdAsync<MainPageImageData>(mainPagePreset?.ImageId);
-                viewModel.Image = imageData?.ImageDataToModel();
-
                 var buttonData = await _mainPageService.GetElementDataByIdAsync<MainPageButtonData>(mainPagePreset?.ButtonId);
-                viewModel.Button = buttonData?.ButtonDataToModel();
-
                 var phraseData = await _mainPageService.GetElementDataByIdAsync<MainPagePhraseData>(mainPagePreset?.PhraseId);
-                viewModel.Phrase = phraseData?.PhraseDataToModel();
-
                 var actionData = await _mainPageService.GetElementDataByIdAsync<MainPageActionData>(mainPagePreset?.ActionId);
-                viewModel.Action = actionData?.ActionDataToModel();
+
+                if (textData != null) viewModel.TextModel = textData.TextDataToModel();
+                viewModel.ImageModel = imageData?.ImageDataToModel();
+                viewModel.ButtonModel = buttonData?.ButtonDataToModel();
+                viewModel.PhraseModel = phraseData?.PhraseDataToModel();
+                if (actionData != null) viewModel.ActionModel = actionData.ActionDataToModel();
             }
 
-            viewModel.Text ??= await _mainPageService.GetDefaultMainPageTextData();
-            viewModel.Action ??= await _mainPageService.GetDefaultMainPageActionData();
+            viewModel.TextModel ??= (await _mainPageService.GetDefaultMainPageTextData()).TextDataToModel();
+            viewModel.ActionModel ??= (await _mainPageService.GetDefaultMainPageActionData()).ActionDataToModel();
 
-            viewModel.Application = new ApplicationModel
+            viewModel.ApplicationModel = new ApplicationModel
             {
                 Status = ApplicationStatus.Initial,
             };

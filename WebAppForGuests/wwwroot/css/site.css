@@ -71,6 +71,14 @@
   background-color: silver;
 }
 
+.text-shadow {
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.overflow-wrap-break-word-block {
+  overflow-wrap: break-word;
+}
+
 /* LAYOUT */
 /* Userbar */
 .userbar {
@@ -154,7 +162,6 @@
   font-weight: 600;
   padding: 10px 25px;
   text-transform: uppercase;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 .nav-link:hover {
@@ -167,7 +174,6 @@
   display: inline-block;
   left: 83%;
   transform: translate(-50%, 0);
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 /* Main */
@@ -436,7 +442,7 @@
 
 .phrase-main-page {
   display: inline-block;
-  width: 58%;
+  width: 800px;
 }
 
 .background-message-application-sent {
@@ -748,19 +754,19 @@
 }
 
 .contacts-block {
+  display: flex;
   margin: 0;
   width: 100%;
 }
 
 .contacts-text-block {
-  vertical-align: top;
-  display: inline-block;
-  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 50%;
 }
 
 .contacts-table {
-  margin-top: 15%;
   width: 100%;
 }
 

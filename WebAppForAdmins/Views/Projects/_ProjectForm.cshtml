@@ -6,7 +6,6 @@
 }
 
 <input asp-for="Id" type="hidden" />
-<input asp-for="CustomerCompanyLogoAsDataImage" type="hidden" />
 
 <div class="content-block-standart-indent preset-content-block">
     <div class="span-prompt">
@@ -59,7 +58,8 @@
                 <span class="large-text font-family-2 black-text">Ссылка</span>
             </div>
             <div class="project-block-link">
-                <input asp-for="LinkToCustomerSite" class="text font-family-2 project-input-text-title" type="text" disabled="@disabled" />
+                <textarea asp-for="LinkToCustomerSite" class="text font-family-2 black-text text-area-max-width-resize-vertical project-text-area-link-customer-site" 
+                disabled="@disabled" placeholder="Вводи ссылку сюда"></textarea>
             </div>
         </div>
     </div>

@@ -60,23 +60,18 @@
         </div>
 
         <div class="preset-content-img-phrase-block">
-            @{
-                string presetPhraseContent;
-                string presetPhraseContentStyles;
-            }
             @if (selectedPhrase != null)
             {
-                presetPhraseContent = selectedPhrase.Phrase;
-                presetPhraseContentStyles = "";
+                <div class="preset-phrase-shell-available overflow-wrap-break-word-block">
+                    <span class="preset-phrase-content mega-text font-family-2 white-text text-shadow">@selectedPhrase.Phrase</span>
+                </div>
             }
             else
             {
-                presetPhraseContent = "Фраза отсутствует";
-                presetPhraseContentStyles = "outline: 5px dashed #4e00a0;";
+                <div class="preset-phrase-shell-not-available">
+                    <span class="preset-phrase-content mega-text font-family-2 white-text">Фраза отсутствует</span>
+                </div>
             }
-            <div class="preset-phrase-shell" style="@presetPhraseContentStyles">
-                <span class="preset-phrase-content mega-text font-family-2 white-text">@presetPhraseContent</span>
-            </div>
         </div>
     </div>
 

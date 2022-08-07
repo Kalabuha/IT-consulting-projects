@@ -212,8 +212,21 @@
 /* FOOTER */
 .footer {
     width: 1170px;
-    background-color: rgb(45, 45, 45);
+    background-color: rgb(32, 32, 32);
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-img {
+    max-width: 300px;
+}
+
 /* CONTENT */
 /* Common */
 .span-prompt {
@@ -443,6 +456,10 @@
     overflow: hidden;
 }
 
+.overflow-wrap-break-word-block {
+    overflow-wrap: break-word;
+}
+
 /* Header */
 .header-block-menu-slogan {
     display: flex;
@@ -632,12 +649,20 @@
     min-height: 160px;
 }
 
+.preset-text-block {
+    max-width: 960px;
+}
+
 .preset-content-img {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 562px;
     border-radius: 5px;
+}
+
+.select-text-label {
+    max-width: 900px;
 }
 
 .preset-content-img-image-available {
@@ -685,13 +710,21 @@
     margin: 0;
 }
 
-.preset-phrase-shell {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.preset-phrase-shell-available {
     border-radius: 10px;
     height: 80px;
-    width: 58%;
+    width: 680px;
+    margin: 0 0 25px 25px;
+}
+
+.preset-phrase-shell-not-available {
+    border-radius: 10px;
+    outline: 5px dashed #4e00a0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 680px;
+    height: 80px;
     margin: 0 0 25px 25px;
 }
 
@@ -707,8 +740,7 @@
 }
 
 .input-block-header {
-    display: flex;
-    justify-content: space-around;
+    max-width: 960px;
 }
 
 .preset-input-action-block-empty {
@@ -833,12 +865,11 @@
 }
 
 .project-card-details-link {
-    display: flex;
-    justify-content: space-around;
+    max-width: 280px;
 }
 
 .project-card-details-title {
-    max-height: 115px;
+    max-height: 120px;
     overflow: hidden;
     word-break: break-all;
 }
@@ -892,10 +923,6 @@
     width: 25%;
 }
 
-.project-input-text-title {
-    width: 97%;
-}
-
 .project-text-area-title {
     min-height: 40px;
     max-height: 100px;
@@ -904,6 +931,11 @@
 .project-text-area-description {
     min-height: 220px;
     max-height: 800px;
+}
+
+.project-text-area-link-customer-site {
+    min-height: 30px;
+    max-height: 360px;
 }
 
 .project-block-logo-image {
@@ -935,6 +967,18 @@
 
 .blog-block:last-child {
     margin-bottom: 0;
+}
+
+.blog-card-details-title {
+    max-width: 960px;
+}
+
+.blog-card-details-short-description {
+    max-width: 960px;
+}
+
+.blog-card-details-long-description {
+    max-width: 960px;
 }
 
 .blog-card-details-img {
