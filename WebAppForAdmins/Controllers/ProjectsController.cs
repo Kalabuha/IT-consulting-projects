@@ -7,7 +7,7 @@ using Resources.Models;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Senior, Admin")]
     public class ProjectsController : Controller
     {
         private readonly IProjectService _projectService;

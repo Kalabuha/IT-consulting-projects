@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class MainController : Controller
     {
         private readonly ILogger<MainController> _logger;

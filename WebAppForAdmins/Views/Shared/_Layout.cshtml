@@ -12,42 +12,50 @@
     <div class="wrapper">
         <div class="container">
             <header class="header">
-                <h1 class="font-family-1 black-text profi">Profi</h1>
+                <a class="profi-link" asp-area="" asp-controller="Home" asp-action="Index">
+                    <h1 class="font-family-1 black-text profi-h1">Profi</h1>
+                </a>
                 <nav class="navbar">
                     <ul class="navbar-list">
-                        @*@if (User.Identity != null && User.Identity.IsAuthenticated)
-                        {*@
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
                             <li class="navbar-item">
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Applications" asp-action="Index">Заявки</a>
                             </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Header" asp-action="Index">Заголовок</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Main" asp-action="Index">Главная</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Blogs" asp-action="Index">Блоги</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Contacts" asp-action="Index">Контакты</a>
-                            </li>
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Header" asp-action="Index">Заголовок</a>
+                                </li>
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Main" asp-action="Index">Главная</a>
+                                </li>
+                            }
+                            if (User.IsInRole("Admin") || User.IsInRole("Senior"))
+                            {
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Projects" asp-action="Index">Проекты</a>
+                                </li>
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Services" asp-action="Index">Услуги</a>
+                                </li>
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Blogs" asp-action="Index">Блоги</a>
+                                </li>
+                                <li class="navbar-item">
+                                    <a class="font-family-1 navbar-link" asp-area="" asp-controller="Contacts" asp-action="Index">Контакты</a>
+                                </li>
+                            }
                             <li class="navbar-item">
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
                             </li>
-                        @*}
+                        }
                         else
-                        {*@
+                        {
                             <li class="navbar-item">
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
                             </li>
-                        @*}*@
+                        }
                     </ul>
                 </nav>
             </header>
@@ -57,9 +65,12 @@
                     <div class="userbar-block-logo">
                         <img class="ldr-logo" src="/img/objects/ldr-logo.jpg" alt="love death & robots" />
                     </div>
-                    <div class="userbar-block-username">
-                        <p class="font-family-2 userbar-text white-text">Пользователь: kalabuha</p>
-                    </div>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <div class="userbar-block-username">
+                            <p class="font-family-2 userbar-text white-text">Пользователь: @User.Identity.Name</p>
+                        </div>
+                    }
                 </div>
                 <div class="container-content">
                     @RenderBody()

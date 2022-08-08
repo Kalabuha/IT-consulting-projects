@@ -7,7 +7,7 @@ using WebAppForAdmins.Models.Contacts;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Senior, Admin")]
     public class ContactsController : Controller
     {
         private readonly IContactService _contactService;

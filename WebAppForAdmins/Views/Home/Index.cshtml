@@ -1,1 +1,39 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Домашняя страница";
+}
+
+<div class="container-content-common">
+    <div class="content-block-standart-indent">
+        <h1 class="font-family-1 h1-standart-page gold-text">Добро пожаловать</h1>
+    </div>
+
+    <div class="content-block-standart-indent">
+        <h2 class="font-family-1 h2-standart-page gold-text">
+            Это приложение предназначено для администрирования сайта для гостей компании "Profi"
+        </h2>
+    </div>
+
+    @if (User.Identity == null || !User.Identity.IsAuthenticated)
+    {
+        <div class="content-block-standart-indent">
+            <p class="middle-text font-family-2 gold-text paragraph">
+                В данный момент вы не авторизованы. Для продолжения работы необходимо авторизоваться. Если у вас нет аккаунта обратитесь
+                к своему непосредственному руководителю. ТЕСТОВЫЕ АККАУНТЫ: junior: 111111, senior: 222222, admin: 333333
+            </p>
+        </div>
+
+        <div class="content-block-standart-indent">
+            <div class="home-image-block">
+                <img class="turned-off-robot-img" src="/img/objects/robot-2.png" alt="turned off robot" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="content-block-standart-indent text-align-center">
+            <span class="middle-text font-family-2 gold-text paragraph">
+                Вы выполнили вход в систему.
+            </span>
+        </div>
+    }
+</div>

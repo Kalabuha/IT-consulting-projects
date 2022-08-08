@@ -22,6 +22,9 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
         {
             _context.Database.Migrate();
 
+            var roles = FillUserRolesTable();
+            FillUsersTable(roles);
+
             FillMenuSetsTable("menuSets.json");
 
             FillProjectsTable("projects.json");
@@ -31,7 +34,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
             FillSlogansTable("slogans.json");
 
-            // Одновременно заполняются таблицы и берётся по одному элементу для одного пресета.
+            // Берётся по одному элементу для одного пресета.
             var text = FillTextsTable("texts.json", 3);
             var image = FillImagesTable("images.json", 1);
             var phrase = FillPhraseTable("phrases.json", 2);
@@ -43,6 +46,68 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             _context.SaveChanges();
 
             Console.WriteLine("Всё, база данных заполнена тестовыми данными. Но это не точно...");
+        }
+
+        private UserRoleEntity[] FillUserRolesTable()
+        {
+            //Ограниченный уровень доступа - заявки
+            var juniorRole = new UserRoleEntity()
+            {
+                Name = "Junior",
+            };
+
+            //Ограниченный уровень доступа - тоже, что и у младшего и ещё контент гостевого сайта: проекты, услуги, блоги, контакты
+            var seniorRole = new UserRoleEntity()
+            {
+                Name = "Senior",
+            };
+
+            //Полный уровень доступа - всё что у работников и ещё оформление гостевого сайта: заголовок(меню, слоган), главная сртаница
+            var adminRole = new UserRoleEntity()
+            {
+                Name = "Admin",
+            };
+
+            _context.Roles.Add(juniorRole);
+            _context.Roles.Add(seniorRole);
+            _context.Roles.Add(adminRole);
+
+            var roles = new UserRoleEntity[] { juniorRole, seniorRole, adminRole};
+            return roles;
+        }
+
+        private void FillUsersTable(UserRoleEntity[] roles)
+        {
+            //pass: 111111
+            var junior = new UserEntity()
+            {
+                Login = "junior",
+                PasswordSalt = "38fde5569cbf4f3bb3a30b2ad30cb9c8",
+                PasswordHash = "CKWIZ6DS1AL4UBolqMtMhLDI7HujbGqzGL/covwMNUM=",
+                Role = roles[0],
+            };
+
+            //pass: 222222
+            var senior = new UserEntity()
+            {
+                Login = "senior",
+                PasswordSalt = "cd7f988c2ee8401f80820d6aa017f50b",
+                PasswordHash = "9+cs5wj2/DYRa6f0+oiE924BSgzvcDO0KDIYzbTbh3E=",
+                Role = roles[1],
+            };
+
+            //pass: 333333
+            var admin = new UserEntity()
+            {
+                Login = "admin",
+                PasswordSalt = "c779e07ada924bef9230113e03f5cdc5",
+                PasswordHash = "WJKe5gond5QYbFiX06/6NOLaTyaiAGobA9FSk63aqrs=",
+                Role = roles[2]
+            };
+
+            _context.Users.Add(junior);
+            _context.Users.Add(senior);
+            _context.Users.Add(admin);
         }
 
         private TEntityTest[] GetTestEntities<TEntityTest>(string nameJsonFile) where TEntityTest : class

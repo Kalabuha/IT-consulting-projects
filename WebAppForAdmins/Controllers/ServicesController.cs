@@ -7,7 +7,7 @@ using WebAppForAdmins.Models.Services;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Senior, Admin")]
     public class ServicesController : Controller
     {
         private readonly IServiceService _serviceService;

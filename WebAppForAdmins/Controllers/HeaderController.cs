@@ -7,7 +7,7 @@ using Resources.Models;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class HeaderController : Controller
     {
         private readonly IHeaderService _headerService;
@@ -122,6 +122,7 @@ namespace WebAppForAdmins.Controllers
             return RedirectToAction(nameof(CustomizeMenu));
         }
 
+        [HttpGet]
         public async Task<IActionResult> CustomizeSlogan()
         {
             var allSloganDatas = await _headerService.GetAllSloganDatasAsync();

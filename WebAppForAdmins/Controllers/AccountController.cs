@@ -38,7 +38,12 @@ namespace WebAppForAdmins.Controllers
                 return View(nameof(Login), model);
             }
 
-            await Authenticate(user.Login, user.Role);
+            if (user.Role == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            await Authenticate(user.Login, user.Role.Name);
             return RedirectToAction("Index", "Applications");
         }
 
@@ -46,7 +51,7 @@ namespace WebAppForAdmins.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Applications");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -55,13 +60,13 @@ namespace WebAppForAdmins.Controllers
             return View(new SignUpViewModel());
         }
 
-        private async Task Authenticate(string login, UserRole role)
+        private async Task Authenticate(string login, string role)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, login),
-                new Claim(ClaimTypes.Role, role.ToString())
+                new Claim(ClaimTypes.Role, role)
             };
             // создаем объект ClaimsIdentity
             var id = new ClaimsIdentity(

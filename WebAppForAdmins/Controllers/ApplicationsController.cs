@@ -8,7 +8,7 @@ using Services.Interfaces;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Junior, Senior, Admin")]
     public class ApplicationsController : Controller
     {
         private readonly IApplicationService _applicationService;
@@ -18,7 +18,6 @@ namespace WebAppForAdmins.Controllers
             _applicationService = applicationService;
         }
 
-        // GET: AcceptanceApplications
         public ActionResult Index()
         {
             return View();
@@ -54,13 +53,11 @@ namespace WebAppForAdmins.Controllers
             });
         }
 
-        // GET: AcceptanceApplications/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AcceptanceApplications/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -75,13 +72,11 @@ namespace WebAppForAdmins.Controllers
             }
         }
 
-        // GET: AcceptanceApplications/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: AcceptanceApplications/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -96,13 +91,11 @@ namespace WebAppForAdmins.Controllers
             }
         }
 
-        // GET: AcceptanceApplications/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AcceptanceApplications/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

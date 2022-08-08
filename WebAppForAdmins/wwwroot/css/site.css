@@ -118,14 +118,18 @@
 .header {
     flex: 1 1 30px;
     box-sizing: border-box;
-    padding-top: 18px;
     background-color: rgba(223, 188, 47, 0.92);
 }
 
-.profi {
-    margin: 0 0 33px 12px;
+.profi-h1 {
+    margin-left: 12px;
     font-size: 38px;
     font-weight: 600;
+}
+
+.profi-link {
+    display: block;
+    padding: 10px 0;
 }
 
 .navbar-list {
@@ -458,6 +462,17 @@
 
 .overflow-wrap-break-word-block {
     overflow-wrap: break-word;
+}
+
+/* Home */
+.home-image-block {
+    display: flex;
+    justify-content: space-around;
+}
+
+.turned-off-robot-img {
+    max-width: 400px;
+    max-height: 400px;
 }
 
 /* Account */

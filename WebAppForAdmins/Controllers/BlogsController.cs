@@ -8,7 +8,7 @@ using Services.Converters;
 
 namespace WebAppForAdmins.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Senior, Admin")]
     public class BlogsController : Controller
     {
         private readonly IBlogService _blogService;

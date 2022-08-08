@@ -26,6 +26,7 @@ namespace DbContextProfi
         public DbSet<ContactEntity> Contacts => Set<ContactEntity>();
 
         public DbSet<UserEntity> Users => Set<UserEntity>();
+        public DbSet<UserRoleEntity> Roles => Set<UserRoleEntity>();
         #endregion
 
         public DbContextProfiСonnector(DbContextOptions<DbContextProfiСonnector> options) : base(options) { }
@@ -38,6 +39,7 @@ namespace DbContextProfi
                 .Property(a => a.Number)
                 .HasDefaultValueSql("NEXT VALUE FOR ApplicationNumbers");
 
+            builder.ApplyConfiguration(new UserTableConfig());
             builder.ApplyConfiguration(new MainPagePresetTableConfig());
         }
     }

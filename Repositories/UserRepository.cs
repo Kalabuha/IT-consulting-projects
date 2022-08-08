@@ -19,6 +19,9 @@ namespace Repositories
             if (passwordHash != user.PasswordHash)
                 return null;
 
+            var role = Context.Roles.FirstOrDefault(r => r.Id == user.RoleId);
+            user.Role = role;
+
             return user;
         }
     }
