@@ -22,7 +22,8 @@ namespace Resources.Entities
         public string PasswordSalt { get; set; } = default!;
 
         [Column("User_role"), Required]
-        public UserRole Role { get; set; }
+        public int RoleId { get; set; }
+        public UserRoleEntity? Role { get; set; }
 
         public static string CreatePasswordSalt()
         {

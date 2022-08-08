@@ -34,20 +34,19 @@ namespace WebAppForAdmins.Controllers
             var user = _userRepository.Login(model.Login, model.Password);
             if (user == null)
             {
-                ModelState.AddModelError("Login", "Неверный логин или пароль");
                 ModelState.AddModelError("Password", "Неверный логин или пароль");
                 return View(nameof(Login), model);
             }
 
             await Authenticate(user.Login, user.Role);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Applications");
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Applications");
         }
 
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Blogs;
 using Services.Interfaces;
 using Resources.Models;
@@ -7,6 +8,7 @@ using Services.Converters;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class BlogsController : Controller
     {
         private readonly IBlogService _blogService;

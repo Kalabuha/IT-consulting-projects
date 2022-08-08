@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resources.Models;
 using Services.Converters;
 using Services.Interfaces;
@@ -6,6 +7,7 @@ using WebAppForAdmins.Models.Services;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class ServicesController : Controller
     {
         private readonly IServiceService _serviceService;

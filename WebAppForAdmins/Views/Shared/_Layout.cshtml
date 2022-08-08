@@ -15,8 +15,8 @@
                 <h1 class="font-family-1 black-text profi">Profi</h1>
                 <nav class="navbar">
                     <ul class="navbar-list">
-                        @if (true)
-                        {
+                        @*@if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {*@
                             <li class="navbar-item">
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Applications" asp-action="Index">Заявки</a>
                             </li>
@@ -39,12 +39,15 @@
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Contacts" asp-action="Index">Контакты</a>
                             </li>
                             <li class="navbar-item">
-                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
-                            </li>
-                            <li class="navbar-item">
                                 <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
                             </li>
-                        }
+                        @*}
+                        else
+                        {*@
+                            <li class="navbar-item">
+                                <a class="font-family-1 navbar-link" asp-area="" asp-controller="Account" asp-action="Login">Вход</a>
+                            </li>
+                        @*}*@
                     </ul>
                 </nav>
             </header>
@@ -67,7 +70,7 @@
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-image-block">
-                    <img class="footer-img" src="/img/objects/ldr-footer-logo.png" alt="Love, Death & Robots"/>
+                    <img class="footer-img" src="/img/objects/ldr-footer-logo.png" alt="Love, Death & Robots" />
                 </div>
             </div>
         </footer>

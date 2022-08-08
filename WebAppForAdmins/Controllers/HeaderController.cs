@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 using WebAppForAdmins.Models.Header;
 using Services.Converters;
@@ -6,6 +7,7 @@ using Resources.Models;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class HeaderController : Controller
     {
         private readonly IHeaderService _headerService;

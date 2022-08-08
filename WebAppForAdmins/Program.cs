@@ -4,11 +4,14 @@ using Repositories.Extensions;
 using Services.Extensions;
 using WebAppForAdmins.UserContext.Interfaces;
 using WebAppForAdmins.UserContext;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 //Admins
 var builder = WebApplication.CreateBuilder(args);
 
 var mvcBuilder = builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => options.LoginPath = new PathString("/Account/Login"));
 
 //if (builder.Environment.IsDevelopment())
 //{

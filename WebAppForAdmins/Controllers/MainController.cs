@@ -6,9 +6,11 @@ using Resources.Models;
 using Resources.Datas;
 using Services.Converters;
 using WebAppForAdmins.Models.Main;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class MainController : Controller
     {
         private readonly ILogger<MainController> _logger;

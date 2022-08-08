@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Projects;
 using Services.Interfaces;
 using Services.Converters;
@@ -6,6 +7,7 @@ using Resources.Models;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly IProjectService _projectService;

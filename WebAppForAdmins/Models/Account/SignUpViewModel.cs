@@ -18,6 +18,7 @@ namespace WebAppForAdmins.Models.Account
         [Required(ErrorMessage = "Повторите пароль")]
         [StringLength(30, ErrorMessage = "Длина пароля не должна превышать 30 символов")]
         [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Пароль введен неверно")]
         public string RepeatPassword { get; set; } = default!;
     }
 }

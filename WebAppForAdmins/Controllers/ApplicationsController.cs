@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Resources.Models;
 using Resources.Enums;
 using Resources.Extensions;
@@ -7,6 +8,7 @@ using Services.Interfaces;
 
 namespace WebAppForAdmins.Controllers
 {
+    [Authorize]
     public class ApplicationsController : Controller
     {
         private readonly IApplicationService _applicationService;
