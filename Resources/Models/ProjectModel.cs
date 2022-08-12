@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Resources.Models.Base;
 using System.ComponentModel.DataAnnotations;
+using Resources.Models.Base;
 
 namespace Resources.Models
 {

@@ -14,15 +14,11 @@
                         var name = @Html.NameFor(p => p.RequestedStatuses);
                         <li class="select-list-item">
                             <div class="select-list-item-block">
-                                @if (status == ApplicationStatus.Initial)
-                                {
-                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" checked />
-                                }
-                                else
-                                {
-                                    <input class="select-point" type="checkbox" name="@name" id="@currentId" value="@status" />
+                                @{
+                                    var isChecked = status == ApplicationStatus.Initial;
                                 }
 
+                                <input class="select-point x-filter-status-checkbox" type="checkbox" name="@name" id="@currentId" value="@status" checked="@isChecked" />
                                 <label class="text font-family-2 black-text select-label" for="@currentId">@status.TranslateApplicationStatusToDisplayPluralString()</label>
                             </div>
                         </li>
@@ -45,15 +41,11 @@
                         var nameEndPeriod = @Html.NameFor(p => p.EndTimePeriod);
                         <li class="select-list-item">
                             <div class="select-list-item-block">
-                                @if (period == DateTimePeriod.Day)
-                                {
-                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" checked />
-                                }
-                                else
-                                {
-                                    <input class="select-point" type="radio" name="@name" id="@currentId" value="@period" />
+                                @{
+                                    var isChecked = period == DateTimePeriod.Day;
                                 }
 
+                                <input class="select-point x-filter-period-radio" type="radio" name="@name" id="@currentId" value="@period" checked="@isChecked" />
                                 @if (period != DateTimePeriod.SelectedPeriodDateTime)
                                 {
                                     <label class="text font-family-2 black-text select-label" for="@currentId">@period.TranslateDateTimePeriodToDisplayString()</label>
@@ -62,11 +54,11 @@
                                 {
                                     <div class="select-list-item-mini-block">
                                         <label class="text font-family-2 black-text select-label" for="@nameStartPeriod">От:</label>
-                                        <input class="select-input-field" type="date" name="@nameStartPeriod" id="StartDateTiem" />
+                                        <input class="select-input-field x-filter-start-date" type="date" name="@nameStartPeriod" id="StartDateTiem" />
                                     </div>
                                     <div class="select-list-item-mini-block">
                                         <label class="text font-family-2 black-text select-label" for="@nameEndPeriod">До:</label>
-                                        <input class="select-input-field" type="date" name="@nameEndPeriod" id="EndDateTiem" />
+                                        <input class="select-input-field x-filter-end-date" type="date" name="@nameEndPeriod" id="EndDateTiem" />
                                     </div>
                                 }
                             </div>

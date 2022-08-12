@@ -7,9 +7,9 @@
     </div>
 
     <div class="content-block">
-        <table class="line-table">
+        <table class="application-table" id="applicationTable" data-update-url="@Url.Action("ChangeApplicationStatus", "Applications")">
             <thead class="line-table-thead">
-                <tr class="line-table-head-row">
+                <tr class="application-table-head-row">
                     <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">№&nbsp</span></th>
                     <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Время</span></th>
                     <th class="line-table-head-cell cell-text-center"><span class="large-text font-family-2 white-text">Имя</span></th>
@@ -21,41 +21,69 @@
             <tbody class="line-table-body">
                 @foreach (var application in Model.Applications)
                 {
-                    <tr class="line-table-body-row">
-                        <td class="line-table-body-cell cell-text-center">
-                            <p class="middle-text font-family-2 black-text">@application.Number</p>
-                        </td>
-                        <td class="line-table-body-cell">
-                            <p class="text font-family-2 black-text">@application.DateReceiptApplication.ToString("dd.MM.yyyy")</p>
-                        </td>
-                        <td class="line-table-body-cell">
-                            <p class="text font-family-2 black-text cut-long-text">@application.GuestName</p>
-                        </td>
-                        <td class="line-table-body-cell">
-                            <p class="text font-family-2 black-text cut-long-text">@application.GuestEmail</p>
-                        </td>
-                        <td class="line-table-body-cell">
-                            <div class="table-body-cell-block">
-                                <p class="text font-family-2 black-text cut-long-text">@application.GuestApplicationText</p>
-                                <button class="text black-text table-button-narrow" type="button">&nbsp&#129095;&nbsp</button>
+                    string applicationTableCellTextId = $"ApplicationTableCellTextId-{application.Id}";
+
+                    <tr class="application-table-body-row x-expandable-text">
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block cell-text-center">
+                                <p class="text font-family-2 black-text text-table">@application.Number</p>
                             </div>
                         </td>
-                        <td class="line-table-body-cell">
-                            <button class="text font-family-2 black-text table-button-wide" type="button">
-                                @application.Status.TranslateApplicationStatusToDisplaySingularString()
-                            </button>
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block">
+                                <p class="text font-family-2 black-text text-table">@application.DateReceiptApplication.ToString("dd.MM.yyyy")</p>
+                            </div>
+                        </td>
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block">
+                                <p class="text font-family-2 black-text text-table cut-long-text x-cut-or-break-text">@application.GuestName</p>
+                            </div>
+                        </td>
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block">
+                                <p class="text font-family-2 black-text text-table cut-long-text x-cut-or-break-text">@application.GuestEmail</p>
+                            </div>
+                        </td>
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block">
+                                <p class="text font-family-2 black-text text-table cut-long-text x-cut-or-break-text">@application.GuestApplicationText</p>
+                            </div>
+                        </td>
+                        <td class="application-table-body-cell">
+                            @{
+                                var statuses = Enum.GetValues<ApplicationStatus>();
+                            }
+
+                            <div class="table-cell-block">
+                                <select class="text font-family-2 black-text table-button-wide x-application-status-select" data-application-id="@application.Id">
+                                    @foreach (var status in statuses)
+                                    {
+                                        var isSelected = status == application.Status;
+                                        var optionClassName = isSelected ? "text-bold" : "text";
+
+                                        <option class="@optionClassName font-family-2 black-text" value="@status" selected="@isSelected">
+                                            @status.TranslateApplicationStatusToDisplaySingularString();
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </td>
+                        <td class="application-table-body-cell">
+                            <div class="table-cell-block">
+                                <button class="table-button-narrow x-expand-table-text" type="button">
+                                    <span class="text font-family-2 black-text">&nbsp&#129095;&nbsp</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-
 }
 else
 {
     <div class="content-block">
         <p class="biggest-text font-family-2 white-text">Заявки не найдены. Попробуте изменить условия поиска.</p>
     </div>
-
 }

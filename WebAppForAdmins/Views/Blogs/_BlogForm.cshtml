@@ -3,7 +3,7 @@
 @{
     var state = ViewData.ModelState;
     var disabled = ViewBag.IsChangeDisabled != null && ViewBag.IsChangeDisabled;
-    var removal = ViewBag.IsImageRemovalAvailable != null && ViewBag.IsImageRemovalAvailable;
+    var removable = ViewBag.IsImageRemovalAvailable != null && ViewBag.IsImageRemovalAvailable;
 }
 
 <input asp-for="Id" type="hidden" />
@@ -61,11 +61,11 @@
             <div class="blog-input-image-block">
                 <input asp-for="BlogImageAsFormFile" class="middle-text font-family-2 black-text input-image" type="file" accept="image/jpeg,image/png" />
 
-                @if (removal)
+                @if (removable)
                 {
                     <div class="blog-remove-image">
                         <input asp-for="IsRemoveImage" class="select-point" disabled="@disabled" />
-                        <label asp-for="IsRemoveImage" aclass="middle-text font-family-2 black-text">&#10006; Убрать изображение</label>
+                        <label asp-for="IsRemoveImage" class="middle-text font-family-2 black-text">&#10006; Убрать изображение</label>
                     </div>
                 }
             </div>

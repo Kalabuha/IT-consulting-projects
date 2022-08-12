@@ -8,7 +8,7 @@
     </div>
 
     <div class="content-block-standart-indent">
-        <div class="filter">
+        <div class="x-filter">
             <partial name="_FilterForm" />
         </div>
     </div>
@@ -17,7 +17,7 @@
         <img class="robots-img" src="/img/objects/robots-1.png" alt="robots" />
     </div>
 
-    <div id="RequestFilterResult">
+    <div class="x-table-reloadable" id="RequestFilterResult" data-load-filter-url="@Url.Action("Filter", "Applications")">
         <div class="content-block-standart-indent content-block-relative">
             <p class="biggest-text font-family-2 white-text">Настройте условия поиска и нажмите "Поиск"</p>
         </div>
@@ -32,7 +32,51 @@
             success: function(response) {
                 $("#RequestFilterResult").html(response);
             }
-        });       
+        });
+
+        $(function() {
+            $("#RequestFilterResult").on('change', '.x-application-status-select', function() {
+                let $inputsApplicationStatuses = $('.x-filter-status-checkbox:checked');
+                let checkedStatusesArray = $inputsApplicationStatuses.map(function(index, elem) {
+                    return $(elem).val();
+                }).get();
+
+                let $inputApplicationPeriod = $('.x-filter-period-radio:checked');
+                let checkedPeriod = $inputApplicationPeriod.val();
+
+                let $inputApplicationStartPeriod = $('.x-filter-start-date');
+                let startPeriod = $inputApplicationStartPeriod.val();
+
+                let $inputApplicationEndPeriod = $('.x-filter-end-date');
+                let endPeriod = $inputApplicationEndPeriod.val();
+
+                let $select = $(this);
+                let statusValue = $select.val();
+                let applicationId = $select.data('application-id');
+
+                let $table = $select.closest('[data-update-url]');
+                let updateApplicationUrl = $table.data('update-url');
+
+                let loadFilterUrl = $('#RequestFilterResult').data('load-filter-url');
+                $.post(
+                    updateApplicationUrl,
+                    {
+                        SelectedApplicationId: applicationId,
+                        SelectedStatus: statusValue
+                    },
+                    function(responseHtml) {
+                        $('#RequestFilterResult').load(
+                            loadFilterUrl,
+                            {
+                                RequestedStatuses: checkedStatusesArray,
+                                RequestedPeriod: checkedPeriod,
+                                StartTimePeriod: startPeriod,
+                                EndTimePeriod: endPeriod,
+                            }
+                        );
+                    });
+              });
+         });
     });
 </script>
 }

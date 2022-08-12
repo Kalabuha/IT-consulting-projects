@@ -80,7 +80,7 @@ namespace WebAppForGuests.Controllers
         [HttpGet]
         public async Task<IActionResult> MessageApplicationSent(int applicationId)
         {
-            var application = await _applicationService.GetApplicationByID(applicationId);
+            var application = await _applicationService.GetApplicationById(applicationId);
             return View(application);
         }
 

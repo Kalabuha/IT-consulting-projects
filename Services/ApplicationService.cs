@@ -39,7 +39,7 @@ namespace Services
             return applications;
         }
 
-        public async Task<ApplicationModel?> GetApplicationByID(int id)
+        public async Task<ApplicationModel?> GetApplicationById(int id)
         {
             var application = (await _applicationRepository.GetApplicationsAsync())
                 .FirstOrDefault(a => a.Id == id);
@@ -47,20 +47,45 @@ namespace Services
             return application?.ApplicationEntityToModel();
         }
 
-        public async Task<int> AddApplicationToDb(ApplicationModel newApplication)
+        public async Task<int> AddApplicationToDb(ApplicationModel model)
         {
-            if (newApplication == null ||
-                string.IsNullOrEmpty(newApplication.GuestName) ||
-                string.IsNullOrEmpty(newApplication.GuestEmail) ||
-                string.IsNullOrEmpty(newApplication.GuestApplicationText))
+            if (CheckApplication(model))
             {
                 return 0;
             }
 
-            var entity = newApplication.ApplicationModelToEntity();
+            var entity = model.ApplicationModelToEntity();
             await _applicationRepository.AddEntityAsync(entity);
             return entity.Id;
         }
 
+        public async Task UpdateApplicationToDb(ApplicationModel model)
+        {
+            if (CheckApplication(model))
+            {
+                return;
+            }
+
+            var entity = await _applicationRepository.GetEntity(model.Id);
+            if (entity == null)
+            {
+                return;
+            }
+
+            var newModel = model.ApplicationModelToEntity(entity);
+            await _applicationRepository.UpdateEntityAsync(newModel);
+        }
+
+        private bool CheckApplication(ApplicationModel newApplication)
+        {
+            if (string.IsNullOrEmpty(newApplication.GuestName) ||
+                string.IsNullOrEmpty(newApplication.GuestEmail) ||
+                string.IsNullOrEmpty(newApplication.GuestApplicationText))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

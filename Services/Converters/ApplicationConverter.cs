@@ -20,7 +20,7 @@ namespace Services.Converters
             };
         }
 
-        public static ApplicationEntity ApplicationModelToEntity(this ApplicationModel model)
+        public static ApplicationEntity ApplicationModelToEntity(this ApplicationModel model, ApplicationEntity? entity = null)
         {
             ApplicationStatus status;
             if (model.GuestName == null || model.GuestEmail == null || model.GuestApplicationText == null)
@@ -32,16 +32,17 @@ namespace Services.Converters
                 status = model.Status;
             }
 
-            return new ApplicationEntity
-            {
-                Id = model.Id,
-                Number = model.Number,
-                GuestName = model.GuestName ?? string.Empty,
-                GuestEmail = model.GuestEmail ?? string.Empty,
-                GuestsApplicationText = model.GuestApplicationText ?? string.Empty,
-                DateReceipt = model.DateReceiptApplication,
-                Status = status
-            };
+            entity ??= new ApplicationEntity();
+
+            entity.Id = model.Id;
+            entity.Number = model.Number;
+            entity.GuestName = model.GuestName ?? string.Empty;
+            entity.GuestEmail = model.GuestEmail ?? string.Empty;
+            entity.GuestsApplicationText = model.GuestApplicationText ?? string.Empty;
+            entity.DateReceipt = model.DateReceiptApplication;
+            entity.Status = status;
+
+            return entity;
         }
     }
 }

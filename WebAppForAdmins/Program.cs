@@ -6,7 +6,6 @@ using WebAppForAdmins.UserContext.Interfaces;
 using WebAppForAdmins.UserContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
-//Admins
 var builder = WebApplication.CreateBuilder(args);
 
 var mvcBuilder = builder.Services.AddControllersWithViews();

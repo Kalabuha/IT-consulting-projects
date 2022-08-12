@@ -5,17 +5,19 @@ VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppForGuests", "WebAppForGuests\WebAppForGuests.csproj", "{5C9D6A98-BF72-4DB5-AE36-843967239540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbContextProfi", "DbContextProfi\DbContextProfi.csproj", "{414C626D-8329-48E7-BD8A-A52B9201F337}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbContextProfi", "DbContextProfi\DbContextProfi.csproj", "{414C626D-8329-48E7-BD8A-A52B9201F337}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{9581CEC9-7E36-4E16-8677-6BB0F5E7BC02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{9581CEC9-7E36-4E16-8677-6BB0F5E7BC02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{9EAAA852-17D4-4E18-A6B3-6E831B6AC803}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{9EAAA852-17D4-4E18-A6B3-6E831B6AC803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{44D6D222-6151-4EB2-9D18-BEABCB2F986D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{44D6D222-6151-4EB2-9D18-BEABCB2F986D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppForAdmins", "WebAppForAdmins\WebAppForAdmins.csproj", "{427012FD-55F8-492D-B6E2-87D2F3FE46D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppForAdmins", "WebAppForAdmins\WebAppForAdmins.csproj", "{427012FD-55F8-492D-B6E2-87D2F3FE46D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppCreateDbProfi", "ConsoleAppCreateDbProfi\ConsoleAppCreateDbProfi.csproj", "{C75D0D09-F3A8-4762-A150-0602E7A225F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppCreateDbProfi", "ConsoleAppCreateDbProfi\ConsoleAppCreateDbProfi.csproj", "{C75D0D09-F3A8-4762-A150-0602E7A225F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWebApli", "WebAppWebApli\WebAppWebApli.csproj", "{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{C75D0D09-F3A8-4762-A150-0602E7A225F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C75D0D09-F3A8-4762-A150-0602E7A225F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C75D0D09-F3A8-4762-A150-0602E7A225F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

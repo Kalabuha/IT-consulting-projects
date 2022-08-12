@@ -23,11 +23,11 @@
                 @foreach (ServiceModel service in Model.Services)
                 {
                     <li class="service-item collapsable">
-                        <div class="service-collapse-block-button collapse collapse-expanded-hide">
+                        <div class="service-collapse-block-button collapse collapse-expanded-hide overflow-wrap-break-word-block">
                             <h2 class="white-text service-title-text-collapse">@service.ServiceName</h2>
                         </div>
 
-                        <div class="service-expand-block collapse-expanded-show">
+                        <div class="service-expand-block collapse-expanded-show overflow-wrap-break-word-block">
                             <h2 class="service-title-text-expand collapse">@service.ServiceName</h2>
                             <p class="paragraph">@service.ServiceDescription</p>
                         </div>

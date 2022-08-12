@@ -24,90 +24,52 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Filter(ApplicationsFilterViewModel model)
+        public async Task<IActionResult> Filter(ApplicationsFilterViewModel filterModel)
+        {
+            var viewModel = await GetApplicationsViewModelAsync(filterModel);
+
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeApplicationStatus(SelectApplicationStatusModel selectModel)
+        {
+            var selectedApplication = await _applicationService.GetApplicationById(selectModel.SelectedApplicationId);
+            if (selectedApplication == null)
+            {
+                return NotFound();
+            }
+
+            selectedApplication.Status = selectModel.SelectedStatus;
+            await _applicationService.UpdateApplicationToDb(selectedApplication);
+
+            return new EmptyResult();
+        }
+
+        private async Task<ApplicationsViewModel> GetApplicationsViewModelAsync(ApplicationsFilterViewModel filterModel)
         {
             List<ApplicationModel> applications;
             // Пользоваетль выбрал период времени из списка предложенных
-            if (model.RequestedPeriod != DateTimePeriod.SelectedPeriodDateTime)
+            if (filterModel.RequestedPeriod != DateTimePeriod.SelectedPeriodDateTime)
             {
                 applications = await _applicationService.GetFilteredApplications(
-                       model.RequestedStatuses, model.RequestedPeriod.GetStartDateTimePeriod(), DateTime.Now);
+                       filterModel.RequestedStatuses, filterModel.RequestedPeriod.GetStartDateTimePeriod(), DateTime.Now);
             }
             // Пользователь указал свой период времени и выбрал его
             else
             {
-                if (model.StartTimePeriod == null || model.EndTimePeriod == null)
+                if (filterModel.StartTimePeriod == null || filterModel.EndTimePeriod == null)
                 {
                     applications = new List<ApplicationModel>();
                 }
                 else
                 {
                     applications = await _applicationService.GetFilteredApplications(
-                        model.RequestedStatuses, model.StartTimePeriod.Value, model.EndTimePeriod.Value);
+                        filterModel.RequestedStatuses, filterModel.StartTimePeriod.Value, filterModel.EndTimePeriod.Value);
                 }
             }
 
-            return PartialView(new ApplicationsViewModel
-            {
-                Applications = applications
-            });
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return new ApplicationsViewModel { Applications = applications };
         }
     }
 }
