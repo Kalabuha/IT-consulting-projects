@@ -8,7 +8,15 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var mvcBuilder = builder.Services.AddControllersWithViews();
+var mvcBuilder = builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+            _ => "Это поле является обязательным.");
+    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(_ => "Некорректное значение поля.");
+    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(_ => "Значением поля должно быть число.");
+    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((_, _) => "Некорректное значение поля.");
+});
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

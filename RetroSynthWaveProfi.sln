@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppForAdmins", "WebAppFo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppCreateDbProfi", "ConsoleAppCreateDbProfi\ConsoleAppCreateDbProfi.csproj", "{C75D0D09-F3A8-4762-A150-0602E7A225F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppWebApli", "WebAppWebApli\WebAppWebApli.csproj", "{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAppWebApli", "WebAppWebApli\WebAppWebApli.csproj", "{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppForEmployees", "WpfAppForEmployees\WpfAppForEmployees.csproj", "{7AE3B991-3932-4C5F-828D-04E8ECDE8FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D70C4FC-4DCA-447E-BF0A-7A855FD9A0F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AE3B991-3932-4C5F-828D-04E8ECDE8FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE3B991-3932-4C5F-828D-04E8ECDE8FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE3B991-3932-4C5F-828D-04E8ECDE8FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE3B991-3932-4C5F-828D-04E8ECDE8FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

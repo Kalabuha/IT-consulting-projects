@@ -50,11 +50,6 @@ namespace WebAppForAdmins.Controllers
                 ModelState.AddModelError("MapAsString", "Изображение карты не установлено");
             }
 
-            if (!CheckPostcodeValidation(model.Postcode))
-            {
-                ModelState.AddModelError("Postcode", "Некорректный почтовый индекс");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(nameof(Create), model);
@@ -95,11 +90,6 @@ namespace WebAppForAdmins.Controllers
                 return NotFound();
             }
 
-            if (!CheckPostcodeValidation(model.Postcode))
-            {
-                ModelState.AddModelError("Postcode", "Некорректный почтовый индекс");
-            }
-
             if (!ModelState.IsValid)
             {
                 var oldModel = oldData.ContactDataToModel();
@@ -138,17 +128,6 @@ namespace WebAppForAdmins.Controllers
         {
             await _contactService.RemoveContactToDbAsync(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool CheckPostcodeValidation(int postcode)
-        {
-            var postCodeLength = postcode.ToString().Length;
-            if (postcode == 0 || postCodeLength != 6)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -4,15 +4,14 @@ using Services.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-
 var connectionString = builder.Configuration.GetConnectionString("DataBase");
 
 if (string.IsNullOrEmpty(connectionString))
     throw new ArgumentNullException(nameof(connectionString));
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterDbContext(connectionString);
 builder.Services.RegisterRepositories();
