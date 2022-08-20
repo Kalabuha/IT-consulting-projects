@@ -22,7 +22,7 @@ namespace WebAppForGuests.Controllers
             var menuData = await _headerService.GetUsedMenuDataAsync();
             ViewBag.PageH1 = menuData.Blogs;
 
-            var blogDatas = await _blogService.GetPublishedBlogModelsAsync();
+            var blogDatas = await _blogService.GetPublishedBlogDatasAsync();
             var blogModels = blogDatas.Select(b => b.BlogDataToModel())
                 .ToList();
 
@@ -32,7 +32,7 @@ namespace WebAppForGuests.Controllers
         [HttpGet]
         public async Task<ActionResult<BlogsViewModel>> BlogDetails(int id)
         {
-            var data = await _blogService.GetBlogByIdAsync(id);
+            var data = await _blogService.GetBlogDataByIdAsync(id);
             if (data == null)
             {
                 return NotFound();

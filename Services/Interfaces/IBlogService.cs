@@ -4,9 +4,9 @@ namespace Services.Interfaces
 {
     public interface IBlogService
     {
-        public Task<List<BlogData>> GetAllBlogModelsAsync();
-        public Task<List<BlogData>> GetPublishedBlogModelsAsync();
-        public Task<BlogData?> GetBlogByIdAsync(int projectId);
+        public Task<List<BlogData>> GetAllBlogDatasAsync();
+        public Task<List<BlogData>> GetPublishedBlogDatasAsync();
+        public Task<BlogData?> GetBlogDataByIdAsync(int projectId);
 
         public Task AddBlogToDbAsync(BlogData data);
         public Task EditBlogToDbAsync(BlogData data);

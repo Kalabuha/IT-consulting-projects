@@ -20,7 +20,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var datas = await _serviceService.GetAllServiceModelsAsync();
+            var datas = await _serviceService.GetAllServiceDatasAsync();
             var models = datas.Select(s => s.ServiceDataToModel())
                 .ToList();
 

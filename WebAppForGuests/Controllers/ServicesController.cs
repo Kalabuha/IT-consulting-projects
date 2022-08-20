@@ -22,7 +22,7 @@ namespace WebAppForGuests.Controllers
             var menuData = await _headerService.GetUsedMenuDataAsync();
             ViewBag.PageH1 = menuData.Services;
 
-            var serviceDatas = await _serviceService.GetPublishedServiceModelsAsync();
+            var serviceDatas = await _serviceService.GetPublishedServiceDatasAsync();
             var serviceModels = serviceDatas.Select(s => s.ServiceDataToModel())
                 .ToList();
 

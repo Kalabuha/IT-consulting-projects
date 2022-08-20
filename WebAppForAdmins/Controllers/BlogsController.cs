@@ -20,7 +20,7 @@ namespace WebAppForAdmins.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var datas = await _blogService.GetAllBlogModelsAsync();
+            var datas = await _blogService.GetAllBlogDatasAsync();
             var models = datas.Select(b => b.BlogDataToModel())
                 .ToList();
 
@@ -57,7 +57,7 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsImageRemovalAvailable = true;
 
-            var data = await _blogService.GetBlogByIdAsync(id);
+            var data = await _blogService.GetBlogDataByIdAsync(id);
             if (data == null)
             {
                 return NotFound();
@@ -72,7 +72,7 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsImageRemovalAvailable = true;
 
-            var oldData = await _blogService.GetBlogByIdAsync(model.Id);
+            var oldData = await _blogService.GetBlogDataByIdAsync(model.Id);
             if (oldData == null)
             {
                 return NotFound();
@@ -104,7 +104,7 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsChangeDisabled = true;
 
-            var data = await _blogService.GetBlogByIdAsync(id);
+            var data = await _blogService.GetBlogDataByIdAsync(id);
             if (data == null)
             {
                 return NotFound();

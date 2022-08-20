@@ -15,7 +15,7 @@ namespace Services
             _blogRepository = blogRepository;
         }
 
-        public async Task<List<BlogData>> GetAllBlogModelsAsync()
+        public async Task<List<BlogData>> GetAllBlogDatasAsync()
         {
             var blogs = (await _blogRepository.GetAllBlogEntitiesAsync())
                 .Select(b => b.BlogEntityToData())
@@ -24,7 +24,7 @@ namespace Services
             return blogs;
         }
 
-        public async Task<List<BlogData>> GetPublishedBlogModelsAsync()
+        public async Task<List<BlogData>> GetPublishedBlogDatasAsync()
         {
             var blogs = (await _blogRepository.GetAllBlogEntitiesAsync())
                 .Where(b => b.IsPublished == true)
@@ -34,7 +34,7 @@ namespace Services
             return blogs;
         }
 
-        public async Task<BlogData?> GetBlogByIdAsync(int projectId)
+        public async Task<BlogData?> GetBlogDataByIdAsync(int projectId)
         {
             var blog = await _blogRepository.GetEntity(projectId);
 

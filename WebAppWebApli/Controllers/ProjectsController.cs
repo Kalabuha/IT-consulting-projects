@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
+using Resources.Datas;
 
 namespace WebAppWebApli.Controllers
 {
@@ -12,36 +13,66 @@ namespace WebAppWebApli.Controllers
         {
             _projectService = projectService;
         }
+
         // GET: api/<ProjectsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<List<ProjectData>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var projects = await _projectService.GetAllProjectDatasAsync();
+
+            return Ok(projects);
         }
 
         // GET api/<ProjectsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<ProjectData>> Get(int id)
         {
-            return "value";
+            var project = await _projectService.GetProjectDataByIdAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(project);
         }
 
         // POST api/<ProjectsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post(ProjectData project)
         {
+            await _projectService.AddProjectToDbAsync(project);
+
+            return Ok();
         }
 
         // PUT api/<ProjectsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Put(ProjectData project)
         {
+            var editedProject = _projectService.GetProjectDataByIdAsync(project.Id);
+            if (editedProject == null)
+            {
+                return NotFound();
+            }
+
+            await _projectService.EditProjectToDbAsync(project);
+
+            return Ok();
         }
 
         // DELETE api/<ProjectsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var deletedProject = _projectService.GetProjectDataByIdAsync(id);
+            if (deletedProject == null)
+            {
+                return NotFound();
+            }
+
+            await _projectService.RemoveProjectToDbAsync(id);
+
+            return Ok();
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Resources.Models;
+using Resources.Datas;
 using Resources.Enums;
 using Resources.Extensions;
 using WebAppForAdmins.Models.Applications;
 using Services.Interfaces;
+using Services.Converters;
 
 namespace WebAppForAdmins.Controllers
 {
@@ -34,7 +36,7 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangeApplicationStatus(SelectApplicationStatusModel selectModel)
         {
-            var selectedApplication = await _applicationService.GetApplicationById(selectModel.SelectedApplicationId);
+            var selectedApplication = await _applicationService.GetApplicationDataById(selectModel.SelectedApplicationId);
             if (selectedApplication == null)
             {
                 return NotFound();
@@ -48,11 +50,11 @@ namespace WebAppForAdmins.Controllers
 
         private async Task<ApplicationsViewModel> GetApplicationsViewModelAsync(ApplicationsFilterViewModel filterModel)
         {
-            List<ApplicationModel> applications;
+            List<ApplicationData> applications;
             // Пользоваетль выбрал период времени из списка предложенных
             if (filterModel.RequestedPeriod != DateTimePeriod.SelectedPeriodDateTime)
             {
-                applications = await _applicationService.GetFilteredApplications(
+                applications = await _applicationService.GetFilteredApplicationDatas(
                        filterModel.RequestedStatuses, filterModel.RequestedPeriod.GetStartDateTimePeriod(), DateTime.Now);
             }
             // Пользователь указал свой период времени и выбрал его
@@ -60,16 +62,21 @@ namespace WebAppForAdmins.Controllers
             {
                 if (filterModel.StartTimePeriod == null || filterModel.EndTimePeriod == null)
                 {
-                    applications = new List<ApplicationModel>();
+                    applications = new List<ApplicationData>();
                 }
                 else
                 {
-                    applications = await _applicationService.GetFilteredApplications(
+                    applications = await _applicationService.GetFilteredApplicationDatas(
                         filterModel.RequestedStatuses, filterModel.StartTimePeriod.Value, filterModel.EndTimePeriod.Value);
                 }
             }
 
-            return new ApplicationsViewModel { Applications = applications };
+            var viewModel = new ApplicationsViewModel()
+            {
+                Applications = applications.Select(a => a.ApplicationDataToModel()).ToList()
+            };
+
+            return viewModel;
         }
     }
 }

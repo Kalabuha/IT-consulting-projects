@@ -52,8 +52,11 @@ namespace WebAppForGuests.Controllers
                 if (actionData != null) viewModel.ActionModel = actionData.ActionDataToModel();
             }
 
-            viewModel.TextModel ??= (await _mainPageService.GetDefaultMainPageTextData()).TextDataToModel();
-            viewModel.ActionModel ??= (await _mainPageService.GetDefaultMainPageActionData()).ActionDataToModel();
+            viewModel.TextModel ??= (await _mainPageService.GetDefaultMainPageTextData())
+                .TextDataToModel();
+
+            viewModel.ActionModel ??= (await _mainPageService.GetDefaultMainPageActionData())
+                .ActionDataToModel();
 
             viewModel.ApplicationModel = new ApplicationModel
             {
@@ -73,22 +76,41 @@ namespace WebAppForGuests.Controllers
 
             TrimApplicationModelData(application);
 
-            var applicationId = await _applicationService.AddApplicationToDb(application);
+            var data = application.ApplicationModelToData();
+            var applicationId = await _applicationService.AddApplicationToDb(data);
+
             return RedirectToAction(nameof(MessageApplicationSent), new { applicationId });
         }
 
         [HttpGet]
         public async Task<IActionResult> MessageApplicationSent(int applicationId)
         {
-            var application = await _applicationService.GetApplicationById(applicationId);
-            return View(application);
+            var data = await _applicationService.GetApplicationDataById(applicationId);
+            if (data == null)
+            {
+                return NotFound();
+            }
+
+            var model = data.ApplicationDataToModel();
+            return View(model);
         }
 
         private void TrimApplicationModelData(ApplicationModel application)
         {
-            application.GuestEmail = application.GuestEmail?.Trim();
-            application.GuestEmail = application.GuestEmail?.Trim();
-            application.GuestApplicationText = application.GuestApplicationText?.Trim();
+            if (!string.IsNullOrEmpty(application.GuestEmail))
+            {
+                application.GuestEmail = application.GuestEmail.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(application.GuestEmail))
+            {
+                application.GuestEmail = application.GuestEmail.Trim();
+            }
+
+            if (!string.IsNullOrEmpty(application.GuestApplicationText))
+            {
+                application.GuestApplicationText = application.GuestApplicationText.Trim();
+            }
         }
     }
 }

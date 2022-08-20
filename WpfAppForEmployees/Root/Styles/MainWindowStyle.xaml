@@ -1,0 +1,63 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="MainWindow" TargetType="Window">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="Height" Value="450" />
+        <Setter Property="MinHeight" Value="300" />
+        <Setter Property="Width" Value="800" />
+        <Setter Property="MinWidth" Value="600" />
+    </Style>
+    
+    <Style x:Key="MainMenu" TargetType="Menu">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="LightGray"/>
+    </Style>
+
+    <Style x:Key="MainTabControl" TargetType="TabControl">
+        <Setter Property="Background" Value="#042744"/>
+        <Setter Property="Margin" Value="6 10 6 0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="MainTabItem" TargetType="TabItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Grid>
+                        <Border Name="Tab" Margin="0 0 1 0" BorderThickness="0" CornerRadius="6 6 0 0">
+                            <ContentPresenter x:Name="TabContent" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="12,2,14,2" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="Tab" Property="Background" Value="#042744" />
+                            <Setter Property="TextElement.Foreground" Value="#dcdcdc" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Tab" Property="Background" Value="#010d17" />
+                            <Setter Property="TextElement.Foreground" Value="#8c8c8c" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="FontWeight" Value="Bold" />
+    </Style>
+
+    <Style x:Key="MainStatusBar" TargetType="StatusBar">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+
+    <Style x:Key="TabItemTextBox" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#dcdcdc"/>
+    </Style>
+</ResourceDictionary>

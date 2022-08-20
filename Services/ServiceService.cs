@@ -15,7 +15,7 @@ namespace Services
             _serviceRepository = serviceRepository;
         }
 
-        public async Task<List<ServiceData>> GetAllServiceModelsAsync()
+        public async Task<List<ServiceData>> GetAllServiceDatasAsync()
         {
             var services = (await _serviceRepository.GetAllServiceEntitiesAsync())
                 .Select(s => s.ServiceEntityToData())
@@ -24,7 +24,7 @@ namespace Services
             return services;
         }
 
-        public async Task<List<ServiceData>> GetPublishedServiceModelsAsync()
+        public async Task<List<ServiceData>> GetPublishedServiceDatasAsync()
         {
             var services = (await _serviceRepository.GetAllServiceEntitiesAsync())
                 .Where(s => s.IsPublished == true)

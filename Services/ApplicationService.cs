@@ -1,6 +1,7 @@
 ﻿using Repositories.Interfaces;
-using Resources.Models;
 using Resources.Enums;
+using Resources.Datas;
+using Resources.Models;
 using Services.Converters;
 using Services.Interfaces;
 
@@ -15,72 +16,72 @@ namespace Services
             _applicationRepository = applicationRepository;
         }
 
-        public async Task<List<ApplicationModel>> GetAllApplicationsAsync()
+        public async Task<List<ApplicationData>> GetAllApplicationsDataAsync()
         {
             var applications = (await _applicationRepository.GetApplicationsAsync())
-                .Select(a => a.ApplicationEntityToModel())
+                .Select(a => a.ApplicationEntityToData())
                 .ToList();
 
             return applications;
         }
 
-        public async Task<List<ApplicationModel>> GetFilteredApplications(ApplicationStatus[] statuses, DateTime start, DateTime end)
+        public async Task<List<ApplicationData>> GetFilteredApplicationDatas(ApplicationStatus[] statuses, DateTime start, DateTime end)
         {
             if (statuses == null || statuses.Length == 0 || start >= end)
             {
-                return new List<ApplicationModel>();
+                return new List<ApplicationData>();
             }
 
             var applications = (await _applicationRepository.GetApplicationsAsync())
                 .Where(a => statuses.Contains(a.Status) && start <= a.DateReceipt && a.DateReceipt <= end)
-                .Select(a => a.ApplicationEntityToModel())
+                .Select(a => a.ApplicationEntityToData())
                 .ToList();
 
             return applications;
         }
 
-        public async Task<ApplicationModel?> GetApplicationById(int id)
+        public async Task<ApplicationData?> GetApplicationDataById(int id)
         {
             var application = (await _applicationRepository.GetApplicationsAsync())
                 .FirstOrDefault(a => a.Id == id);
 
-            return application?.ApplicationEntityToModel();
+            return application?.ApplicationEntityToData();
         }
 
-        public async Task<int> AddApplicationToDb(ApplicationModel model)
+        public async Task<int> AddApplicationToDb(ApplicationData data)
         {
-            if (CheckApplication(model))
+            if (CheckApplication(data))
             {
                 return 0;
             }
 
-            var entity = model.ApplicationModelToEntity();
+            var entity = data.ApplicationDataToEntity();
             await _applicationRepository.AddEntityAsync(entity);
             return entity.Id;
         }
 
-        public async Task UpdateApplicationToDb(ApplicationModel model)
+        public async Task UpdateApplicationToDb(ApplicationData data)
         {
-            if (CheckApplication(model))
+            if (CheckApplication(data))
             {
                 return;
             }
 
-            var entity = await _applicationRepository.GetEntity(model.Id);
+            var entity = await _applicationRepository.GetEntity(data.Id);
             if (entity == null)
             {
                 return;
             }
 
-            var newModel = model.ApplicationModelToEntity(entity);
+            var newModel = data.ApplicationDataToEntity(entity);
             await _applicationRepository.UpdateEntityAsync(newModel);
         }
 
-        private bool CheckApplication(ApplicationModel newApplication)
+        private bool CheckApplication(ApplicationData data)
         {
-            if (string.IsNullOrEmpty(newApplication.GuestName) ||
-                string.IsNullOrEmpty(newApplication.GuestEmail) ||
-                string.IsNullOrEmpty(newApplication.GuestApplicationText))
+            if (string.IsNullOrEmpty(data.GuestName) ||
+                string.IsNullOrEmpty(data.GuestEmail) ||
+                string.IsNullOrEmpty(data.GuestApplicationText))
             {
                 return true;
             }

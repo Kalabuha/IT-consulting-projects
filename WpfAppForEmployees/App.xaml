@@ -1,9 +1,16 @@
 ﻿<Application x:Class="WpfAppForEmployees.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfAppForEmployees"
-             StartupUri="Views/Windows/MainWindow.xaml">
+             xmlns:local="clr-namespace:WpfAppForEmployees.Views.Main"
+             xmlns:vm="clr-namespace:WpfAppForEmployees.ViewModels.Locators"
+             StartupUri="Views/Main/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Root/Styles/MainWindowStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <vm:ViewModelLocator x:Key="Locator" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
