@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Extensions
+namespace WebAppWebApli.Client
 {
-    internal class RegisterApiServicesExtensions
+    public class ApiOptions
     {
+        public string Url { get; set; }
     }
 }

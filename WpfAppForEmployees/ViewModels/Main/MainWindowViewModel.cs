@@ -1,29 +1,28 @@
-﻿using WpfAppForEmployees.ViewModels.Base;
-using WpfAppForEmployees.ViewModels.Main.Tabs;
+﻿using System.Threading.Tasks;
+using WebAppWebApli.Client;
+using WpfAppForEmployees.ViewModels.Base;
 
 namespace WpfAppForEmployees.ViewModels.Main
 {
     public class MainWindowViewModel : BaseViewModel
     {
-        public MainWindowViewModel(
-            ApplicationsTabModel applicationsTabModel,
-            ProjectsTabModel projectsTabModel,
-            BlogsTabModel blogsTabModel,
-            ServicesTabModel servicesTabModel)
-        {
-            ApplicationsTabModel = applicationsTabModel;
-            ProjectsTabModel = projectsTabModel;
-            BlogsTabModel = blogsTabModel;
-            ServicesTabModel = servicesTabModel;
-        }
-
-        public ApplicationsTabModel ApplicationsTabModel { get; set; }
-        public ProjectsTabModel ProjectsTabModel { get; set; }
-        public BlogsTabModel BlogsTabModel { get; set; }
-        public ServicesTabModel ServicesTabModel { get; set; }
+        private readonly IApplicationsApi api;
 
         public string Title { get; set; } = "Главное окно";
 
         public string Data { get; set; } = "какой-то текст";
+
+
+        public MainWindowViewModel(IApplicationsApi api)
+        {
+            this.api = api;
+        }
+
+        
+        public async Task Load()
+        {
+            var result = await api.Get();
+            Title = result.GuestName;
+        }
     }
 }

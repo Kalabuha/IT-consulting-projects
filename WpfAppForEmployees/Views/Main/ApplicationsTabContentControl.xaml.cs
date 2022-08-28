@@ -18,9 +18,9 @@ namespace WpfAppForEmployees.Views.Main
     /// <summary>
     /// Interaction logic for ApplicationsTabBodyControl.xaml
     /// </summary>
-    public partial class ApplicationsTabBodyControl : UserControl
+    public partial class ApplicationsTabControl : UserControl
     {
-        public ApplicationsTabBodyControl()
+        public ApplicationsTabControl()
         {
             InitializeComponent();
         }

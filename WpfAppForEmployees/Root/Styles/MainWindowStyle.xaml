@@ -1,6 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--Common-->
+    <Style x:Key="CommonBackgroundOxfordBlue" TargetType="FrameworkElement">
+        <Setter Property="DocumentViewerBase.Background" Value="#042744"/>
+    </Style>
+
+    <Style x:Key="CommonFontFamilyCalibri" TargetType="FrameworkElement">
+        <Setter Property="TextElement.FontFamily" Value="Calibri"/>
+    </Style>
+
+    <Style x:Key="CommonFontFamilyArial" TargetType="FrameworkElement">
+        <Setter Property="TextElement.FontFamily" Value="Arial"/>
+    </Style>
+
+    <!--Elements-->
     <Style x:Key="MainWindow" TargetType="Window">
         <Setter Property="Background" Value="White" />
         <Setter Property="Height" Value="450" />
@@ -9,20 +23,24 @@
         <Setter Property="MinWidth" Value="600" />
     </Style>
     
-    <Style x:Key="MainMenu" TargetType="Menu">
+    <Style x:Key="MainMenu" TargetType="Menu" BasedOn="{StaticResource CommonFontFamilyCalibri}">
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="FontFamily" Value="Calibri" />
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="LightGray"/>
+        <Setter Property="Background" Value="#dcdcdc"/>
+        <Setter Property="Margin" Value="0 0 0 16"/>
     </Style>
 
+    <Style x:Key="BorderTabControl" TargetType="Border">
+        <Setter Property="BorderThickness" Value="6 0 6 0"/>
+        <Setter Property="BorderBrush" Value="White"/>
+    </Style>
+    
     <Style x:Key="MainTabControl" TargetType="TabControl">
-        <Setter Property="Background" Value="#042744"/>
-        <Setter Property="Margin" Value="6 10 6 0"/>
+        <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
-    <Style x:Key="MainTabItem" TargetType="TabItem">
+    <Style x:Key="MainTabItem" TargetType="TabItem" BasedOn="{StaticResource CommonFontFamilyCalibri}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
@@ -37,7 +55,7 @@
                             <Setter Property="TextElement.Foreground" Value="#dcdcdc" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
-                            <Setter TargetName="Tab" Property="Background" Value="#010d17" />
+                            <Setter TargetName="Tab" Property="Background" Value="Black" />
                             <Setter Property="TextElement.Foreground" Value="#8c8c8c" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -46,17 +64,73 @@
         </Setter>
         
         <Setter Property="FontSize" Value="20" />
-        <Setter Property="FontFamily" Value="Calibri" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
-    <Style x:Key="MainStatusBar" TargetType="StatusBar">
+    <Style x:Key="MainStatusBar" TargetType="StatusBar" BasedOn="{StaticResource CommonFontFamilyArial}">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="#dcdcdc"/>
     </Style>
 
+    <Style x:Key="TabControlGridLeftColumn" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="0.5*"/>
+        <Setter Property="MinWidth" Value="160"/>
+    </Style>
+
+    <Style x:Key="TabControlGridRigthColumn" TargetType="ColumnDefinition">
+        <Setter Property="Width" Value="1*"/>
+        <Setter Property="MinWidth" Value="300"/>
+    </Style>
+
+    <Style x:Key="TabControlMainGrid_GridSplitter" TargetType="GridSplitter">
+        <Setter Property="Width" Value="3"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="ShowsPreview" Value="False"/>
+        <Setter Property="Panel.ZIndex" Value="10"/>
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <Style x:Key="TabControlLeftListView" TargetType="ListView" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <Style x:Key="ListViewHeaderGridView" TargetType="GridViewColumnHeader" BasedOn="{StaticResource CommonFontFamilyCalibri}">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="18" />
+    </Style>
+
+    <Style x:Key="TabControlRigthDataGrid" TargetType="DataGrid" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+    
+    <Style x:Key="TabControlLeftColumnGrid_BottomRow" TargetType="RowDefinition">
+        <Setter Property="Height" Value="30"/>
+    </Style>
+
+    <Style x:Key="CrudButtonsGrid" TargetType="Grid">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+    
+    <Style x:Key="CommonButton" TargetType="Button">
+        <Setter Property="Button.Background" Value="#aed3f2"/>
+        <Setter Property="TextElement.FontSize" Value="16"/>
+    </Style>
+    
+    <Style x:Key="TabControlCrudButtons_LeftButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
+        <Setter Property="Margin" Value="8 4 4 4"/>
+    </Style>
+
+    <Style x:Key="TabControlCrudButtons_CenterButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
+        <Setter Property="Margin" Value="4 4 4 4"/>
+    </Style>
+
+    <Style x:Key="TabControlCrudButtons_RigthButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
+        <Setter Property="Margin" Value="4 4 8 4"/>
+    </Style>
+    
     <Style x:Key="TabItemTextBox" TargetType="TextBlock">
         <Setter Property="Foreground" Value="#dcdcdc"/>
     </Style>

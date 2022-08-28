@@ -4,8 +4,8 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using WebAppWebApli.Client;
 using WpfAppForEmployees.ViewModels.Main;
-using WpfAppForEmployees.ViewModels.Main.Tabs;
 
 namespace WpfAppForEmployees
 {
@@ -43,10 +43,12 @@ namespace WpfAppForEmployees
         {
             services.AddSingleton<MainWindowViewModel>();
 
-            services.AddSingleton<ApplicationsTabModel>();
-            services.AddSingleton<ProjectsTabModel>();
-            services.AddSingleton<BlogsTabModel>();
-            services.AddSingleton<ServicesTabModel>();
+            services.AddSingleton<ApplicationsTabViewModel>();
+            services.AddSingleton<ProjectsTabViewModel>();
+            services.AddSingleton<BlogsTabViewModel>();
+            services.AddSingleton<ServicesTabViewModel>();
+            services.Configure<ApiOptions>(host.Configuration.GetSection("Api"));
+            services.AddApiClients();
         }
 
         private static string GetSourceCodePath([CallerFilePath] string path = null!) => path;

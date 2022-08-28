@@ -28,22 +28,24 @@
             <TextBlock Text="Статус"/>
         </StatusBar>
 
-        <TabControl x:Name="MainWindowTabControl" Style="{StaticResource MainTabControl}">
-            <TabItem Header="Заявки" Style="{StaticResource MainTabItem}">
-                <local:ApplicationsTabBodyControl x:Name="ApplicationsControl"/>
-            </TabItem>
+        <Border Style="{StaticResource BorderTabControl}">
+            <TabControl x:Name="MainWindowTabControl" Style="{StaticResource MainTabControl}">
+                <TabItem Header="Заявки" Style="{StaticResource MainTabItem}">
+                    <local:ApplicationsTabControl x:Name="ApplicationsControl"/>
+                </TabItem>
 
-            <TabItem Header="Проекты" Style="{StaticResource MainTabItem}">
-                <local:ProjectsTabBodyControl x:Name="ProjectsControl"/>
-            </TabItem>
+                <TabItem Header="Проекты" Style="{StaticResource MainTabItem}">
+                    <local:ProjectsTabControl x:Name="ProjectsControl"/>
+                </TabItem>
 
-            <TabItem Header="Услуги" Style="{StaticResource MainTabItem}">
-                <local:ServicesTabBodyControl x:Name="ServicesControl"/>
-            </TabItem>
+                <TabItem Header="Услуги" Style="{StaticResource MainTabItem}">
+                    <local:ServicesTabControl x:Name="ServicesControl"/>
+                </TabItem>
 
-            <TabItem Header="Блоги" Style="{StaticResource MainTabItem}">
-                <local:BlogsTabBodyControl x:Name="BlogsControl"/>
-            </TabItem>
-        </TabControl>
+                <TabItem Header="Блоги" Style="{StaticResource MainTabItem}">
+                    <local:BlogsTabControl x:Name="BlogsControl"/>
+                </TabItem>
+            </TabControl>
+        </Border>
     </DockPanel>
 </Window>
