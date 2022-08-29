@@ -1,4 +1,4 @@
-﻿using Resources.Models;
+﻿using WebModels;
 
 namespace WebAppForGuests.Models
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DbContextProfi.TableConfigurations;
-using Resources.Entities;
+using Entities;
 
 namespace DbContextProfi
 {

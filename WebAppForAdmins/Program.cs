@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using DbContextProfi.Extensions;
-using Repositories.Extensions;
-using Services.Extensions;
+using DbRepositories.Extensions;
+using WebServices.Extensions;
 using WebAppForAdmins.UserContext.Interfaces;
 using WebAppForAdmins.UserContext;
 using Microsoft.AspNetCore.Authentication.Cookies;

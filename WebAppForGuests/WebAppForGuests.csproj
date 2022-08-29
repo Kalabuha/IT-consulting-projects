@@ -23,8 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Resources\Resources.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\DataModels\DataModels.csproj" />
+    <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
+    <ProjectReference Include="..\Enums\Enums.csproj" />
+    <ProjectReference Include="..\WebModels\WebModels.csproj" />
+    <ProjectReference Include="..\WebServices\WebServices.csproj" />
   </ItemGroup>
 
 </Project>

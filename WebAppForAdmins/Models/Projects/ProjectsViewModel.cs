@@ -1,4 +1,4 @@
-﻿using Resources.Models;
+﻿using WebModels;
 
 namespace WebAppForAdmins.Models.Projects
 {

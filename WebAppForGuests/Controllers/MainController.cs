@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAppForGuests.Models;
-using Services.Interfaces;
-using Services.Converters;
-using Resources.Models;
-using Resources.Datas;
-using Resources.Enums;
+using WebServices.Interfaces;
+using WebServices.Converters;
+using WebModels;
+using DataModels;
+using Enums;
 
 namespace WebAppForGuests.Controllers
 {

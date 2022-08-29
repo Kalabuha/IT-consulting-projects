@@ -1,7 +1,7 @@
 using DbContextProfi.Extensions;
 using Microsoft.EntityFrameworkCore;
-using Repositories.Extensions;
-using Services.Extensions;
+using DbRepositories.Extensions;
+using WebServices.Extensions;
 
 //Guests
 var builder = WebApplication.CreateBuilder(args);

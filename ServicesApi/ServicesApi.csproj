@@ -14,8 +14,4 @@
     <Folder Include="Base\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RepositoriesApi\RepositoriesApi.csproj" />
-  </ItemGroup>
-
 </Project>

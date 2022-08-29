@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resources.Models;
-using Resources.Datas;
-using Resources.Enums;
-using Resources.Extensions;
 using WebAppForAdmins.Models.Applications;
-using Services.Interfaces;
-using Services.Converters;
+using WebServices.Interfaces;
+using WebServices.Converters;
+using DataModels;
+using Enums;
+using Enums.Extensions;
 
 namespace WebAppForAdmins.Controllers
 {

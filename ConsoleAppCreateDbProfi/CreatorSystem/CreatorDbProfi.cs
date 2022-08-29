@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using DbContextProfi;
-using Resources.Entities;
-using ConsoleAppCreateDbProfi.TestData.TestEntities;
+using Entities;
+using ConsoleAppCreateDbProfi.TestData.CreatorEntities;
 
 namespace ConsoleAppCreateDbProfi.CreatorSystem
 {
@@ -110,24 +110,24 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
             _context.Users.Add(admin);
         }
 
-        private TEntityTest[] GetTestEntities<TEntityTest>(string nameJsonFile) where TEntityTest : class
+        private TCreatorEntity[] GetTestEntities<TCreatorEntity>(string nameJsonFile) where TCreatorEntity : class
         {
             var pathJsonFile = Path.Combine(_FilesDdirectory, nameJsonFile);
 
             if (!File.Exists(pathJsonFile))
             {
-                return new TEntityTest[0];
+                return new TCreatorEntity[0];
             }
 
             var entitiesJson = File.ReadAllText(pathJsonFile);
-            var testEntities = JsonSerializer.Deserialize<TEntityTest[]>(entitiesJson);
+            var testEntities = JsonSerializer.Deserialize<TCreatorEntity[]>(entitiesJson);
 
-            return testEntities ?? new TEntityTest[0];
+            return testEntities ?? new TCreatorEntity[0];
         }
 
         private void FillMenuSetsTable(string menuSetsNameJson)
         {
-            var sets = GetTestEntities<MenuTestEntity>(menuSetsNameJson);
+            var sets = GetTestEntities<MenuCreatorEntity>(menuSetsNameJson);
 
             foreach (var set in sets)
             {
@@ -147,7 +147,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private void FillProjectsTable(string projectsNameJsonFile)
         {
-            var projects = GetTestEntities<ProjectTestEntity>(projectsNameJsonFile);
+            var projects = GetTestEntities<ProjectCreatorEntity>(projectsNameJsonFile);
 
             foreach (var project in projects)
             {
@@ -164,7 +164,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private void FillServicesTable(string servicesNameJsonFile)
         {
-            var services = GetTestEntities<ServiceTestEntity>(servicesNameJsonFile);
+            var services = GetTestEntities<ServiceCreatorEntity>(servicesNameJsonFile);
 
             foreach (var service in services)
             {
@@ -179,7 +179,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private void FillBlogsTable(string blogsNameJsonFile)
         {
-            var blogs = GetTestEntities<BlogTestEntity>(blogsNameJsonFile);
+            var blogs = GetTestEntities<BlogCreatorEntity>(blogsNameJsonFile);
 
             foreach (var blog in blogs)
             {
@@ -197,7 +197,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private void FillContactsTable(string contactsNameJsonFile)
         {
-            var contacts = GetTestEntities<ContactTestEntity>(contactsNameJsonFile);
+            var contacts = GetTestEntities<ContactCreatorEntity>(contactsNameJsonFile);
 
             foreach (var contact in contacts)
             {
@@ -215,7 +215,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private MainPageTextEntity? FillTextsTable(string textsNameJsonFile, int forPresetIndex)
         {
-            var texts = GetTestEntities<TextTestEntity>(textsNameJsonFile);
+            var texts = GetTestEntities<TextCreatorEntity>(textsNameJsonFile);
 
             MainPageTextEntity? forPreset = null;
             for (int i = 0; i < texts.Length; i++)
@@ -238,7 +238,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private MainPageImageEntity? FillImagesTable(string imagesNameJsonFile, int forPresetIndex)
         {
-            var images = GetTestEntities<ImageTestEntity>(imagesNameJsonFile);
+            var images = GetTestEntities<ImageCreatorEntity>(imagesNameJsonFile);
 
             MainPageImageEntity? forPreset = null;
             for (int i = 0; i < images.Length; i++)
@@ -261,7 +261,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private MainPagePhraseEntity? FillPhraseTable(string phrasesNameJsonFile, int forPresetIndex)
         {
-            var phrases = GetTestEntities<PhraseTestEntity>(phrasesNameJsonFile);
+            var phrases = GetTestEntities<PhraseCreatorEntity>(phrasesNameJsonFile);
 
             MainPagePhraseEntity? forPreset = null;
             for (int i = 0; i < phrases.Length; i++)
@@ -284,7 +284,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private MainPageActionEntity? FillActionsTable(string actionsNameJsonFile, int forPresetIndex)
         {
-            var actions = GetTestEntities<ActionTestEntity>(actionsNameJsonFile);
+            var actions = GetTestEntities<ActionCreatorEntity>(actionsNameJsonFile);
 
             MainPageActionEntity? forPreset = null;
             for (int i = 0; i < actions.Length; i++)
@@ -307,7 +307,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private MainPageButtonEntity? FillButtonsTable(string buttonsNameJsonFile, int forPresetIndex)
         {
-            var buttons = GetTestEntities<ButtonTestEntity>(buttonsNameJsonFile);
+            var buttons = GetTestEntities<ButtonCreatorEntity>(buttonsNameJsonFile);
 
             MainPageButtonEntity? forPreset = null;
             for (int i = 0; i < buttons.Length; i++)
@@ -330,7 +330,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
         private void FillSlogansTable(string slogansNameJsonFile)
         {
-            var slogans = GetTestEntities<SloganTestEntity>(slogansNameJsonFile);
+            var slogans = GetTestEntities<SloganCreatorEntity>(slogansNameJsonFile);
 
             foreach (var slogan in slogans)
             {

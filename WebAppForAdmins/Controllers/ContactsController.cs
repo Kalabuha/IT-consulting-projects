@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Resources.Models;
-using Services.Converters;
-using Services.Interfaces;
 using WebAppForAdmins.Models.Contacts;
+using WebServices.Interfaces;
+using WebServices.Converters;
+using WebModels;
 
 namespace WebAppForAdmins.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Resources.Entities;
+using Entities;
 
 namespace DbContextProfi.TableConfigurations
 {

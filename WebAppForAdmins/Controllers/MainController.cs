@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WebAppForAdmins.Models;
-using Services.Interfaces;
-using Resources.Models;
-using Resources.Datas;
-using Services.Converters;
-using WebAppForAdmins.Models.Main;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
+using WebAppForAdmins.Models.Main;
+using WebAppForAdmins.Models;
+using WebServices.Interfaces;
+using WebServices.Converters;
+using WebModels;
+using DataModels;
 
 namespace WebAppForAdmins.Controllers
 {

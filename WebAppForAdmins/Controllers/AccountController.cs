@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
-using Repositories.Interfaces;
+using DbRepositories.Interfaces;
 using WebAppForAdmins.Models.Account;
-using Resources.Enums;
 
 namespace WebAppForAdmins.Controllers
 {

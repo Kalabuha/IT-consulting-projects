@@ -1,4 +1,4 @@
-﻿using Resources.Enums;
+﻿using Enums;
 
 namespace WebAppForAdmins.Models.Applications
 {

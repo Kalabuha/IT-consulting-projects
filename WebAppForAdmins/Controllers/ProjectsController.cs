@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Projects;
-using Services.Interfaces;
-using Services.Converters;
-using Resources.Models;
+using WebServices.Interfaces;
+using WebServices.Converters;
+using WebModels;
 
 namespace WebAppForAdmins.Controllers
 {
