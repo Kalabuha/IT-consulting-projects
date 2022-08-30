@@ -33,7 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommonDataConverters\CommonDataConverters.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
+    <ProjectReference Include="..\EntitiesDataModelsConverters\EntitiesDataModelsConverters.csproj" />
     <ProjectReference Include="..\WebModels\WebModels.csproj" />
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />

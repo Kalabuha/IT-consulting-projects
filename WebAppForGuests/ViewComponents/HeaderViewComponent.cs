@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebServices.Interfaces;
-using WebServices.Converters;
+using DataModelsWebModelsConverters;
 using WebAppForGuests.Models;
 
 namespace WebAppForGuests.ViewComponents

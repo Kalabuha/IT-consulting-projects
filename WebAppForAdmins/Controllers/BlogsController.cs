@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Blogs;
 using WebServices.Interfaces;
-using WebServices.Converters;
+using DataModelsWebModelsConverters;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers

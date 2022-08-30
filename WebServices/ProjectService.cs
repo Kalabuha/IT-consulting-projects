@@ -1,6 +1,7 @@
 ﻿using DbRepositories.Interfaces;
 using WebServices.Interfaces;
-using WebServices.Converters;
+using EntitiesDataModelsConverters;
+using CommonDataConverters;
 using WebServices.Common;
 using DataModels;
 
@@ -46,7 +47,7 @@ namespace WebServices
             if (string.IsNullOrEmpty(data.CustomerCompanyLogoAsString))
             {
                 var pathToDefaultCompanyLogo = GetDefaultImageFromFile("retro-wave-logo.png");
-                var defaultCompanyLogoAsArray64 = CommonDataConverter.PathToImageToArray64(pathToDefaultCompanyLogo);
+                var defaultCompanyLogoAsArray64 = ImageDataConverter.PathToImageToArray64(pathToDefaultCompanyLogo);
                 data.CustomerCompanyLogoAsString = Convert.ToBase64String(defaultCompanyLogoAsArray64);
             }
 

@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataModelsWebModelsConverters\DataModelsWebModelsConverters.csproj" />
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />

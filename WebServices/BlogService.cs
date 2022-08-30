@@ -1,6 +1,6 @@
 ﻿using DbRepositories.Interfaces;
 using WebServices.Interfaces;
-using WebServices.Converters;
+using EntitiesDataModelsConverters;
 using DataModels;
 
 namespace WebServices
