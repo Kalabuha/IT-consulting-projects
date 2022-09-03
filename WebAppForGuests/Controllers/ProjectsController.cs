@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAppForGuests.Models;
-using WebServices.Interfaces;
+using ServiceInterfaces;
 using DataModelsWebModelsConverters;
 
 namespace WebAppForGuests.Controllers

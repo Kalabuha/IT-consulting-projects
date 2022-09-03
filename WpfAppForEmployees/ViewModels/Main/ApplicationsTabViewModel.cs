@@ -1,6 +1,6 @@
 ﻿using WpfAppForEmployees.ViewModels.Base;
 using WpfAppForEmployees.ViewModels.Main.Base;
-using Resources.Datas;
+using DataModels;
 using System.Windows.Media.Imaging;
 
 namespace WpfAppForEmployees.ViewModels.Main

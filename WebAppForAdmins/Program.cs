@@ -35,8 +35,8 @@ if (string.IsNullOrEmpty(connectionString))
     throw new ArgumentNullException(nameof(connectionString));
 
 builder.Services.RegisterDbContext(connectionString);
-builder.Services.RegisterRepositories();
-builder.Services.RegisterServices();
+builder.Services.RegisterDbRepositories();
+builder.Services.RegisterWebServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContextAccessor>();
 

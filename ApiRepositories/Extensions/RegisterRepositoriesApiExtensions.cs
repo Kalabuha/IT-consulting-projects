@@ -8,7 +8,7 @@ namespace ApiRepositories.Extensions
         {
             services
                 .AddHttpClient("Api", client => client.BaseAddress = new Uri(hostApi))
-                .AddTypedClient<ProjectRepositoryApi>();
+                .AddTypedClient<ProjectApiRepository>();
 
             return services;
         }

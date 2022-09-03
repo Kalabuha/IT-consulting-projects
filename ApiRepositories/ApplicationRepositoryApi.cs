@@ -1,8 +1,8 @@
-﻿using ApiRepositories.Interfaces;
+﻿using RepositoryInterfaces;
 
 namespace ApiRepositories
 {
-    public class ApplicationRepositoryApi : IApplicationRepositoryApi
+    public class ApplicationRepositoryApi
     {
     }
 }

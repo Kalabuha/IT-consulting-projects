@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using WebAppWebApli.Client;
+using WebAppDataApi.Client;
 using WpfAppForEmployees.ViewModels.Main;
 
 namespace WpfAppForEmployees

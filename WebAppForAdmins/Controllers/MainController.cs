@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
 using WebAppForAdmins.Models.Main;
 using WebAppForAdmins.Models;
-using WebServices.Interfaces;
+using ServiceInterfaces;
 using DataModelsWebModelsConverters;
 using WebModels;
 using DataModels;

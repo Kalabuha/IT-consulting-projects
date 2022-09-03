@@ -1,8 +1,8 @@
-﻿using ApiServices.Interfaces;
+﻿using ServiceInterfaces;
 
 namespace ApiServices
 {
-    internal class ApplicationServiceApi : IApplicationServiceApi
+    internal class ApplicationServiceApi
     {
 
     }

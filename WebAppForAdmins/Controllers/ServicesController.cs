@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAppForAdmins.Models.Services;
-using WebServices.Interfaces;
+using ServiceInterfaces;
 using DataModelsWebModelsConverters;
 using WebModels;
 

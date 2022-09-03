@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using DbRepositories.Extensions;
 using WebServices.Extensions;
 
-//Guests
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+
 var mvcBuilder = builder.Services.AddControllersWithViews();
 
 //if (builder.Environment.IsDevelopment())
@@ -20,8 +19,8 @@ if (string.IsNullOrEmpty(connectionString))
     throw new ArgumentNullException(nameof(connectionString));
 
 builder.Services.RegisterDbContext(connectionString);
-builder.Services.RegisterRepositories();
-builder.Services.RegisterServices();
+builder.Services.RegisterDbRepositories();
+builder.Services.RegisterWebServices();
 var app = builder.Build();
 
 app.UseHttpsRedirection();

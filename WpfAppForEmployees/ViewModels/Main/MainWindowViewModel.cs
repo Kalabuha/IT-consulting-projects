@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using WebAppWebApli.Client;
+using WebAppDataApi.Client;
 using WpfAppForEmployees.ViewModels.Base;
 
 namespace WpfAppForEmployees.ViewModels.Main

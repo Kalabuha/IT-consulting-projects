@@ -14,8 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.RegisterDbContext(connectionString);
-builder.Services.RegisterRepositories();
-builder.Services.RegisterServices();
+builder.Services.RegisterDbRepositories();
+builder.Services.RegisterWebServices();
 builder.Services.AddHttpContextAccessor();
 
 

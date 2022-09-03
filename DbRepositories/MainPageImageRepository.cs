@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DbRepositories.Interfaces;
+using RepositoryInterfaces;
 using DbRepositories.Base;
 using DbContextProfi;
 using Entities;

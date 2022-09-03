@@ -1,5 +1,5 @@
 ﻿using DbContextProfi;
-using DbRepositories.Interfaces;
+using RepositoryInterfaces;
 using Entities.Base;
 
 namespace DbRepositories.Base
@@ -13,27 +13,47 @@ namespace DbRepositories.Base
             Context = context;
         }
 
-        public async Task AddEntityAsync(TEntity entity)
-        {
-            await Context.AddAsync(entity);
-            await Context.SaveChangesAsync();
-        }
-
-        public async Task UpdateEntityAsync(TEntity entity)
-        {
-            Context.Update(entity);
-            await Context.SaveChangesAsync();
-        }
-
-        public async Task RemoveEntityAsync(TEntity entity)
-        {
-            Context.Remove(entity);
-            await Context.SaveChangesAsync();
-        }
-
-        public async Task<TEntity?> GetEntity(int? id)
+        public async Task<TEntity?> GetEntityAsync(int? id)
         {
             return id.HasValue ? await Context.FindAsync<TEntity>(id) : null;
+        }
+
+        public async Task<bool> AddEntityAsync(TEntity entity)
+        {
+            if (entity != null)
+            {
+                await Context.AddAsync(entity);
+                await Context.SaveChangesAsync();
+                return true;
+            }
+            
+            return false;
+        }
+
+        public async Task<bool> UpdateEntityAsync(TEntity entity)
+        {
+            var entityFromDb = await GetEntityAsync(entity.Id);
+            if (entityFromDb != null)
+            {
+                Context.Update(entity);
+                await Context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> RemoveEntityAsync(int id)
+        {
+            var entity = await GetEntityAsync(id);
+            if (entity != null)
+            {
+                Context.Remove(entity);
+                await Context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

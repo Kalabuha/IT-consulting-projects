@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebServices.Interfaces;
+using ServiceInterfaces;
 using DataModels;
 
 namespace WebAppDataApi.Controllers

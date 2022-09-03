@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
+    <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
     <ProjectReference Include="..\WebServices\WebServices.csproj" />
   </ItemGroup>
 

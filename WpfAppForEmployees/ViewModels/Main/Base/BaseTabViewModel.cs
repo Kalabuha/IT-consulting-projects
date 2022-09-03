@@ -1,5 +1,5 @@
 ﻿using WpfAppForEmployees.ViewModels.Base;
-using Resources.Datas.Base;
+using DataModels.Base;
 using System.Collections.ObjectModel;
 
 namespace WpfAppForEmployees.ViewModels.Main.Base

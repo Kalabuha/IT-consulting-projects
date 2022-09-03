@@ -1,7 +1,7 @@
 ﻿using DbContextProfi;
 using Microsoft.EntityFrameworkCore;
 using DbRepositories.Base;
-using DbRepositories.Interfaces;
+using RepositoryInterfaces;
 using Entities;
 
 namespace DbRepositories
