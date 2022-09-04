@@ -7,23 +7,23 @@ namespace DbRepositories.Extensions
     {
         public static IServiceCollection RegisterDbRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserDbRepository>();
 
-            services.AddScoped<IHeaderMenuSetRepository, HeaderMenuSetRepository>();
-            services.AddScoped<IHeaderSloganRepository, HeaderSloganRepository>();
+            services.AddScoped<IHeaderMenuSetRepository, HeaderMenuSetDbRepository>();
+            services.AddScoped<IHeaderSloganRepository, HeaderSloganDbRepository>();
 
-            services.AddScoped<IMainPagePresetRepository, MainPagePresetRepository>();
-            services.AddScoped<IMainPageActionRepository, MainPageActionRepository>();
-            services.AddScoped<IMainPageButtonRepository, MainPageButtonRepository>();
-            services.AddScoped<IMainPageImageRepository, MainPageImageRepository>();
-            services.AddScoped<IMainPagePhraseRepository, MainPagePhraseRepository>();
-            services.AddScoped<IMainPageTextRepository, MainPageTextRepository>();
+            services.AddScoped<IMainPagePresetRepository, MainPagePresetDbRepository>();
+            services.AddScoped<IMainPageActionRepository, MainPageActionDbRepository>();
+            services.AddScoped<IMainPageButtonRepository, MainPageButtonDbRepository>();
+            services.AddScoped<IMainPageImageRepository, MainPageImageDbRepository>();
+            services.AddScoped<IMainPagePhraseRepository, MainPagePhraseDbRepository>();
+            services.AddScoped<IMainPageTextRepository, MainPageTextDbRepository>();
 
-            services.AddScoped<IApplicationRepository, ApplicationRepository>();
-            services.AddScoped<IProjectRepository, ProjectRepository>();
-            services.AddScoped<IServiceRepository, ServiceRepository>();
-            services.AddScoped<IBlogRepository, BlogRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IApplicationRepository, ApplicationDbRepository>();
+            services.AddScoped<IProjectRepository, ProjectDbRepository>();
+            services.AddScoped<IServiceRepository, ServiceDbRepository>();
+            services.AddScoped<IBlogRepository, BlogDbRepository>();
+            services.AddScoped<IContactRepository, ContactDbRepository>();
 
             return services;
         }

@@ -1,11 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Runtime.CompilerServices;
+using WpfAppForEmployees.ViewModels;
+using WpfAppForEmployees.ViewModels.TabViewModels;
+using ApiRepositories.Extensions;
+using ContentDataServices.Extensions;
 using WebAppDataApi.Client;
-using WpfAppForEmployees.ViewModels.Main;
 
 namespace WpfAppForEmployees
 {
@@ -41,13 +45,21 @@ namespace WpfAppForEmployees
 
         public static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
-            services.AddSingleton<MainWindowViewModel>();
+            IConfigurationSection hostUrlSection = host.Configuration.GetSection("Api");
 
+            //ViewModels
+            services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<ApplicationsTabViewModel>();
             services.AddSingleton<ProjectsTabViewModel>();
             services.AddSingleton<BlogsTabViewModel>();
             services.AddSingleton<ServicesTabViewModel>();
-            services.Configure<ApiOptions>(host.Configuration.GetSection("Api"));
+
+            //Repositories
+            services.RegisterApiRepositories(hostUrlSection.Value);
+
+            //Services
+            services.RegisterContentDataServices();
+            services.Configure<ApiOptions>(hostUrlSection);
             services.AddApiClients();
         }
 

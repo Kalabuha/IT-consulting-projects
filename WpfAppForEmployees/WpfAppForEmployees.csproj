@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiRepositories\ApiRepositories.csproj" />
+    <ProjectReference Include="..\ApiServices\ApiServices.csproj" />
+    <ProjectReference Include="..\ContentDataServices\ContentDataServices.csproj" />
+    <ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj" />
+    <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
     <ProjectReference Include="..\WebAppDataApi.Client\WebAppDataApi.Client.csproj" />
   </ItemGroup>
 

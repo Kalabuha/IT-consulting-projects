@@ -6,9 +6,9 @@ using Entities;
 
 namespace DbRepositories
 {
-    internal class MainPageButtonRepository : BaseRepository<MainPageButtonEntity>, IMainPageButtonRepository
+    internal class MainPageButtonDbRepository : BaseDbRepository<MainPageButtonEntity>, IMainPageButtonRepository
     {
-        public MainPageButtonRepository(DbContextProfiСonnector context) : base(context) { }
+        public MainPageButtonDbRepository(DbContextProfiСonnector context) : base(context) { }
 
         public async Task<MainPageButtonEntity[]> GetAllMainPageButtonEntitiesAsync()
         {

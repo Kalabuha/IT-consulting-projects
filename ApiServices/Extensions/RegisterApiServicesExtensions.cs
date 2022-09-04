@@ -4,7 +4,7 @@ namespace ApiServices.Extensions
 {
     public static class RegisterApiServicesExtensions
     {
-        public static IServiceCollection RegisterServicesApi(this IServiceCollection services)
+        public static IServiceCollection RegisterApiServices(this IServiceCollection services)
         {
 
             return services;

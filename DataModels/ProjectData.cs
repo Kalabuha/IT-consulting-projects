@@ -1,6 +1,8 @@
-﻿namespace DataModels
+﻿using DataModels.Base;
+
+namespace DataModels
 {
-    public class ProjectData
+    public class ProjectData : BaseData
     {
         public int Id { get; set; }
 

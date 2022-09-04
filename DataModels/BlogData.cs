@@ -1,8 +1,9 @@
-﻿namespace DataModels
+﻿using DataModels.Base;
+
+namespace DataModels
 {
-    public class BlogData
+    public class BlogData : BaseData
     {
-        public int Id { get; set; }
         public string BlogTitle { get; set; } = default!;
         public string ShortBlogDescription { get; set; } = default!;
         public string LongBlogDescription { get; set; } = default!;

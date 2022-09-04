@@ -1,8 +1,9 @@
-﻿namespace DataModels
+﻿using DataModels.Base;
+
+namespace DataModels
 {
-    public class MenuData
+    public class MenuData : BaseData
     {
-        public int Id { get; set; }
         public string Main { get; set; } = default!;
         public string Services { get; set; } = default!;
         public string Projects { get; set; } = default!;

@@ -18,6 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AppearanceDataServices\AppearanceDataServices.csproj" />
+    <ProjectReference Include="..\ContentDataServices\ContentDataServices.csproj" />
     <ProjectReference Include="..\DataModelsWebModelsConverters\DataModelsWebModelsConverters.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />

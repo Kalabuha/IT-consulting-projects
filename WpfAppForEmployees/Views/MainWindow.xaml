@@ -1,0 +1,51 @@
+﻿<Window x:Class="WpfAppForEmployees.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppForEmployees.Views.MainWindowTabs"
+        mc:Ignorable="d"
+        DataContext="{Binding MainWindowViewModel, Source={StaticResource Locator}}"
+        Style="{StaticResource MainWindow}"
+        Title="{Binding Title}">
+
+    <DockPanel>
+        <Menu x:Name="MainWindowMenu" DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть"/>
+                <Separator/>
+                <MenuItem Header="Закрыть"/>
+            </MenuItem>
+
+            <MenuItem Header="Система">
+                <MenuItem Header="Вход в систему"/>
+                <Separator/>
+                <MenuItem Header="Настройки"/>
+            </MenuItem>
+        </Menu>
+
+        <StatusBar x:Name="MainWindowStatusBar" DockPanel.Dock="Bottom" Style="{StaticResource MainStatusBar}">
+            <TextBlock Text="Статус"/>
+        </StatusBar>
+
+        <Border Style="{StaticResource BorderTabControl}">
+            <TabControl x:Name="MainWindowTabControl" Style="{StaticResource MainTabControl}">
+                <TabItem Header="Заявки" Style="{StaticResource MainTabItem}">
+                    <local:ApplicationsTabControl x:Name="ApplicationsControl"/>
+                </TabItem>
+
+                <TabItem Header="Проекты" Style="{StaticResource MainTabItem}" Height="28" VerticalAlignment="Top">
+                    <local:ProjectsTabControl x:Name="ProjectsControl"/>
+                </TabItem>
+
+                <TabItem Header="Услуги" Style="{StaticResource MainTabItem}">
+                    <local:ServicesTabControl x:Name="ServicesControl"/>
+                </TabItem>
+
+                <TabItem Header="Блоги" Style="{StaticResource MainTabItem}">
+                    <local:BlogsTabControl x:Name="BlogsControl"/>
+                </TabItem>
+            </TabControl>
+        </Border>
+    </DockPanel>
+</Window>

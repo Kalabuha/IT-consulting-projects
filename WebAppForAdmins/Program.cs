@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using DbContextProfi.Extensions;
 using DbRepositories.Extensions;
 using WebServices.Extensions;
+using AppearanceDataServices.Extensions;
+using ContentDataServices.Extensions;
 using WebAppForAdmins.UserContext.Interfaces;
 using WebAppForAdmins.UserContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -36,6 +38,8 @@ if (string.IsNullOrEmpty(connectionString))
 
 builder.Services.RegisterDbContext(connectionString);
 builder.Services.RegisterDbRepositories();
+builder.Services.RegisterAppearanceDataServices();
+builder.Services.RegisterContentDataServices();
 builder.Services.RegisterWebServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserContext, UserContextAccessor>();
