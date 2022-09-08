@@ -8,9 +8,9 @@ namespace WebAppForAdmins.Models.Main
         public int SelectedImageId { get; set; }
         public int SelectedPhraseId { get; set; }
         public int SelectedButtonId { get; set; }
-        public IList<MainPageImageModel> Images { get; set; } = default!;
-        public IList<MainPagePhraseModel> Phrases { get; set; } = default!;
-        public IList<MainPageButtonModel> Buttons { get; set; } = default!;
+        public IList<MainPageImageWebModel> Images { get; set; } = default!;
+        public IList<MainPagePhraseWebModel> Phrases { get; set; } = default!;
+        public IList<MainPageButtonWebModel> Buttons { get; set; } = default!;
 
         public static ImageBlockViewModel CreateEmptyImageBlockViewModel()
         {
@@ -20,9 +20,9 @@ namespace WebAppForAdmins.Models.Main
                 SelectedImageId = 0,
                 SelectedPhraseId = 0,
                 SelectedButtonId = 0,
-                Images = new List<MainPageImageModel>(),
-                Phrases = new List<MainPagePhraseModel>(),
-                Buttons = new List<MainPageButtonModel>()
+                Images = new List<MainPageImageWebModel>(),
+                Phrases = new List<MainPagePhraseWebModel>(),
+                Buttons = new List<MainPageButtonWebModel>()
             };
 
             return emptyImageBlockViewModel;

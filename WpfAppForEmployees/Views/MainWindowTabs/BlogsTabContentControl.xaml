@@ -20,11 +20,11 @@
                 <RowDefinition Style="{StaticResource TabControlLeftColumnGrid_BottomRow}"/>
             </Grid.RowDefinitions>
 
-            <ListView Style="{StaticResource TabControlLeftListView}">
+            <ListView ItemsSource="{Binding TabDataCollection}" Style="{StaticResource TabControlLeftListView}">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource ListViewHeaderGridView}">
-                        <GridViewColumn Header="№"/>
-                        <GridViewColumn Header="Название"/>
+                        <GridViewColumn Header="№" DisplayMemberBinding="{Binding Id}"/>
+                        <GridViewColumn Header="Заголовок" DisplayMemberBinding="{Binding BlogTitle}"/>
                     </GridView>
                 </ListView.View>
             </ListView>

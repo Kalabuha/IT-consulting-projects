@@ -5,22 +5,22 @@ namespace ServiceInterfaces
 {
     public interface IMainPageService
     {
-        public Task<List<MainPagePresetData>> GetAllPresetDatasAsync();
-        public Task<MainPagePresetData?> GetPublishedPresetDataAsync();
-        public Task<MainPagePresetData?> GetPresetDataByIdAsync(int id);
+        public Task<List<MainPagePresetDataModel>> GetAllPresetDatasAsync();
+        public Task<MainPagePresetDataModel?> GetPublishedPresetDataAsync();
+        public Task<MainPagePresetDataModel?> GetPresetDataByIdAsync(int id);
         public Task PublishPresetAsync(int id);
 
-        public Task<int> CreatePresetAsync(MainPagePresetData data);
-        public Task UpdatePresetAsync(MainPagePresetData data);
-        public Task DeletePresetAsync(MainPagePresetData data);
+        public Task<int> AddMainPagePresetToDbAsync(MainPagePresetDataModel? data);
+        public Task EditMainPagePresetToDbAsync(MainPagePresetDataModel? data);
+        public Task RemoveMainPagePresetToDbAsync(MainPagePresetDataModel? data);
 
-        public Task<TMainPageData?> GetElementDataByIdAsync<TMainPageData>(int? id) where TMainPageData : BaseData;
-        public Task<TMainPageData?> GetElementDataByPresetIdAsync<TMainPageData>(int? id) where TMainPageData : BaseData;
-        public Task<List<TMainPageData>> GetAllElementDatasAsync<TMainPageData>() where TMainPageData : BaseData;
-        public Task DeleteElementAsync<TMainPageData>(int id) where TMainPageData : BaseData;
-        public Task CreateElementAsync<TMainPageData>(TMainPageData data) where TMainPageData : BaseData;
+        public Task<TMainPageData?> GetElementDataByIdAsync<TMainPageData>(int? id) where TMainPageData : BaseDataModel;
+        public Task<TMainPageData?> GetElementDataByPresetIdAsync<TMainPageData>(int? id) where TMainPageData : BaseDataModel;
+        public Task<List<TMainPageData>> GetAllElementDatasAsync<TMainPageData>() where TMainPageData : BaseDataModel;
+        public Task DeleteElementToDbAsync<TMainPageData>(int id) where TMainPageData : BaseDataModel;
+        public Task AddElementToDbAsync<TMainPageData>(TMainPageData data) where TMainPageData : BaseDataModel;
 
-        public Task<MainPageTextData> GetDefaultMainPageTextData();
-        public Task<MainPageActionData> GetDefaultMainPageActionData();
+        public Task<MainPageTextDataModel> GetDefaultMainPageTextData();
+        public Task<MainPageActionDataModel> GetDefaultMainPageActionData();
     }
 }

@@ -7,8 +7,8 @@ namespace DbContextProfi
     public class DbContextProfiСonnector : DbContext
     {
         #region DbSets
-        public DbSet<MenuEntity> HeaderMenuSets => Set<MenuEntity>();
-        public DbSet<SloganEntity> HeaderSlogans => Set<SloganEntity>();
+        public DbSet<HeaderMenuEntity> HeaderMenus => Set<HeaderMenuEntity>();
+        public DbSet<HeaderSloganEntity> HeaderSlogans => Set<HeaderSloganEntity>();
 
         public DbSet<MainPagePresetEntity> MainPagePresets => Set<MainPagePresetEntity>();
 

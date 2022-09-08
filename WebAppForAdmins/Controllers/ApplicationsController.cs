@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAppForAdmins.Models.Applications;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using DataModels;
 using Enums;
 using Enums.Extensions;
@@ -42,14 +42,14 @@ namespace WebAppForAdmins.Controllers
             }
 
             selectedApplication.Status = selectModel.SelectedStatus;
-            await _applicationService.UpdateApplicationToDb(selectedApplication);
+            await _applicationService.EditApplicationToDb(selectedApplication);
 
             return new EmptyResult();
         }
 
         private async Task<ApplicationsViewModel> GetApplicationsViewModelAsync(ApplicationsFilterViewModel filterModel)
         {
-            List<ApplicationData> applications;
+            List<ApplicationDataModel> applications;
             // Пользоваетль выбрал период времени из списка предложенных
             if (filterModel.RequestedPeriod != DateTimePeriod.SelectedPeriodDateTime)
             {
@@ -61,7 +61,7 @@ namespace WebAppForAdmins.Controllers
             {
                 if (filterModel.StartTimePeriod == null || filterModel.EndTimePeriod == null)
                 {
-                    applications = new List<ApplicationData>();
+                    applications = new List<ApplicationDataModel>();
                 }
                 else
                 {

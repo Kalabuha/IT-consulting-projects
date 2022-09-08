@@ -12,7 +12,7 @@
     <div class="select-block-inner">
         <div class="select-list-block scroll-y-block">
             <ul class="select-list">
-                @foreach (MainPagePhraseModel phrase in Model.Phrases)
+                @foreach (MainPagePhraseWebModel phrase in Model.Phrases)
                 {
                     var isSelected = phrase.Id == Model.SelectedPhraseId;
                     var labelClassName = isSelected ? "green-text" : "black-text";

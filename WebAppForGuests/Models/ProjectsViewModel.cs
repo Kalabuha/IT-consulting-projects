@@ -4,7 +4,7 @@ namespace WebAppForGuests.Models
 {
     public class ProjectsViewModel
     {
-        public ProjectModel? SelectedProject { get; set; }
-        public List<ProjectModel>? Projects { get; set; }
+        public ProjectWebModel? SelectedProject { get; set; }
+        public List<ProjectWebModel>? Projects { get; set; }
     }
 }

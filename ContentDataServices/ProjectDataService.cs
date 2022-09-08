@@ -1,6 +1,5 @@
 ﻿using RepositoryInterfaces;
 using ServiceInterfaces;
-using EntitiesDataModelsConverters;
 using DefaultDataServices;
 using CommonDataConverters;
 using DataModels;
@@ -16,59 +15,59 @@ namespace ContentDataServices
             _projectRepository = projectRepository;
         }
 
-        public async Task<List<ProjectData>> GetAllProjectDatasAsync()
+        public async Task<List<ProjectDataModel>> GetAllProjectDatasAsync()
         {
-            var datas = (await _projectRepository.GetAllProjectEntitiesAsync())
-                .Select(p => p.ProjectEntityToData())
+            var datas = (await _projectRepository.GetAllProjectsAsync())
                 .ToList();
 
             return datas;
         }
 
-        public async Task<List<ProjectData>> GetPublishedProjectDatasAsync()
+        public async Task<List<ProjectDataModel>> GetPublishedProjectDatasAsync()
         {
-            var projects = (await _projectRepository.GetAllProjectEntitiesAsync())
-                .Where(p => p.IsPublished == true)
-                .Select(p => p.ProjectEntityToData())
+            var projects = (await _projectRepository.GetAllProjectsAsync())
+                .Where(p => p.IsPublished)
                 .ToList();
 
             return projects;
         }
 
-        public async Task<ProjectData?> GetProjectDataByIdAsync(int projectId)
+        public async Task<ProjectDataModel?> GetProjectDataByIdAsync(int id)
         {
-            var project = await _projectRepository.GetEntityAsync(projectId);
+            var project = await _projectRepository.GetProjectAsync(id);
 
-            return project?.ProjectEntityToData();
+            return project;
         }
 
-        public async Task AddProjectToDbAsync(ProjectData data)
+        public async Task AddProjectToDbAsync(ProjectDataModel? data)
         {
-            if (string.IsNullOrEmpty(data.CustomerCompanyLogoAsString))
+            if (data != null)
             {
-                var pathToDefaultCompanyLogo = GetDefaultImageFromFile("retro-wave-logo.png");
-                var defaultCompanyLogoAsArray64 = ImageDataConverter.PathToImageToArray64(pathToDefaultCompanyLogo);
-                data.CustomerCompanyLogoAsString = Convert.ToBase64String(defaultCompanyLogoAsArray64);
+                if (data.CustomerCompanyLogoAsByte == null || data.CustomerCompanyLogoAsByte.Length == 0)
+                {
+                    var pathToDefaultCompanyLogo = GetDefaultImageFromFile("retro-wave-logo.png");
+                    var defaultCompanyLogoAsByte = ImageDataConverter.PathToImageToByte(pathToDefaultCompanyLogo);
+                    data.CustomerCompanyLogoAsByte = defaultCompanyLogoAsByte;
+                }
+
+                await _projectRepository.AddProjectAsync(data);
             }
-
-            var entity = data.ProjectDataToEntity();
-
-            await _projectRepository.AddEntityAsync(entity);
         }
 
-        public async Task EditProjectToDbAsync(ProjectData data)
+        public async Task EditProjectToDbAsync(ProjectDataModel? data)
         {
-            var entity = await _projectRepository.GetEntityAsync(data.Id);
-            if (entity == null) throw new ArgumentException($"Не найден проект {data.Id}.", nameof(data));
-
-            data.ProjectDataToEntity(entity);
-
-            await _projectRepository.UpdateEntityAsync(entity);
+            if (data != null)
+            {
+                await _projectRepository.UpdateProjectAsync(data);
+            }
         }
 
         public async Task RemoveProjectToDbAsync(int id)
         {
-            await _projectRepository.RemoveEntityAsync(id);
+            if (id > 0)
+            {
+                await _projectRepository.DeleteProjectAsync(id);
+            }
         }
     }
 }

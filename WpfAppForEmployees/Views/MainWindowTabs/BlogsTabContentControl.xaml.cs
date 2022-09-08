@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using WpfAppForEmployees.ViewModels.TabViewModels;
 
 namespace WpfAppForEmployees.Views.MainWindowTabs
 {
@@ -10,6 +11,13 @@ namespace WpfAppForEmployees.Views.MainWindowTabs
         public BlogsTabControl()
         {
             InitializeComponent();
+            this.Loaded += BlogsTabControl_Loaded;
+        }
+
+        private async void BlogsTabControl_Loaded(object? sender, System.EventArgs e)
+        {
+            var viewModel = (BlogsTabViewModel)this.DataContext;
+            await viewModel.LoadData();
         }
     }
 }

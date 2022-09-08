@@ -2,37 +2,61 @@
 using RepositoryInterfaces;
 using DbRepositories.Base;
 using DbContextProfi;
+using EntitiesDataModelsMappers;
+using DataModels;
 using Entities;
 
 namespace DbRepositories
 {
     internal class MainPagePresetDbRepository : BaseDbRepository<MainPagePresetEntity>, IMainPagePresetRepository
     {
-        public MainPagePresetDbRepository(DbContextProfiСonnector context) : base(context) {}
+        public MainPagePresetDbRepository(DbContextProfiСonnector context) : base(context) { }
 
-        public async Task<MainPagePresetEntity[]> GetAllMainPagePresetEntitiesAsync()
+        public async Task<MainPagePresetDataModel?> GetMainPagePresetAsync(int id)
+        {
+            var entity = await GetEntityAsync(id);
+            return entity?.MainPagePresetEntityToData();
+        }
+
+        public async Task<MainPagePresetDataModel[]> GetAllMainPagePresetsAsync()
         {
             var presets = await Context.MainPagePresets
+                .Select(p => p.MainPagePresetEntityToData())
                 .ToArrayAsync();
 
             return presets;
         }
 
-        public async Task<MainPagePresetEntity[]> GetAllPublishedPresetEntityAsync()
+        public async Task<int> AddMainPagePresetAsync(MainPagePresetDataModel data)
         {
-            var presets = await Context.MainPagePresets
-                .Where(p => p.IsPublishedOnMainPage == true)
-                .ToArrayAsync();
-
-            return presets;
+            var entity = data.MainPagePresetDataToEntity();
+            await AddEntityAsync(entity);
+            return entity.Id;
         }
 
-        public async Task<MainPagePresetEntity?> GetPublishedMainPagePresetEntityAsync()
+        public async Task<bool> UpdateMainPagePresetAsync(MainPagePresetDataModel data)
         {
-            var publishedPreset = await Context.MainPagePresets
-                .FirstOrDefaultAsync(p => p.IsPublishedOnMainPage);
+            var entity = await GetEntityAsync(data.Id);
+            if (entity == null)
+            {
+                return false;
+            }
 
-            return publishedPreset;
+            var updated = data.MainPagePresetDataToEntity(entity);
+            await UpdateEntityAsync(updated);
+            return true;
+        }
+
+        public async Task<bool> DeleteMainPagePresetAsync(int id)
+        {
+            var entity = await GetEntityAsync(id);
+            if (entity == null)
+            {
+                return false;
+            }
+
+            await RemoveEntityAsync(entity);
+            return true;
         }
     }
 }

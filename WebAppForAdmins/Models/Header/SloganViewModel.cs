@@ -5,6 +5,6 @@ namespace WebAppForAdmins.Models.Header
     public class SloganViewModel
     {
         public string DefaultSloganContent { get; set; } = default!;
-        public List<SloganModel> Slogans { get; set; } = default!;
+        public List<HeaderSloganWebModel> Slogans { get; set; } = default!;
     }
 }

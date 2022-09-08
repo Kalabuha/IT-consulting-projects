@@ -4,7 +4,7 @@ namespace WebDataConverters
 {
     public static class ImageWebDataConverter
     {
-        public static string ReadBytesFromFormFile(IFormFile formFile)
+        public static string ConvertImageFromFormFileToBytes(IFormFile formFile)
         {
             if (formFile == null)
             {

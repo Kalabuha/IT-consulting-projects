@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Contacts";
-    ViewBag.PageH1 ??= nameof(MenuModel.Contacts);
+    ViewBag.PageH1 ??= nameof(HeaderMenuWebModel.Contacts);
 }
 
 <div class="header-block header-block-contacts">
@@ -19,7 +19,7 @@
     <div class="main-content-block main-content-color-block">
         @if (Model != null && Model.Contact != null)
         {
-            ContactModel contact = Model.Contact;
+            ContactWebModel contact = Model.Contact;
 
             <div class="contacts-block">
                 <div class="contacts-text-block">

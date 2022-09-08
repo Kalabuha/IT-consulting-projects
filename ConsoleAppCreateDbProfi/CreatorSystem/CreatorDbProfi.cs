@@ -131,7 +131,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
             foreach (var set in sets)
             {
-                var entity = new MenuEntity
+                var entity = new HeaderMenuEntity
                 {
                     Main = set.Main,
                     Services = set.Services,
@@ -141,7 +141,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
                     IsPublishedOnMainPage = set.IsPosted
                 };
 
-                _context.HeaderMenuSets.Add(entity);
+                _context.HeaderMenus.Add(entity);
             }
         }
 
@@ -334,7 +334,7 @@ namespace ConsoleAppCreateDbProfi.CreatorSystem
 
             foreach (var slogan in slogans)
             {
-                var entity = new SloganEntity
+                var entity = new HeaderSloganEntity
                 {
                     Slogan = slogan.Slogan,
                     IsUsed = slogan.IsUsed

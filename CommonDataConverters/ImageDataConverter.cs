@@ -2,7 +2,7 @@
 {
     public static class ImageDataConverter
     {
-        public static byte[] PathToImageToArray64(string path)
+        public static byte[] PathToImageToByte(string path)
         {
             if (string.IsNullOrEmpty(path))
             {

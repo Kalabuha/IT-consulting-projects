@@ -16,7 +16,7 @@
                 @{
                     int count = 0;
                 }
-                @foreach (MainPageImageModel image in Model.Images)
+                @foreach (MainPageImageWebModel image in Model.Images)
                 {
                     var isSelected = image.Id == Model.SelectedImageId;
                     var imageClassName = isSelected ? "img-select-image-selected" : string.Empty;

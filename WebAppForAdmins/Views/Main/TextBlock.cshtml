@@ -2,7 +2,7 @@
 
 @{
     //Здесь всегда должна быть модель. Если её нет, это аварийный случай.
-    MainPageTextModel? selectedTextModel = Model.Texts.FirstOrDefault(t => t.Id == Model.SelectedTextId);
+    MainPageTextWebModel? selectedTextModel = Model.Texts.FirstOrDefault(t => t.Id == Model.SelectedTextId);
 }
 
 @if (Model.SelectedTextId == 0 && Model.CurrentPresetId > 0)
@@ -62,7 +62,7 @@ else
                         <div class="select-block-inner">
                             <div class="select-list-block select-block-max-height-2 scroll-y-block">
                                 <ul class="select-list">
-                                    @foreach (MainPageTextModel text in Model.Texts)
+                                    @foreach (MainPageTextWebModel text in Model.Texts)
                                     {
                                         var isSelected = text.Id == Model.SelectedTextId;
                                         var labelClassName = isSelected ? "green-text" : "black-text";

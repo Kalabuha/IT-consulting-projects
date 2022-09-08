@@ -17,16 +17,16 @@ namespace WebAppDataApi.Controllers
 
         // GET: api/<ApplicationsController>
         [HttpGet]
-        public async Task<ActionResult<ApplicationData>> Get()
+        public async Task<ActionResult<ApplicationDataModel>> Get()
         {
             var applications = await _applicationService.GetAllApplicationsDataAsync();
 
-            return Ok();
+            return Ok(applications);
         }
 
         // GET api/<ApplicationsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationData>> Get(int id)
+        public async Task<ActionResult<ApplicationDataModel>> Get(int id)
         {
             var application = await _applicationService.GetApplicationDataById(id);
             if (application == null)
@@ -34,21 +34,21 @@ namespace WebAppDataApi.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            return Ok(application);
         }
 
         // POST api/<ApplicationsController>
         [HttpPost]
-        public async Task<ActionResult> Post(ApplicationData data)
+        public async Task<ActionResult> Post(ApplicationDataModel data)
         {
-            await _applicationService.AddApplicationToDb(data);
+            await _applicationService.AddApplicationToDbAsync(data);
 
             return Ok();
         }
 
         // PUT api/<ApplicationsController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(ApplicationData data)
+        public async Task<ActionResult> Put(ApplicationDataModel data)
         {
             var editedApplication = await _applicationService.GetApplicationDataById(data.Id);
             if (editedApplication == null)
@@ -56,7 +56,7 @@ namespace WebAppDataApi.Controllers
                 return NotFound();
             }
 
-            await _applicationService.UpdateApplicationToDb(data);
+            await _applicationService.EditApplicationToDb(data);
 
             return Ok();
         }

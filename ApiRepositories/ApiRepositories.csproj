@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Entities\Entities.csproj" />
+		<ProjectReference Include="..\DataModels\DataModels.csproj" />
 		<ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj" />
 	</ItemGroup>
 

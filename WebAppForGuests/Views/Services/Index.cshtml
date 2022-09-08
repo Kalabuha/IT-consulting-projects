@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Services";
-    ViewBag.PageH1 ??= nameof(MenuModel.Services);
+    ViewBag.PageH1 ??= nameof(HeaderMenuWebModel.Services);
 }
 
 <div class="header-block header-block-services">
@@ -20,7 +20,7 @@
         @if (Model != null && Model.Services != null && Model.Services.Count != 0)
         {
             <ul class="list-services">
-                @foreach (ServiceModel service in Model.Services)
+                @foreach (ServiceWebModel service in Model.Services)
                 {
                     <li class="service-item collapsable">
                         <div class="service-collapse-block-button collapse collapse-expanded-hide overflow-wrap-break-word-block">

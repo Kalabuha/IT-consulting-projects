@@ -4,7 +4,7 @@ namespace WebAppForGuests.Models
 {
     public class HeaderViewModel
     {
-        public MenuModel Menu { get; set; } = default!;
-        public SloganModel Slogan { get; set; } = default!;
+        public HeaderMenuWebModel Menu { get; set; } = default!;
+        public HeaderSloganWebModel Slogan { get; set; } = default!;
     }
 }

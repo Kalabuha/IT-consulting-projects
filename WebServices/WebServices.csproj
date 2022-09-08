@@ -14,7 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CommonDataConverters\CommonDataConverters.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
-    <ProjectReference Include="..\EntitiesDataModelsConverters\EntitiesDataModelsConverters.csproj" />
     <ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj" />
     <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
     <ProjectReference Include="..\WebModels\WebModels.csproj" />

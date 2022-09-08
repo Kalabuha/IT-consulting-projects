@@ -2,9 +2,9 @@
 
 @if (Model.CurrentPresetId > 0)
 {
-    MainPageImageModel? selectedImage = Model.Images.FirstOrDefault(i => i.Id == Model.SelectedImageId);
-    MainPageButtonModel? selectedButton = Model.Buttons.FirstOrDefault(b => b.Id == Model.SelectedButtonId);
-    MainPagePhraseModel? selectedPhrase = Model.Phrases.FirstOrDefault(p => p.Id == Model.SelectedPhraseId);
+    MainPageImageWebModel? selectedImage = Model.Images.FirstOrDefault(i => i.Id == Model.SelectedImageId);
+    MainPageButtonWebModel? selectedButton = Model.Buttons.FirstOrDefault(b => b.Id == Model.SelectedButtonId);
+    MainPagePhraseWebModel? selectedPhrase = Model.Phrases.FirstOrDefault(p => p.Id == Model.SelectedPhraseId);
 
     string imageUrl;
     string imageAvailableOrNotStyleClass;

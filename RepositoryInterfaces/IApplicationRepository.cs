@@ -1,9 +1,13 @@
-﻿using Entities;
+﻿using DataModels;
 
 namespace RepositoryInterfaces
 {
-    public interface IApplicationRepository : IRepository<ApplicationEntity>
+    public interface IApplicationRepository
     {
-        public Task<ApplicationEntity[]> GetAllApplicationEntitiesAsync();
+        public Task<ApplicationDataModel?> GetApplicationAsync(int id);
+        public Task<ApplicationDataModel[]> GetAllApplicationAsync();
+        public Task<int> AddApplicationAsync(ApplicationDataModel data);
+        public Task<bool> UpdateApplicationAsync(ApplicationDataModel data);
+        public Task<bool> DeleteApplicationAsync(int id);
     }
 }

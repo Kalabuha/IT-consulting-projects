@@ -12,7 +12,7 @@
     <div class="select-block-inner">
         <div class="select-list-block scroll-y-block">
             <ul class="select-list">
-                @foreach (MainPageButtonModel button in Model.Buttons)
+                @foreach (MainPageButtonWebModel button in Model.Buttons)
                 {
                     var isSelected = button.Id == Model.SelectedButtonId;
                     var labelClassName = isSelected ? "green-text" : "black-text";

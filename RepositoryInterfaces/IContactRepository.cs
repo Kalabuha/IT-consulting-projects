@@ -1,10 +1,14 @@
-﻿using Entities;
+﻿using DataModels;
 
 namespace RepositoryInterfaces
 {
-    public interface IContactRepository : IRepository<ContactEntity>
+    public interface IContactRepository
     {
-        public Task<ContactEntity[]> GetAllContactEntitiesAsync();
-        public Task<ContactEntity[]> GetAllPublishedContactEntitiesAsync();
+        public Task<ContactDataModel?> GetContactAsync(int id);
+        public Task<ContactDataModel[]> GetAllContactsAsync();
+        public Task<int> AddContactAsync(ContactDataModel data);
+        public Task<bool> UpdateContactAsync(ContactDataModel data);
+        public Task<bool> DeleteContactAsync(int id);
+        
     }
 }

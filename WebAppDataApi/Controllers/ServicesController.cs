@@ -17,7 +17,7 @@ namespace WebAppDataApi.Controllers
 
         // GET: api/<ServicesController>
         [HttpGet]
-        public async Task<ActionResult<List<ServiceData>>> Get()
+        public async Task<ActionResult<List<ServiceDataModel>>> Get()
         {
             var services = await _serviceService.GetAllServiceDatasAsync();
 
@@ -26,7 +26,7 @@ namespace WebAppDataApi.Controllers
 
         // GET api/<ServicesController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceData>> Get(int id)
+        public async Task<ActionResult<ServiceDataModel>> Get(int id)
         {
             var service = await _serviceService.GetServiceDataByIdAsync(id);
             if (service == null)
@@ -39,7 +39,7 @@ namespace WebAppDataApi.Controllers
 
         // POST api/<ServicesController>
         [HttpPost]
-        public async Task<ActionResult> Post(ServiceData service)
+        public async Task<ActionResult> Post(ServiceDataModel service)
         {
             await _serviceService.AddServiceToDbAsync(service);
 
@@ -48,7 +48,7 @@ namespace WebAppDataApi.Controllers
 
         // PUT api/<ServicesController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(ServiceData service)
+        public async Task<ActionResult> Put(ServiceDataModel service)
         {
             var editedService = await _serviceService.GetServiceDataByIdAsync(service.Id);
             if (editedService == null)

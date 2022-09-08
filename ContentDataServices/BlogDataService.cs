@@ -1,6 +1,5 @@
 ﻿using RepositoryInterfaces;
 using ServiceInterfaces;
-using EntitiesDataModelsConverters;
 using DataModels;
 
 namespace ContentDataServices
@@ -14,55 +13,52 @@ namespace ContentDataServices
             _blogRepository = blogRepository;
         }
 
-        public async Task<List<BlogData>> GetAllBlogDatasAsync()
+        public async Task<BlogDataModel?> GetBlogDataByIdAsync(int id)
         {
-            var blogs = (await _blogRepository.GetAllBlogEntitiesAsync())
-                .Select(b => b.BlogEntityToData())
+            var blog = await _blogRepository.GetBlogAsync(id);
+
+            return blog;
+        }
+
+        public async Task<List<BlogDataModel>> GetAllBlogDatasAsync()
+        {
+            var blogs = (await _blogRepository.GetAllBlogsAsync())
                 .ToList();
 
             return blogs;
         }
 
-        public async Task<List<BlogData>> GetPublishedBlogDatasAsync()
+        public async Task<List<BlogDataModel>> GetPublishedBlogDatasAsync()
         {
-            var blogs = (await _blogRepository.GetAllBlogEntitiesAsync())
-                .Where(b => b.IsPublished == true)
-                .Select(b => b.BlogEntityToData())
+            var blogs = (await _blogRepository.GetAllBlogsAsync())
+                .Where(b => b.IsPublished)
                 .ToList();
 
             return blogs;
         }
 
-        public async Task<BlogData?> GetBlogDataByIdAsync(int projectId)
+        public async Task AddBlogToDbAsync(BlogDataModel? data)
         {
-            var blog = await _blogRepository.GetEntityAsync(projectId);
-
-            return blog?.BlogEntityToData();
+            if (data != null)
+            {
+                data.PublicationDate = DateTime.Now;
+                await _blogRepository.AddBlogAsync(data);
+            }
         }
 
-        public async Task AddBlogToDbAsync(BlogData data)
+        public async Task EditBlogToDbAsync(BlogDataModel? data)
         {
-            data.PublicationDate = DateTime.Now;
-
-            var entity = data.BlogDataToEntity();
-            await _blogRepository.AddEntityAsync(entity);
-        }
-
-        public async Task EditBlogToDbAsync(BlogData data)
-        {
-            var entity = await _blogRepository.GetEntityAsync(data.Id);
-            if (entity == null) throw new ArgumentException($"Не найден блог {data.Id}.", nameof(data));
-
-            data.BlogDataToEntity(entity);
-            await _blogRepository.UpdateEntityAsync(entity);
+            if (data != null)
+            {
+                await _blogRepository.UpdateBlogAsync(data);
+            }
         }
 
         public async Task RemoveBlogToDbAsync(int id)
         {
-            var entity = await _blogRepository.GetEntityAsync(id);
-            if (entity != null)
+            if (id > 0)
             {
-                await _blogRepository.RemoveEntityAsync(entity.Id);
+                await _blogRepository.DeleteBlogAsync(id);
             }
         }
     }

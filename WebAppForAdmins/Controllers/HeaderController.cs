@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAppForAdmins.Models.Header;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers
@@ -20,8 +20,8 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var menuData = await _headerService.GetUsedMenuDataAsync();
-            var sloganData = await _headerService.GetRandomSloganDataAsync();
+            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync();
 
             var menuModel = menuData.MenuDataToModel();
             var sloganModel = sloganData.SloganDataToModel();
@@ -38,7 +38,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomizeMenu()
         {
-            var allMenuDatas = await _headerService.GetAllMenuDatasAsync();
+            var allMenuDatas = await _headerService.GetAllHeaderMenuDatasAsync();
             var allMenuModels = allMenuDatas.Select(m => m.MenuDataToModel())
                 .ToList();
 
@@ -55,7 +55,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (id > 0)
             {
-                await _headerService.StartUsingMenuAsync(id);
+                await _headerService.StartUsingHeaderMenuAsync(id);
             }
 
             return RedirectToAction(nameof(CustomizeMenu));
@@ -64,13 +64,13 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public IActionResult CreateMenu()
         {
-            var menuModel = new MenuModel();
+            var menuModel = new HeaderMenuWebModel();
 
             return View(menuModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMenuPost(MenuModel model)
+        public async Task<IActionResult> CreateMenuPost(HeaderMenuWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUsedMenu()
         {
-            var data = await _headerService.GetUsedMenuDataAsync();
+            var data = await _headerService.GetUsedHeaderMenuDataAsync();
             if (data.Id > 0)
             {
                 var model = data.MenuDataToModel();
@@ -97,7 +97,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditUsedMenuPost(MenuModel model)
+        public async Task<IActionResult> EditUsedMenuPost(HeaderMenuWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUsedMenuPost()
         {
-            var data = await _headerService.GetUsedMenuDataAsync();
+            var data = await _headerService.GetUsedHeaderMenuDataAsync();
             if (data.Id > 0)
             {
                 await _headerService.RemoveMenuToDbAsync(data.Id);
@@ -125,7 +125,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomizeSlogan()
         {
-            var allSloganDatas = await _headerService.GetAllSloganDatasAsync();
+            var allSloganDatas = await _headerService.GetAllHeaderSloganDatasAsync();
             var allSloganModels = allSloganDatas.Select(s => s.SloganDataToModel())
                 .ToList();
 
@@ -143,7 +143,7 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> SelectSlogans(int[] id)
         {
-            await _headerService.StartUsingSlogansAsync(id);
+            await _headerService.StartUsingHeaderSlogansAsync(id);
 
             return RedirectToAction(nameof(CustomizeSlogan));
         }
@@ -151,13 +151,13 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public IActionResult CreateSlogan()
         {
-            var sloganModel = new SloganModel();
+            var sloganModel = new HeaderSloganWebModel();
 
             return View(sloganModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSloganPost(SloganModel model)
+        public async Task<IActionResult> CreateSloganPost(HeaderSloganWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -173,7 +173,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> EditSlogan(int id)
         {
-            var data = await _headerService.GetSloganDataByIdAsync(id);
+            var data = await _headerService.GetHeaderSloganDataByIdAsync(id);
             if (data == null)
             {
                 return NotFound();
@@ -184,7 +184,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditSloganPost(SloganModel model)
+        public async Task<IActionResult> EditSloganPost(HeaderSloganWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -202,7 +202,7 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsChangeDisabled = true;
 
-            var data = await _headerService.GetSloganDataByIdAsync(id);
+            var data = await _headerService.GetHeaderSloganDataByIdAsync(id);
             if (data == null)
             {
                 return NotFound();
@@ -213,9 +213,9 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteSloganPost(SloganModel model)
+        public async Task<IActionResult> DeleteSloganPost(HeaderSloganWebModel model)
         {
-            var data = await _headerService.GetSloganDataByIdAsync(model.Id);
+            var data = await _headerService.GetHeaderSloganDataByIdAsync(model.Id);
             if (data != null)
             {
                 await _headerService.RemoveSloganToDbAsync(data.Id);

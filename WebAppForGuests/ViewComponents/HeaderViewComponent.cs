@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebAppForGuests.Models;
 
 namespace WebAppForGuests.ViewComponents
@@ -16,10 +16,10 @@ namespace WebAppForGuests.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var menuData = await _headerService.GetUsedMenuDataAsync();
+            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
             var menuModel = menuData.MenuDataToModel();
 
-            var sloganData = await _headerService.GetRandomSloganDataAsync();
+            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync();
             var sloganModel = sloganData.SloganDataToModel();
 
             var viewModel = new HeaderViewModel()

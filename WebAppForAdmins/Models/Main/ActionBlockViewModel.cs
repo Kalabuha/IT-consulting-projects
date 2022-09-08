@@ -6,6 +6,6 @@ namespace WebAppForAdmins.Models.Main
     {
         public int CurrentPresetId { get; set; }
         public int SelectedActionId { get; set; }
-        public List<MainPageActionModel> Actions { get; set; } = default!;
+        public List<MainPageActionWebModel> Actions { get; set; } = default!;
     }
 }

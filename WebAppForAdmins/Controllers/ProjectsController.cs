@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Projects;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers
@@ -37,11 +37,11 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsChangeDisabled = false;
 
-            return View(new ProjectModel());
+            return View(new ProjectWebModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(ProjectModel model)
+        public async Task<IActionResult> CreatePost(ProjectWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(ProjectModel model)
+        public async Task<IActionResult> EditPost(ProjectWebModel model)
         {
             var oldData = await _projectService.GetProjectDataByIdAsync(model.Id);
             if (oldData == null)

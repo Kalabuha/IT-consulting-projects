@@ -4,6 +4,6 @@ namespace WebAppForAdmins.Models.Applications
 {
     public class ApplicationsViewModel
     {
-        public IList<ApplicationModel> Applications { get; set; } = default!;
+        public IList<ApplicationWebModel> Applications { get; set; } = default!;
     }
 }

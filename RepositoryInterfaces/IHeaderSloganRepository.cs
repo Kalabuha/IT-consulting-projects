@@ -1,11 +1,13 @@
-﻿using Entities;
+﻿using DataModels;
 
 namespace RepositoryInterfaces
 {
-    public interface IHeaderSloganRepository : IRepository<SloganEntity>
+    public interface IHeaderSloganRepository
     {
-        public Task<SloganEntity[]> GetAllSloganEntitiesAsync();
-        public Task<SloganEntity[]> GetSloganEntitiesAsync();
-
+        public Task<HeaderSloganDataModel?> GetHeaderSloganAsync(int id);
+        public Task<HeaderSloganDataModel[]> GetAllHeaderSlogansAsync();
+        public Task<int> AddHeaderSloganAsync(HeaderSloganDataModel data);
+        public Task<bool> UpdateHeaderSloganAsync(HeaderSloganDataModel data);
+        public Task<bool> DeleteHeaderSloganAsync(int id);
     }
 }

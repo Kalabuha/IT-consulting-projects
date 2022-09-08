@@ -1,10 +1,9 @@
 ﻿using DbContextProfi;
-using RepositoryInterfaces;
 using Entities.Base;
 
 namespace DbRepositories.Base
 {
-    public abstract class BaseDbRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+    public abstract class BaseDbRepository<TEntity> where TEntity : BaseEntity
     {
         protected DbContextProfiСonnector Context { get; }
 
@@ -13,47 +12,27 @@ namespace DbRepositories.Base
             Context = context;
         }
 
-        public async Task<TEntity?> GetEntityAsync(int? id)
+        protected async Task<TEntity?> GetEntityAsync(int id)
         {
-            return id.HasValue ? await Context.FindAsync<TEntity>(id) : null;
+            return await Context.FindAsync<TEntity>(id);
         }
 
-        public async Task<bool> AddEntityAsync(TEntity entity)
+        protected async Task AddEntityAsync(TEntity entity)
         {
-            if (entity != null)
-            {
-                await Context.AddAsync(entity);
-                await Context.SaveChangesAsync();
-                return true;
-            }
-            
-            return false;
+            await Context.AddAsync(entity);
+            await Context.SaveChangesAsync();
         }
 
-        public async Task<bool> UpdateEntityAsync(TEntity entity)
+        protected async Task UpdateEntityAsync(TEntity entity)
         {
-            var entityFromDb = await GetEntityAsync(entity.Id);
-            if (entityFromDb != null)
-            {
-                Context.Update(entity);
-                await Context.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
+            Context.Update(entity);
+            await Context.SaveChangesAsync();
         }
 
-        public async Task<bool> RemoveEntityAsync(int id)
+        protected async Task RemoveEntityAsync(TEntity entity)
         {
-            var entity = await GetEntityAsync(id);
-            if (entity != null)
-            {
-                Context.Remove(entity);
-                await Context.SaveChangesAsync();
-                return true;
-            }
-
-            return false;
+            Context.Remove(entity);
+            await Context.SaveChangesAsync();
         }
     }
 }

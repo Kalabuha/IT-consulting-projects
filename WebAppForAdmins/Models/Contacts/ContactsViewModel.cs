@@ -4,6 +4,6 @@ namespace WebAppForAdmins.Models.Contacts
 {
     public class ContactsViewModel
     {
-        public List<ContactModel> Contacts { get; set; } = default!;
+        public List<ContactWebModel> Contacts { get; set; } = default!;
     }
 }

@@ -4,6 +4,6 @@ namespace WebAppForAdmins.Models.Services
 {
     public class ServicesViewModel
     {
-        public IList<ServiceModel> Services { get; set; } = default!;
+        public IList<ServiceWebModel> Services { get; set; } = default!;
     }
 }

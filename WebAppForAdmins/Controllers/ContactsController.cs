@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAppForAdmins.Models.Contacts;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers
@@ -37,13 +37,13 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsChangeDisabled = false;
 
-            var model = new ContactModel();
+            var model = new ContactWebModel();
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(ContactModel model)
+        public async Task<IActionResult> CreatePost(ContactWebModel model)
         {
             if (model.MapAsFormFile == null)
             {
@@ -82,7 +82,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(ContactModel model)
+        public async Task<IActionResult> EditPost(ContactWebModel model)
         {
             var oldData = await _contactService.GetContactDataByIdAsync(model.Id);
             if (oldData == null)

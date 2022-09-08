@@ -4,6 +4,6 @@ namespace WebAppForGuests.Models
 {
     public class ContactsViewModel
     {
-        public ContactModel? Contact { get; set; }
+        public ContactWebModel? Contact { get; set; }
     }
 }

@@ -47,6 +47,8 @@ namespace WpfAppForEmployees
         {
             IConfigurationSection hostUrlSection = host.Configuration.GetSection("Api");
 
+            var t = "https://localhost:7166";
+
             //ViewModels
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<ApplicationsTabViewModel>();
@@ -55,7 +57,7 @@ namespace WpfAppForEmployees
             services.AddSingleton<ServicesTabViewModel>();
 
             //Repositories
-            services.RegisterApiRepositories(hostUrlSection.Value);
+            services.RegisterApiRepositories(t);
 
             //Services
             services.RegisterContentDataServices();

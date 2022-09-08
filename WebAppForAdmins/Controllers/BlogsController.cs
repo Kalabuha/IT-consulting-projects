@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using WebAppForAdmins.Models.Blogs;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers
@@ -34,11 +34,11 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new BlogModel());
+            return View(new BlogWebModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(BlogModel model)
+        public async Task<IActionResult> CreatePost(BlogWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(BlogModel model)
+        public async Task<IActionResult> EditPost(BlogWebModel model)
         {
             ViewBag.IsImageRemovalAvailable = true;
 
@@ -87,11 +87,11 @@ namespace WebAppForAdmins.Controllers
             var newData = model.BlogModelToData();
             if (model.IsRemoveImage)
             {
-                newData.BlogImageAsString = null;
+                newData.BlogImageAsByte = null;
             }
-            else if (newData.BlogImageAsString == null)
+            else if (newData.BlogImageAsByte == null)
             {
-                newData.BlogImageAsString = string.Empty;
+                newData.BlogImageAsByte = new byte[0];
             }
 
             await _blogService.EditBlogToDbAsync(newData);
@@ -114,7 +114,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePost(BlogModel model)
+        public async Task<IActionResult> DeletePost(BlogWebModel model)
         {
             await _blogService.RemoveBlogToDbAsync(model.Id);
             return RedirectToAction(nameof(Index));

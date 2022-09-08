@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAppForGuests.Models;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 
 namespace WebAppForGuests.Controllers
 {
@@ -19,7 +19,7 @@ namespace WebAppForGuests.Controllers
         // GET: ServicesController
         public async Task<ActionResult<ServicesViewModel>> Index()
         {
-            var menuData = await _headerService.GetUsedMenuDataAsync();
+            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
             ViewBag.PageH1 = menuData.Services;
 
             var serviceDatas = await _serviceService.GetPublishedServiceDatasAsync();

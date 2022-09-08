@@ -4,6 +4,6 @@ namespace WebAppForAdmins.Models.Projects
 {
     public class ProjectsViewModel
     {
-        public IList<ProjectModel> Projects { get; set; } = default!;
+        public IList<ProjectWebModel> Projects { get; set; } = default!;
     }
 }

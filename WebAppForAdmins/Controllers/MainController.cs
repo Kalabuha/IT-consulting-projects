@@ -4,7 +4,7 @@ using System.Diagnostics;
 using WebAppForAdmins.Models.Main;
 using WebAppForAdmins.Models;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 using DataModels;
 
@@ -30,7 +30,7 @@ namespace WebAppForAdmins.Controllers
             var presetModels = presetDatas.Select(p => p.MainPagePresetDataToModel())
                 .ToList();
 
-            MainPagePresetData? selectedPresetData;
+            MainPagePresetDataModel? selectedPresetData;
             if (id.HasValue && id.Value > 0)
             {
                 selectedPresetData = await _mainPageService.GetPresetDataByIdAsync(id.Value);
@@ -79,14 +79,14 @@ namespace WebAppForAdmins.Controllers
                     return NotFound();
                 }
 
-                await _mainPageService.DeletePresetAsync(data);
+                await _mainPageService.RemoveMainPagePresetToDbAsync(data);
             }
 
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePreset(MainPagePresetModel model)
+        public async Task<IActionResult> CreatePreset(MainPagePresetWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace WebAppForAdmins.Controllers
             }
 
             var data = model.MainPagePresetModelToData();
-            var id = await _mainPageService.CreatePresetAsync(data);
+            var id = await _mainPageService.AddMainPagePresetToDbAsync(data);
 
             return RedirectToAction(nameof(Index), new { id });
         }
@@ -114,11 +114,11 @@ namespace WebAppForAdmins.Controllers
             var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
             if (presetData != null)
             {
-                var textData = await _mainPageService.GetElementDataByIdAsync<MainPageTextData>(model.SelectedTextId);
+                var textData = await _mainPageService.GetElementDataByIdAsync<MainPageTextDataModel>(model.SelectedTextId);
                 if (textData != null)
                 {
                     presetData.TextId = textData.Id;
-                    await _mainPageService.UpdatePresetAsync(presetData);
+                    await _mainPageService.EditMainPagePresetToDbAsync(presetData);
                 }
             }
 
@@ -130,11 +130,10 @@ namespace WebAppForAdmins.Controllers
         public async Task<IActionResult> RemoveTextForCurrentPreset(int presetId)
         {
             var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
-
             if (presetData != null)
             {
                 presetData.TextId = null;
-                await _mainPageService.UpdatePresetAsync(presetData);
+                await _mainPageService.EditMainPagePresetToDbAsync(presetData);
             }
 
             var viewModel = await GetTextBlockViewModelAsync(presetId);
@@ -150,12 +149,12 @@ namespace WebAppForAdmins.Controllers
                 model.TextContent = model.TextContent.Trim();
                 if (model.TextContent.Length <= 4000)
                 {
-                    var textData = new MainPageTextData()
+                    var textData = new MainPageTextDataModel()
                     {
                         Text = model.TextContent!
                     };
 
-                    await _mainPageService.CreateElementAsync(textData);
+                    await _mainPageService.AddElementToDbAsync(textData);
                 }
             }
 
@@ -168,7 +167,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (model.SelectedTextId > 0)
             {
-                await _mainPageService.DeleteElementAsync<MainPageTextData>(model.SelectedTextId);
+                await _mainPageService.DeleteElementToDbAsync<MainPageTextDataModel>(model.SelectedTextId);
             }
 
             var viewModel = await GetTextBlockViewModelAsync(model.CurrentPresetId);
@@ -193,11 +192,11 @@ namespace WebAppForAdmins.Controllers
             var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
             if (presetData != null)
             {
-                var imageData = await _mainPageService.GetElementDataByIdAsync<MainPageImageData>(model.SelectedImageId);
+                var imageData = await _mainPageService.GetElementDataByIdAsync<MainPageImageDataModel>(model.SelectedImageId);
                 if (imageData != null)
                 {
                     presetData.ImageId = imageData.Id;
-                    await _mainPageService.UpdatePresetAsync(presetData);
+                    await _mainPageService.EditMainPagePresetToDbAsync(presetData);
                 }
             }
 
@@ -213,7 +212,7 @@ namespace WebAppForAdmins.Controllers
             if (presetData != null)
             {
                 presetData.ImageId = null;
-                await _mainPageService.UpdatePresetAsync(presetData);
+                await _mainPageService.EditMainPagePresetToDbAsync(presetData);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(presetId);
@@ -225,14 +224,14 @@ namespace WebAppForAdmins.Controllers
         {
             if (model != null && model.AddedImageAsFormFile != null)
             {
-                var imageModel = new MainPageImageModel
+                var imageModel = new MainPageImageWebModel
                 {
                     ImageAsFormFile = model.AddedImageAsFormFile,
                 };
 
                 var imageData = imageModel.ImageModelToData();
 
-                await _mainPageService.CreateElementAsync(imageData);
+                await _mainPageService.AddElementToDbAsync(imageData);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
@@ -244,7 +243,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (model.SelectedImageId > 0)
             {
-                await _mainPageService.DeleteElementAsync<MainPageImageData>(model.SelectedImageId);
+                await _mainPageService.DeleteElementToDbAsync<MainPageImageDataModel>(model.SelectedImageId);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
@@ -259,11 +258,11 @@ namespace WebAppForAdmins.Controllers
             var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
             if (presetData != null)
             {
-                var buttonData = await _mainPageService.GetElementDataByIdAsync<MainPageButtonData>(model.SelectedButtonId);
+                var buttonData = await _mainPageService.GetElementDataByIdAsync<MainPageButtonDataModel>(model.SelectedButtonId);
                 if (buttonData != null)
                 {
                     presetData.ButtonId = buttonData.Id;
-                    await _mainPageService.UpdatePresetAsync(presetData);
+                    await _mainPageService.EditMainPagePresetToDbAsync(presetData);
                 }
             }
 
@@ -278,7 +277,7 @@ namespace WebAppForAdmins.Controllers
             if (presetData != null)
             {
                 presetData.ButtonId = null;
-                await _mainPageService.UpdatePresetAsync(presetData);
+                await _mainPageService.EditMainPagePresetToDbAsync(presetData);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(presetId);
@@ -293,12 +292,12 @@ namespace WebAppForAdmins.Controllers
                 model.ButtonContent = model.ButtonContent.Trim();
                 if (model.ButtonContent.Length <= 16)
                 {
-                    var buttonData = new MainPageButtonData()
+                    var buttonData = new MainPageButtonDataModel()
                     {
                         Button = model.ButtonContent!
                     };
 
-                    await _mainPageService.CreateElementAsync(buttonData);
+                    await _mainPageService.AddElementToDbAsync(buttonData);
                 }
             }
 
@@ -311,7 +310,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (model.SelectedButtonId > 0)
             {
-                await _mainPageService.DeleteElementAsync<MainPageButtonData>(model.SelectedButtonId);
+                await _mainPageService.DeleteElementToDbAsync<MainPageButtonDataModel>(model.SelectedButtonId);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
@@ -326,11 +325,11 @@ namespace WebAppForAdmins.Controllers
             var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
             if (presetData != null)
             {
-                var phraseData = await _mainPageService.GetElementDataByIdAsync<MainPagePhraseData>(model.SelectedPhraseId);
+                var phraseData = await _mainPageService.GetElementDataByIdAsync<MainPagePhraseDataModel>(model.SelectedPhraseId);
                 if (phraseData != null)
                 {
                     presetData.PhraseId = phraseData.Id;
-                    await _mainPageService.UpdatePresetAsync(presetData);
+                    await _mainPageService.EditMainPagePresetToDbAsync(presetData);
                 }
             }
 
@@ -345,7 +344,7 @@ namespace WebAppForAdmins.Controllers
             if (presetData != null)
             {
                 presetData.PhraseId = null;
-                await _mainPageService.UpdatePresetAsync(presetData);
+                await _mainPageService.EditMainPagePresetToDbAsync(presetData);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(presetId);
@@ -360,12 +359,12 @@ namespace WebAppForAdmins.Controllers
                 model.PhraseContent = model.PhraseContent.Trim();
                 if (model.PhraseContent.Length <= 44)
                 {
-                    var phraseData = new MainPagePhraseData()
+                    var phraseData = new MainPagePhraseDataModel()
                     {
                         Phrase = model.PhraseContent!
                     };
 
-                    await _mainPageService.CreateElementAsync(phraseData);
+                    await _mainPageService.AddElementToDbAsync(phraseData);
                 }
             }
 
@@ -378,7 +377,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (model.SelectedPhraseId > 0)
             {
-                await _mainPageService.DeleteElementAsync<MainPagePhraseData>(model.SelectedPhraseId);
+                await _mainPageService.DeleteElementToDbAsync<MainPagePhraseDataModel>(model.SelectedPhraseId);
             }
 
             var viewModel = await GetImageBlockViewModelAsync(model.CurrentPresetId);
@@ -401,11 +400,11 @@ namespace WebAppForAdmins.Controllers
             var presetData = await _mainPageService.GetPresetDataByIdAsync(model.CurrentPresetId);
             if (presetData != null)
             {
-                var actionData = await _mainPageService.GetElementDataByIdAsync<MainPageActionData>(model.SelectedActionId);
+                var actionData = await _mainPageService.GetElementDataByIdAsync<MainPageActionDataModel>(model.SelectedActionId);
                 if (actionData != null)
                 {
                     presetData.ActionId = actionData.Id;
-                    await _mainPageService.UpdatePresetAsync(presetData);
+                    await _mainPageService.EditMainPagePresetToDbAsync(presetData);
                 }
             }
 
@@ -420,7 +419,7 @@ namespace WebAppForAdmins.Controllers
             if (presetData != null)
             {
                 presetData.ActionId = null;
-                await _mainPageService.UpdatePresetAsync(presetData);
+                await _mainPageService.EditMainPagePresetToDbAsync(presetData);
             }
 
             var viewModel = await GetActionBlockViewModelAsync(presetId);
@@ -435,12 +434,12 @@ namespace WebAppForAdmins.Controllers
                 model.ActionContent = model.ActionContent.Trim();
                 if (model.ActionContent.Length <= 60)
                 {
-                    var actionData = new MainPageActionData()
+                    var actionData = new MainPageActionDataModel()
                     {
                         Action = model.ActionContent!
                     };
 
-                    await _mainPageService.CreateElementAsync(actionData);
+                    await _mainPageService.AddElementToDbAsync(actionData);
                 }
             }
 
@@ -453,7 +452,7 @@ namespace WebAppForAdmins.Controllers
         {
             if (model.SelectedActionId > 0)
             {
-                await _mainPageService.DeleteElementAsync<MainPageActionData>(model.SelectedActionId);
+                await _mainPageService.DeleteElementToDbAsync<MainPageActionDataModel>(model.SelectedActionId);
             }
 
             var viewModel = await GetActionBlockViewModelAsync(model.CurrentPresetId);
@@ -471,7 +470,7 @@ namespace WebAppForAdmins.Controllers
                 var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
                 if (presetData != null)
                 {
-                    var textDatas = await _mainPageService.GetAllElementDatasAsync<MainPageTextData>();
+                    var textDatas = await _mainPageService.GetAllElementDatasAsync<MainPageTextDataModel>();
                     if (presetData.TextId.HasValue)
                     {
                         textSelectViewModel.SelectedTextId = presetData.TextId.Value;
@@ -496,7 +495,7 @@ namespace WebAppForAdmins.Controllers
 
             textSelectViewModel.SelectedTextId = 0;
             textSelectViewModel.CurrentPresetId = 0;
-            textSelectViewModel.Texts = new List<MainPageTextModel> { defaultMainPageTextModel };
+            textSelectViewModel.Texts = new List<MainPageTextWebModel> { defaultMainPageTextModel };
 
             return textSelectViewModel;
         }
@@ -512,15 +511,15 @@ namespace WebAppForAdmins.Controllers
             }
             else
             {
-                var allImageDatas = await _mainPageService.GetAllElementDatasAsync<MainPageImageData>();
+                var allImageDatas = await _mainPageService.GetAllElementDatasAsync<MainPageImageDataModel>();
                 var allImageModels = allImageDatas.Select(i => i.ImageDataToModel())
                     .ToList();
 
-                var allButtonDatas = await _mainPageService.GetAllElementDatasAsync<MainPageButtonData>();
+                var allButtonDatas = await _mainPageService.GetAllElementDatasAsync<MainPageButtonDataModel>();
                 var allButtonModels = allButtonDatas.Select(b => b.ButtonDataToModel())
                     .ToList();
 
-                var allPhraseDatas = await _mainPageService.GetAllElementDatasAsync<MainPagePhraseData>();
+                var allPhraseDatas = await _mainPageService.GetAllElementDatasAsync<MainPagePhraseDataModel>();
                 var allPhraseModels = allPhraseDatas.Select(p => p.PhraseDataToModel())
                     .ToList();
 
@@ -548,7 +547,7 @@ namespace WebAppForAdmins.Controllers
                 var presetData = await _mainPageService.GetPresetDataByIdAsync(presetId);
                 if (presetData != null)
                 {
-                    var actionDatas = await _mainPageService.GetAllElementDatasAsync<MainPageActionData>();
+                    var actionDatas = await _mainPageService.GetAllElementDatasAsync<MainPageActionDataModel>();
                     if (presetData.ActionId.HasValue)
                     {
                         actionSelectViewModel.SelectedActionId = presetData.ActionId.Value;
@@ -573,7 +572,7 @@ namespace WebAppForAdmins.Controllers
 
             actionSelectViewModel.SelectedActionId = 0;
             actionSelectViewModel.CurrentPresetId = 0;
-            actionSelectViewModel.Actions = new List<MainPageActionModel> { defaultMainPageActionModel };
+            actionSelectViewModel.Actions = new List<MainPageActionWebModel> { defaultMainPageActionModel };
 
             return actionSelectViewModel;
         }

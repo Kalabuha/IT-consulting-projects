@@ -7,9 +7,9 @@ namespace AppearanceDataServices.Extensions
     {
         public static IServiceCollection RegisterAppearanceDataServices(this IServiceCollection services)
         {
-            services.AddScoped<IHeaderService, HeaderWebService>();
-            services.AddScoped<IMainPageService, MainPageWebService>();
-            services.AddScoped<IContactService, ContactWebService>();
+            services.AddScoped<IHeaderService, MainPageHeaderDataService>();
+            services.AddScoped<IMainPageService, MainPageElementsDataService>();
+            services.AddScoped<IContactService, ContactDataService>();
 
             return services;
         }

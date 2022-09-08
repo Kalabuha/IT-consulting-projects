@@ -26,7 +26,7 @@
                             @if (Model.Presets != null)
                             {
                                 <ul class="select-list">
-                                    @foreach (MainPagePresetModel presetModel in Model.Presets)
+                                    @foreach (MainPagePresetWebModel presetModel in Model.Presets)
                                     {
                                         var forLabelPresetId = $"preset-{presetModel.Id}";
                                         var labelClassName = presetModel.IsPublished ? "green-text" : "black-text";
@@ -120,7 +120,7 @@
 
     @{
         bool IsHasPreset = false;
-        MainPagePresetModel? selectedPreset = null;
+        MainPagePresetWebModel? selectedPreset = null;
     }
 
     @if (selectedPresetId > 0 && Model.Presets != null)

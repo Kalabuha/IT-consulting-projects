@@ -4,11 +4,11 @@ namespace ServiceInterfaces
 {
     public interface IProjectService
     {
-        public Task<List<ProjectData>> GetAllProjectDatasAsync();
-        public Task<List<ProjectData>> GetPublishedProjectDatasAsync();
-        public Task<ProjectData?> GetProjectDataByIdAsync(int projectId);
-        public Task AddProjectToDbAsync(ProjectData project);
-        public Task EditProjectToDbAsync(ProjectData project);
+        public Task<List<ProjectDataModel>> GetAllProjectDatasAsync();
+        public Task<List<ProjectDataModel>> GetPublishedProjectDatasAsync();
+        public Task<ProjectDataModel?> GetProjectDataByIdAsync(int projectId);
+        public Task AddProjectToDbAsync(ProjectDataModel project);
+        public Task EditProjectToDbAsync(ProjectDataModel project);
         public Task RemoveProjectToDbAsync(int id);
     }
 }

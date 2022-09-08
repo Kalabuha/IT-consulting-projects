@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Blogs";
-    ViewBag.PageH1 ??= nameof(MenuModel.Blogs);
+    ViewBag.PageH1 ??= nameof(HeaderMenuWebModel.Blogs);
 }
 
 <div class="header-block header-block-blogs">
@@ -20,7 +20,7 @@
         @if (Model != null && Model.Blogs != null && Model.Blogs.Count != 0)
         {
             <ul class="list-blogs">
-                @foreach (BlogModel blog in Model.Blogs)
+                @foreach (BlogWebModel blog in Model.Blogs)
                 {
                     <li class="blog-item">
                         <a class="link-blog-item" asp-area="" asp-controller="Blogs" asp-action="BlogDetails" asp-route-id="@blog.Id">

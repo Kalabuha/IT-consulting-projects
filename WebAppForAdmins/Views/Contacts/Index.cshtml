@@ -21,7 +21,7 @@
         <ul class="list-items-wrap">
             @if (Model.Contacts != null)
             {
-                @foreach (ContactModel contact in Model.Contacts)
+                @foreach (ContactWebModel contact in Model.Contacts)
                 {
                     string borderColor;
                     if (contact.IsPublished)

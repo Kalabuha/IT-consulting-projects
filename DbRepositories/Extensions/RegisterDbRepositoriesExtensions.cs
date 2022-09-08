@@ -9,7 +9,7 @@ namespace DbRepositories.Extensions
         {
             services.AddScoped<IUserRepository, UserDbRepository>();
 
-            services.AddScoped<IHeaderMenuSetRepository, HeaderMenuSetDbRepository>();
+            services.AddScoped<IHeaderMenuRepository, HeaderMenuDbRepository>();
             services.AddScoped<IHeaderSloganRepository, HeaderSloganDbRepository>();
 
             services.AddScoped<IMainPagePresetRepository, MainPagePresetDbRepository>();

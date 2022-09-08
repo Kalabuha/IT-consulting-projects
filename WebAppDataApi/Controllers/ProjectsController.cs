@@ -16,7 +16,7 @@ namespace WebAppDataApi.Controllers
 
         // GET: api/<ProjectsController>
         [HttpGet]
-        public async Task<ActionResult<List<ProjectData>>> Get()
+        public async Task<ActionResult<List<ProjectDataModel>>> Get()
         {
             var projects = await _projectService.GetAllProjectDatasAsync();
 
@@ -25,7 +25,7 @@ namespace WebAppDataApi.Controllers
 
         // GET api/<ProjectsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProjectData>> Get(int id)
+        public async Task<ActionResult<ProjectDataModel>> Get(int id)
         {
             var project = await _projectService.GetProjectDataByIdAsync(id);
             if (project == null)
@@ -38,7 +38,7 @@ namespace WebAppDataApi.Controllers
 
         // POST api/<ProjectsController>
         [HttpPost]
-        public async Task<ActionResult> Post(ProjectData project)
+        public async Task<ActionResult> Post(ProjectDataModel project)
         {
             await _projectService.AddProjectToDbAsync(project);
 
@@ -47,7 +47,7 @@ namespace WebAppDataApi.Controllers
 
         // PUT api/<ProjectsController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(ProjectData project)
+        public async Task<ActionResult> Put(ProjectDataModel project)
         {
             var editedProject = _projectService.GetProjectDataByIdAsync(project.Id);
             if (editedProject == null)

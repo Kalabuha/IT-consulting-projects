@@ -6,12 +6,12 @@ namespace WebAppForGuests.Models
     {
         public string PageH1 { get; set; } = default!;
 
-        public MainPageTextModel TextModel { get; set; } = default!;
-        public MainPageImageModel? ImageModel { get; set; }
-        public MainPageButtonModel? ButtonModel { get; set; }
-        public MainPagePhraseModel? PhraseModel { get; set; }
-        public MainPageActionModel ActionModel { get; set; } = default!;
+        public MainPageTextWebModel TextModel { get; set; } = default!;
+        public MainPageImageWebModel? ImageModel { get; set; }
+        public MainPageButtonWebModel? ButtonModel { get; set; }
+        public MainPagePhraseWebModel? PhraseModel { get; set; }
+        public MainPageActionWebModel ActionModel { get; set; } = default!;
 
-        public ApplicationModel ApplicationModel { get; set; } = default!;
+        public ApplicationWebModel ApplicationModel { get; set; } = default!;
     }
 }

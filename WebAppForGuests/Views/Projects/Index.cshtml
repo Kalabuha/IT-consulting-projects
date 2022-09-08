@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Projects";
-    ViewBag.PageH1 ??= nameof(MenuModel.Projects);
+    ViewBag.PageH1 ??= nameof(HeaderMenuWebModel.Projects);
 }
 
 <div class="header-block header-block-projects">
@@ -22,7 +22,7 @@
             <ul class="list-projects">
                 @for (int i = 0, imageNumber = 1; i < Model.Projects.Count; i++)
                 {
-                    ProjectModel project = Model.Projects[i];
+                    ProjectWebModel project = Model.Projects[i];
 
                     string backgroundDirectoryPath = "../img/background-img/";
 

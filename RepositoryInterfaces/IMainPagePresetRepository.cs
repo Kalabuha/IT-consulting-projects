@@ -1,11 +1,13 @@
-﻿using Entities;
+﻿using DataModels;
 
 namespace RepositoryInterfaces
 {
-    public interface IMainPagePresetRepository : IRepository<MainPagePresetEntity>
+    public interface IMainPagePresetRepository
     {
-        public Task<MainPagePresetEntity[]> GetAllMainPagePresetEntitiesAsync();
-        public Task<MainPagePresetEntity[]> GetAllPublishedPresetEntityAsync();
-        public Task<MainPagePresetEntity?> GetPublishedMainPagePresetEntityAsync();
+        public Task<MainPagePresetDataModel?> GetMainPagePresetAsync(int id);
+        public Task<MainPagePresetDataModel[]> GetAllMainPagePresetsAsync();
+        public Task<int> AddMainPagePresetAsync(MainPagePresetDataModel data);
+        public Task<bool> UpdateMainPagePresetAsync(MainPagePresetDataModel data);
+        public Task<bool> DeleteMainPagePresetAsync(int id);
     }
 }

@@ -20,7 +20,7 @@
 
     <div class="content-block-standart-indent">
         <p class="large-text font-family-2 gold-text paragraph">
-            Меню по умолчанию: @nameof(MenuModel.Main), @nameof(MenuModel.Services), @nameof(MenuModel.Projects), @nameof(MenuModel.Blogs), @nameof(MenuModel.Contacts).
+            Меню по умолчанию: @nameof(HeaderMenuWebModel.Main), @nameof(HeaderMenuWebModel.Services), @nameof(HeaderMenuWebModel.Projects), @nameof(HeaderMenuWebModel.Blogs), @nameof(HeaderMenuWebModel.Contacts).
         </p>
     </div>
 
@@ -33,7 +33,7 @@
                 <ul class="select-list">
                     @if (Model.Menus != null)
                     {
-                        foreach (MenuModel menu in Model.Menus)
+                        foreach (HeaderMenuWebModel menu in Model.Menus)
                         {
                             var forLabelMenuContent = $"menuId-{menu.Id}";
 

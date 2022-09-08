@@ -1,9 +1,13 @@
-﻿using Entities;
+﻿using DataModels;
 
 namespace RepositoryInterfaces
 {
-    public interface IBlogRepository : IRepository<BlogEntity>
+    public interface IBlogRepository
     {
-        public Task<BlogEntity[]> GetAllBlogEntitiesAsync();
+        public Task<BlogDataModel?> GetBlogAsync(int id);
+        public Task<BlogDataModel[]> GetAllBlogsAsync();
+        public Task<int> AddBlogAsync(BlogDataModel data);
+        public Task<bool> UpdateBlogAsync(BlogDataModel data);
+        public Task<bool> DeleteBlogAsync(int id);
     }
 }

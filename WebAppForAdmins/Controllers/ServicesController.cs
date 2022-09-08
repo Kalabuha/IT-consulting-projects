@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebAppForAdmins.Models.Services;
 using ServiceInterfaces;
-using DataModelsWebModelsConverters;
+using DataModelsWebModelsMappers;
 using WebModels;
 
 namespace WebAppForAdmins.Controllers
@@ -37,11 +37,11 @@ namespace WebAppForAdmins.Controllers
         {
             ViewBag.IsChangeDisabled = false;
 
-            return View(new ServiceModel());
+            return View(new ServiceWebModel());
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePost(ServiceModel model)
+        public async Task<IActionResult> CreatePost(ServiceWebModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -70,7 +70,7 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditPost(ServiceModel model)
+        public async Task<IActionResult> EditPost(ServiceWebModel model)
         {
             if (!ModelState.IsValid)
             {

@@ -2,7 +2,7 @@
 
 @{
     //Здесь всегда должна быть модель. Если её нет, это аварийный случай.
-    MainPageActionModel? selectedActionModel = Model.Actions.FirstOrDefault(a => a.Id == Model.SelectedActionId);
+    MainPageActionWebModel? selectedActionModel = Model.Actions.FirstOrDefault(a => a.Id == Model.SelectedActionId);
 }
 
 @if (Model.SelectedActionId == 0 && Model.CurrentPresetId > 0)
@@ -83,7 +83,7 @@
                         <div class="select-block-inner">
                             <div class="select-list-block select-block-max-height-1 scroll-y-block">
                                 <ul class="select-list">
-                                    @foreach (MainPageActionModel action in Model.Actions)
+                                    @foreach (MainPageActionWebModel action in Model.Actions)
                                     {
                                         var isSelected = action.Id == Model.SelectedActionId;
                                         var labelClassName = isSelected ? "green-text" : "black-text";

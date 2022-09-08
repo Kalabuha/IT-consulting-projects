@@ -17,7 +17,7 @@ namespace WebAppDataApi.Controllers
 
         // GET: api/<BlogsController>
         [HttpGet]
-        public async Task<ActionResult<List<BlogData>>> Get()
+        public async Task<ActionResult<List<BlogDataModel>>> Get()
         {
             var blogs = await _blogService.GetAllBlogDatasAsync();
 
@@ -26,7 +26,7 @@ namespace WebAppDataApi.Controllers
 
         // GET api/<BlogsController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BlogData>> Get(int id)
+        public async Task<ActionResult<BlogDataModel>> Get(int id)
         {
             var blog = await _blogService.GetBlogDataByIdAsync(id);
             if (blog == null)
@@ -39,7 +39,7 @@ namespace WebAppDataApi.Controllers
 
         // POST api/<BlogsController>
         [HttpPost]
-        public async Task<ActionResult> Post(BlogData blog)
+        public async Task<ActionResult> Post(BlogDataModel blog)
         {
             await _blogService.AddBlogToDbAsync(blog);
 
@@ -48,7 +48,7 @@ namespace WebAppDataApi.Controllers
 
         // PUT api/<BlogsController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(BlogData blog)
+        public async Task<ActionResult> Put(BlogDataModel blog)
         {
             var editedBlog = await _blogService.GetBlogDataByIdAsync(blog.Id);
             if (editedBlog == null)
