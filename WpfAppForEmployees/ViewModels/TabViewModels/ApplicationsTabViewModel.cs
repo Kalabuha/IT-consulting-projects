@@ -1,9 +1,10 @@
 ﻿using WpfAppForEmployees.ViewModels.TabViewModels.Base;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Linq;
+using WpfAppForEmployees.DataModelsWpfModelsMappers;
 using ServiceInterfaces;
-using DataModels;
-using WpfModels;
+using WpfAppForEmployees.WpfModels;
 
 namespace WpfAppForEmployees.ViewModels.TabViewModels
 {
@@ -17,8 +18,10 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels
 
         public async Task LoadData()
         {
-            var applications = await _applicationService.GetAllApplicationsDataAsync();
-            TabDataCollection = new ObservableCollection<ApplicationDataModel>(applications);
+            var applications = (await _applicationService.GetAllApplicationsDataAsync())
+                .Select(a => a.ApplicationDataModelToWpfModel());
+
+            TabItems = new ObservableCollection<ApplicationWpfModel>(applications);
         }
     }
 }

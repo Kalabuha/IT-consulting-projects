@@ -95,13 +95,17 @@
 
     <Style x:Key="TabControlLeftListView" TargetType="ListView" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="TextElement.Foreground" Value="#dcdcdc"/>
+        <Setter Property="TextElement.FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="ListViewHeaderGridView" TargetType="GridViewColumnHeader" BasedOn="{StaticResource CommonFontFamilyCalibri}">
+    <Style x:Key="TabControlListViewHeaderGridView" TargetType="GridViewColumnHeader" BasedOn="{StaticResource CommonFontFamilyCalibri}">
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Padding" Value="8 0 8 0"/>
     </Style>
-
+    
     <Style x:Key="TabControlRigthDataGrid" TargetType="DataGrid" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
         <Setter Property="BorderThickness" Value="0"/>
     </Style>

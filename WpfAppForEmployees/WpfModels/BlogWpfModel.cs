@@ -10,7 +10,17 @@ namespace WpfAppForEmployees.WpfModels
         public string ShortBlogDescription { get; set; } = default!;
         public string LongBlogDescription { get; set; } = default!;
         public BitmapImage? BlogImageAsBitmap { get; set; }
-        public DateTime PublicationDate { get; set; }
-        public bool IsPublished { get; set; }
+
+        public DateTime PublicationDateAsDateTime { get; set; } = default!;
+        public string PublicationDateAsString
+        {
+            get => PublicationDateAsDateTime.ToString("dd.MM.yyyy");
+        }
+
+        public bool IsPublishedAsBool { get; set; }
+        public string IsPublishedAsString
+        {
+            get => IsPublishedAsBool ? "Вкл." : "Выкл.";
+        }
     }
 }

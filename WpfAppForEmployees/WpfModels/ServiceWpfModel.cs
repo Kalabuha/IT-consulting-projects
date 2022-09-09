@@ -6,6 +6,11 @@ namespace WpfAppForEmployees.WpfModels
     {
         public string ServiceName { get; set; } = default!;
         public string ServiceDescription { get; set; } = default!;
-        public bool IsPublished { get; set; }
+
+        public bool IsPublishedAsBool { get; set; }
+        public string IsPublishedAsString
+        {
+            get => IsPublishedAsBool ? "Вкл." : "Выкл.";
+        }
     }
 }

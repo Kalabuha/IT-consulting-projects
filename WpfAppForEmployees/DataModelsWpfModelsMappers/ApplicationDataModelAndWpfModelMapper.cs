@@ -14,7 +14,7 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 GuestName = data.GuestName ?? string.Empty,
                 GuestEmail = data.GuestEmail ?? string.Empty,
                 GuestApplicationText = data.GuestApplicationText ?? string.Empty,
-                DateReceiptApplication = data.DateReceiptApplication,
+                DateReceiptApplicationAsDateTime = data.DateReceiptApplication,
                 Status = data.Status
             };
         }
@@ -28,7 +28,6 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 GuestName = model.GuestName,
                 GuestEmail = model.GuestEmail,
                 GuestApplicationText = model.GuestApplicationText,
-                DateReceiptApplication = model.DateReceiptApplication,
                 Status = model.Status,
             };
         }

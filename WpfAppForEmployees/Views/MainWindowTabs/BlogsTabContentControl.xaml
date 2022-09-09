@@ -20,10 +20,11 @@
                 <RowDefinition Style="{StaticResource TabControlLeftColumnGrid_BottomRow}"/>
             </Grid.RowDefinitions>
 
-            <ListView ItemsSource="{Binding TabDataCollection}" Style="{StaticResource TabControlLeftListView}">
+            <ListView ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}" Style="{StaticResource TabControlLeftListView}">
                 <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource ListViewHeaderGridView}">
-                        <GridViewColumn Header="№" DisplayMemberBinding="{Binding Id}"/>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource TabControlListViewHeaderGridView}">
+                        <GridViewColumn Header="На сайте" DisplayMemberBinding="{Binding IsPublishedAsString}"/>
+                        <GridViewColumn Header="Дата публ." DisplayMemberBinding="{Binding PublicationDateAsString}"/>
                         <GridViewColumn Header="Заголовок" DisplayMemberBinding="{Binding BlogTitle}"/>
                     </GridView>
                 </ListView.View>

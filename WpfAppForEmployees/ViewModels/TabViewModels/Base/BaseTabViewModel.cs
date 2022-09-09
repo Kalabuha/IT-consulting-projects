@@ -1,6 +1,6 @@
 ﻿using WpfAppForEmployees.ViewModels.Base;
 using System.Collections.ObjectModel;
-using WpfModels.Base;
+using WpfAppForEmployees.WpfModels.Base;
 
 namespace WpfAppForEmployees.ViewModels.TabViewModels.Base
 {
@@ -8,14 +8,21 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels.Base
     {
         public BaseTabViewModel()
         {
-            _tabDataModels = new ObservableCollection<TWpfModel>();
+            _tabItems = new ObservableCollection<TWpfModel>();
         }
 
-        private ObservableCollection<TWpfModel> _tabDataModels;
-        public ObservableCollection<TWpfModel> TabDataCollection
+        private ObservableCollection<TWpfModel> _tabItems;
+        public ObservableCollection<TWpfModel> TabItems
         {
-            get => _tabDataModels; 
-            set => Set(ref _tabDataModels, value);
+            get => _tabItems; 
+            set => Set(ref _tabItems, value);
+        }
+
+        private TWpfModel? _selectedTabItem;
+        public TWpfModel? SelectedTabItem
+        {
+            get => _selectedTabItem;
+            set => Set(ref _selectedTabItem, value);
         }
     }
 }

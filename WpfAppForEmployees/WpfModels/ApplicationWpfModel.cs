@@ -11,7 +11,12 @@ namespace WpfAppForEmployees.WpfModels
         public string? GuestEmail { get; set; }
         public string? GuestApplicationText { get; set; }
 
-        public DateTime DateReceiptApplication { get; set; }
+        public DateTime DateReceiptApplicationAsDateTime { get; set; } = default!;
+        public string DateReceiptApplicationAsString
+        {
+            get => DateReceiptApplicationAsDateTime.ToString("dd.MM.yyyy");
+        }
+
         public ApplicationStatus Status { get; set; }
     }
 }

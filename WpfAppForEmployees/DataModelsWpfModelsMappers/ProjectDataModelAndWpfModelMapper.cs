@@ -7,7 +7,7 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
 {
     public static class ProjectDataModelAndWpfModelMapper
     {
-        public static ProjectWpfModel ProjectDataToModel(this ProjectDataModel data)
+        public static ProjectWpfModel ProjectDataModelToWpfModel(this ProjectDataModel data)
         {
             var imageAsString = Convert.ToBase64String(data.CustomerCompanyLogoAsByte);
 
@@ -16,13 +16,13 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 Id = data.Id,
                 ProjectTitle = data.ProjectTitle,
                 ProjectDescription = data.ProjectDescription,
-                IsPublished = data.IsPublished,
+                IsPublishedAsBool = data.IsPublished,
                 LinkToCustomerSite = data.LinkToCustomerSite,
                 CustomerCompanyLogoAsBitmap = ImageWpfDataConverter.ConvertImageFromBytesToBitmap(data.CustomerCompanyLogoAsByte)
             };
         }
 
-        public static ProjectDataModel ProjectModelToData(this ProjectWpfModel model)
+        public static ProjectDataModel ProjectWpfModelToDataModel(this ProjectWpfModel model)
         {
             //if (model.BlogImageAsBitmap != null)
             //{
@@ -35,7 +35,7 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 Id = model.Id,
                 ProjectTitle = model.ProjectTitle,
                 ProjectDescription = model.ProjectDescription,
-                IsPublished = model.IsPublished,
+                IsPublished = model.IsPublishedAsBool,
                 LinkToCustomerSite = model.LinkToCustomerSite,
             };
 

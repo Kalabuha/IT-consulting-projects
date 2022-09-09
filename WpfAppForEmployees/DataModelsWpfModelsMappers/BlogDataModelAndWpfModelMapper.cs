@@ -16,9 +16,9 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 BlogTitle = data.BlogTitle,
                 ShortBlogDescription = data.ShortBlogDescription,
                 LongBlogDescription = data.LongBlogDescription,
-                PublicationDate = data.PublicationDate,
+                PublicationDateAsDateTime = data.PublicationDate,
                 BlogImageAsBitmap = imageAsBitmap,
-                IsPublished = data.IsPublished
+                IsPublishedAsBool = data.IsPublished
             };
         }
 
@@ -36,8 +36,6 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 BlogTitle = model.BlogTitle,
                 ShortBlogDescription = model.ShortBlogDescription,
                 LongBlogDescription = model.LongBlogDescription,
-                PublicationDate = model.PublicationDate,
-                IsPublished = model.IsPublished,
             };
 
             return data;

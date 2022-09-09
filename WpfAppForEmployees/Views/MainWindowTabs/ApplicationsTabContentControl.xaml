@@ -20,11 +20,13 @@
                 <RowDefinition Style="{StaticResource TabControlLeftColumnGrid_BottomRow}"/>
             </Grid.RowDefinitions>
 
-            <ListView ItemsSource="{Binding TabDataCollection}" Style="{StaticResource TabControlLeftListView}">
+            <ListView ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}" Style="{StaticResource TabControlLeftListView}">
                 <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource ListViewHeaderGridView}">
-                        <GridViewColumn Header="№" DisplayMemberBinding="{Binding Id}"/>
-                        <GridViewColumn Header="Название" DisplayMemberBinding="{Binding GuestApplicationText}"/>
+                    <GridView ColumnHeaderContainerStyle="{StaticResource TabControlListViewHeaderGridView}">
+                        <GridViewColumn Header="№" DisplayMemberBinding="{Binding Number}"/>
+                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding DateReceiptApplicationAsString}"/>
+                        <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding GuestName}"/>
+                        <GridViewColumn Header="Почта" DisplayMemberBinding="{Binding GuestEmail}"/>
                     </GridView>
                 </ListView.View>
             </ListView>
