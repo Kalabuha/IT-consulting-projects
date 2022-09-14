@@ -15,6 +15,7 @@ namespace WebAppForGuests.Controllers
         private readonly IApplicationService _applicationService;
         private readonly IHeaderService _headerService;
 
+        private readonly string _startPathToDefaultData;
 
         public MainController(
             ILogger<MainController> logger,
@@ -22,6 +23,8 @@ namespace WebAppForGuests.Controllers
             IApplicationService applicationService,
             IHeaderService headerService)
         {
+            _startPathToDefaultData = @"..\DefaultDataServices\DefaultData\txt";
+
             _logger = logger;
             _mainPageService = mainPageService;
             _applicationService = applicationService;
@@ -52,10 +55,10 @@ namespace WebAppForGuests.Controllers
                 if (actionData != null) viewModel.ActionModel = actionData.ActionDataToModel();
             }
 
-            viewModel.TextModel ??= (await _mainPageService.GetDefaultMainPageTextData())
+            viewModel.TextModel ??= (await _mainPageService.GetDefaultMainPageTextData(_startPathToDefaultData))
                 .TextDataToModel();
 
-            viewModel.ActionModel ??= (await _mainPageService.GetDefaultMainPageActionData())
+            viewModel.ActionModel ??= (await _mainPageService.GetDefaultMainPageActionData(_startPathToDefaultData))
                 .ActionDataToModel();
 
             viewModel.ApplicationModel = new ApplicationWebModel

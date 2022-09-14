@@ -61,5 +61,13 @@ namespace ContentDataServices
                 await _blogRepository.DeleteBlogAsync(id);
             }
         }
+
+        public async Task RemoveBlogToDbAsync(BlogDataModel? data)
+        {
+            if (data != null)
+            {
+                await _blogRepository.DeleteBlogAsync(data.Id);
+            }
+        }
     }
 }

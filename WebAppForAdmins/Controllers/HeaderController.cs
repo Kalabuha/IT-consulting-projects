@@ -12,8 +12,11 @@ namespace WebAppForAdmins.Controllers
     {
         private readonly IHeaderService _headerService;
 
+        private readonly string _startPathToDefaultData;
+
         public HeaderController(IHeaderService headerService)
         {
+            _startPathToDefaultData = @"..\DefaultDataServices\DefaultData\txt";
             _headerService = headerService;
         }
 
@@ -21,7 +24,7 @@ namespace WebAppForAdmins.Controllers
         public async Task<IActionResult> Index()
         {
             var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
-            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync();
+            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync(_startPathToDefaultData);
 
             var menuModel = menuData.MenuDataToModel();
             var sloganModel = sloganData.SloganDataToModel();
@@ -129,7 +132,7 @@ namespace WebAppForAdmins.Controllers
             var allSloganModels = allSloganDatas.Select(s => s.SloganDataToModel())
                 .ToList();
 
-            var defaultSloganContent = await _headerService.GetDefaultSloganContent();
+            var defaultSloganContent = await _headerService.GetDefaultSloganContent(_startPathToDefaultData);
 
             var viewModel = new SloganViewModel
             {
@@ -141,9 +144,9 @@ namespace WebAppForAdmins.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SelectSlogans(int[] id)
+        public async Task<IActionResult> SelectSlogans(int[] slogansId)
         {
-            await _headerService.StartUsingHeaderSlogansAsync(id);
+            await _headerService.StartUsingHeaderSlogansAsync(slogansId);
 
             return RedirectToAction(nameof(CustomizeSlogan));
         }

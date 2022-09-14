@@ -8,7 +8,7 @@ namespace WpfAppForEmployees.ViewModels
     {
         //private readonly IApplicationsApi api;
 
-        public string Title { get; set; } = "asd";
+        public string Title { get; set; }
         public string Data { get; set; } = "какой-то текст";
         public string GuestName { get; set; } = "asd";
 

@@ -11,9 +11,9 @@ namespace ServiceInterfaces
         public Task EditMenuToDbAsync(HeaderMenuDataModel data);
         public Task RemoveMenuToDbAsync(int id);
 
-        public Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync();
+        public Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync(string startPathToDefaultData);
         public Task<List<HeaderSloganDataModel>> GetAllHeaderSloganDatasAsync();
-        public Task<string> GetDefaultSloganContent();
+        public Task<string> GetDefaultSloganContent(string startPathToDefaultData);
 
         public Task StartUsingHeaderSlogansAsync(int[] slogansId);
         public Task<HeaderSloganDataModel?> GetHeaderSloganDataByIdAsync(int id);

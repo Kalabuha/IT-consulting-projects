@@ -20,7 +20,7 @@ namespace ServiceInterfaces
         public Task DeleteElementToDbAsync<TMainPageData>(int id) where TMainPageData : BaseDataModel;
         public Task AddElementToDbAsync<TMainPageData>(TMainPageData data) where TMainPageData : BaseDataModel;
 
-        public Task<MainPageTextDataModel> GetDefaultMainPageTextData();
-        public Task<MainPageActionDataModel> GetDefaultMainPageActionData();
+        public Task<MainPageTextDataModel> GetDefaultMainPageTextData(string startPathToDefaultData);
+        public Task<MainPageActionDataModel> GetDefaultMainPageActionData(string startPathToDefaultData);
     }
 }

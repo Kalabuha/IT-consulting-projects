@@ -1,0 +1,92 @@
+﻿<Window x:Class="WpfAppForEmployees.Views.TabItemManagerWindows.ProjectManagerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppForEmployees.Views.TabItemManagerWindows.Controllers"
+        xmlns:vm="clr-namespace:WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels"
+        mc:Ignorable="d"
+        Style="{StaticResource TabItemManagerWindow}"
+        d:DataContext="{d:DesignInstance Type=vm:ProjectManagerWindowViewModel, IsDesignTimeCreatable=True}">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel>
+                <AdornedElementPlaceholder />
+                <Label Content="Ошибка" Style="{StaticResource TabItemManagerWindowValidErrorsMessages_Label}"/>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <DockPanel>
+        <StatusBar DockPanel.Dock="Bottom" Style="{StaticResource StatusBarStyles}">
+            <TextBlock Text=""/>
+        </StatusBar>
+
+        <Border Style="{StaticResource BorderWindowContentStyles}">
+            <ScrollViewer>
+                <Grid Style="{StaticResource TabItemManagerWindow_Grid}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <Label Content="Заголовок проекта" Style="{StaticResource TabItemManagerWindowPrompts_Label}"/>
+                        <TextBox Validation.ErrorTemplate="{StaticResource validationFailed}" IsEnabled="{Binding IsEditingEnable}" Style="{StaticResource TabItemManagerWindowTitle_TextBox}">
+                            <TextBox.Text>
+                                <Binding Path="ManagerItem.ProjectTitle">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <Label Content="Ссылка на сайт" Style="{StaticResource TabItemManagerWindowPrompts_Label}"/>
+                        <TextBox Validation.ErrorTemplate="{StaticResource validationFailed}" IsEnabled="{Binding IsEditingEnable}" Style="{StaticResource TabItemManagerWindowLink_TextBox}">
+                            <TextBox.Text>
+                                <Binding Path="ManagerItem.LinkToCustomerSite">
+                                    <Binding.ValidationRules>
+                                        <DataErrorValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="0.35*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <Label Content="Описание проекта" Style="{StaticResource TabItemManagerWindowPrompts_Label}"/>
+                            <TextBox Validation.ErrorTemplate="{StaticResource validationFailed}" IsEnabled="{Binding IsEditingEnable}" Style="{StaticResource TabItemManagerWindowDescription_TextBox}">
+                                <TextBox.Text>
+                                    <Binding Path="ManagerItem.ProjectDescription">
+                                        <Binding.ValidationRules>
+                                            <DataErrorValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <Label Content="Логотип" Style="{StaticResource TabItemManagerWindowPrompts_Label}"/>
+                            <Image Source="{Binding ManagerItem.CustomerCompanyLogoAsBitmap}" Style="{StaticResource TabItemManagerWindowLogo_Image}"/>
+                            <Button Content="Выбрать файл" Visibility="{Binding ResetButtonVisibility}" Style="{StaticResource TabItemManagerWindowSelectFile_Button}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <local:TabItemManagerWindowBottomButtonsPanel Grid.Row="3"/>
+                </Grid>
+            </ScrollViewer>
+        </Border>
+    </DockPanel>
+</Window>

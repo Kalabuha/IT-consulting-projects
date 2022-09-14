@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfAppForEmployees.ViewModels.ManagerWindowViewModels
+namespace WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels
 {
-    internal class ServiceManagerWindowViewModel
+    internal class BlogManagerWindowViewModel
     {
     }
 }

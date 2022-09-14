@@ -8,9 +8,12 @@ namespace WebAppForGuests.ViewComponents
     public class HeaderViewComponent : ViewComponent
     {
         private readonly IHeaderService _headerService;
+        
+        private readonly string _startPathToDefaultData;
 
         public HeaderViewComponent(IHeaderService headerService)
         {
+            _startPathToDefaultData = @"..\DefaultDataServices\DefaultData\txt";
             _headerService = headerService;
         }
 
@@ -19,7 +22,7 @@ namespace WebAppForGuests.ViewComponents
             var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
             var menuModel = menuData.MenuDataToModel();
 
-            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync();
+            var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync(_startPathToDefaultData);
             var sloganModel = sloganData.SloganDataToModel();
 
             var viewModel = new HeaderViewModel()

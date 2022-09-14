@@ -39,17 +39,27 @@ namespace ContentDataServices
             return project;
         }
 
-        public async Task AddProjectToDbAsync(ProjectDataModel? data)
+        // Для Db репозитория - перед сохранением необходимо убедится, что есть картинка и добавить её если она отстутствует.
+        public async Task AddProjectToDbAsync(ProjectDataModel? data, string startPathToDefaultData)
         {
             if (data != null)
             {
                 if (data.CustomerCompanyLogoAsByte == null || data.CustomerCompanyLogoAsByte.Length == 0)
                 {
-                    var pathToDefaultCompanyLogo = GetDefaultImageFromFile("retro-wave-logo.png");
+                    var pathToDefaultCompanyLogo = Path.Combine(startPathToDefaultData, "retro-wave-logo.png");
                     var defaultCompanyLogoAsByte = ImageDataConverter.PathToImageToByte(pathToDefaultCompanyLogo);
                     data.CustomerCompanyLogoAsByte = defaultCompanyLogoAsByte;
                 }
 
+                await _projectRepository.AddProjectAsync(data);
+            }
+        }
+
+        // Для api репозитория - сохранение ещё не происходит, можно пропустить. Web.Api затем повторно проверит и добавит картинку.
+        public async Task AddProjectToDbAsync(ProjectDataModel? data)
+        {
+            if (data != null)
+            {
                 await _projectRepository.AddProjectAsync(data);
             }
         }
@@ -67,6 +77,14 @@ namespace ContentDataServices
             if (id > 0)
             {
                 await _projectRepository.DeleteProjectAsync(id);
+            }
+        }
+
+        public async Task RemoveProjectToDbAsync(ProjectDataModel? data)
+        {
+            if (data != null)
+            {
+                await _projectRepository.DeleteProjectAsync(data.Id);
             }
         }
     }

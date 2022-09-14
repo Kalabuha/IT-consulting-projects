@@ -49,7 +49,7 @@ namespace WebAppForAdmins.Controllers
             }
 
             var data = model.ProjectModelToData();
-            await _projectService.AddProjectToDbAsync(data);
+            await _projectService.AddProjectToDbAsync(data, "..\\DefaultDataServices\\DefaultData\\img");
 
             return RedirectToAction(nameof(Index));
         }

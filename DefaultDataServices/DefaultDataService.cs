@@ -4,14 +4,13 @@ namespace DefaultDataServices
 {
     public abstract class DefaultDataService
     {
-        protected readonly string _directoryDefaultTextFiles = @"..\DefaultDataServices\DefaultData\txt";
         protected readonly string _directoryDefaultImageFiles = @"..\DefaultDataServices\DefaultData\img";
 
-        protected async Task<string> GetDefaultTextFromFileAsync(string nameTxtFile)
+        protected async Task<string> GetDefaultTextFromFileAsync(string startFilePath, string nameTxtFile)
         {
             string defaultString = string.Empty;
 
-            string pathToTextFile = Path.Combine(_directoryDefaultTextFiles, nameTxtFile);
+            string pathToTextFile = Path.Combine(startFilePath, nameTxtFile);
             if (File.Exists(pathToTextFile))
             {
                 using (FileStream stream = new FileStream(pathToTextFile, FileMode.OpenOrCreate))
@@ -29,13 +28,5 @@ namespace DefaultDataServices
 
             return defaultString;
         }
-
-        protected string GetDefaultImageFromFile(string nameImgFile)
-        {
-            var pathToImageFile = Path.Combine(_directoryDefaultImageFiles, nameImgFile);
-
-            return pathToImageFile;
-        }
-
     }
 }

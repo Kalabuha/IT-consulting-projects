@@ -2,7 +2,6 @@
 using ServiceInterfaces;
 using DefaultDataServices;
 using DataModels;
-using Entities;
 
 namespace AppearanceDataServices
 {
@@ -110,15 +109,20 @@ namespace AppearanceDataServices
             return slogans;
         }
 
-        public async Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync()
+        public async Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync(string startPathToDefaultData)
         {
             var allSlogans = await _sloganRepository.GetAllHeaderSlogansAsync();
-            var randomSlogan = allSlogans.Length > 0 ? allSlogans[_random.Next(allSlogans.Length)] : null;
+
+            var usedSlogans = allSlogans
+                .Where(s => s.IsUsed)
+                .ToArray();
+
+            var randomSlogan = usedSlogans.Length > 0 ? usedSlogans[_random.Next(usedSlogans.Length)] : null;
 
             randomSlogan ??= new HeaderSloganDataModel
             {
                 Id = 0,
-                Slogan = await GetDefaultTextFromFileAsync("slogan.txt"),
+                Slogan = await GetDefaultTextFromFileAsync(startPathToDefaultData, "slogan.txt"),
                 IsUsed = true
             };
 
@@ -127,7 +131,7 @@ namespace AppearanceDataServices
 
         public async Task StartUsingHeaderSlogansAsync(int[] slogansId)
         {
-            if (slogansId == null)
+            if (slogansId == null || slogansId.Length == 0)
             {
                 return;
             }
@@ -137,6 +141,10 @@ namespace AppearanceDataServices
             {
                 if (slogansId.Contains(slogan.Id))
                 {
+                    if (slogan.IsUsed)
+                    {
+                        continue;
+                    }
                     slogan.IsUsed = true;
                 }
                 else
@@ -145,10 +153,8 @@ namespace AppearanceDataServices
                     {
                         continue;
                     }
-
                     slogan.IsUsed = false;
                 }
-
                 await _sloganRepository.UpdateHeaderSloganAsync(slogan);
             }
         }
@@ -177,9 +183,9 @@ namespace AppearanceDataServices
             }
         }
 
-        public async Task<string> GetDefaultSloganContent()
+        public async Task<string> GetDefaultSloganContent(string startPathToDefaultData)
         {
-            var defaultSloganContent = await GetDefaultTextFromFileAsync("slogan.txt");
+            var defaultSloganContent = await GetDefaultTextFromFileAsync(startPathToDefaultData, "slogan.txt");
 
             return defaultSloganContent;
         }

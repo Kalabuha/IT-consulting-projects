@@ -1,6 +1,9 @@
-﻿using WpfAppForEmployees.ViewModels.Base;
+﻿using System;
+using System.Windows.Input;
 using System.Collections.ObjectModel;
+using WpfAppForEmployees.ViewModels.Base;
 using WpfAppForEmployees.WpfModels.Base;
+using WpfAppForEmployees.Commands;
 
 namespace WpfAppForEmployees.ViewModels.TabViewModels.Base
 {
@@ -24,5 +27,9 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels.Base
             get => _selectedTabItem;
             set => Set(ref _selectedTabItem, value);
         }
+
+        public ICommand CreateTabItemCommand { get; set; } = default!;
+        public ICommand EditTabItemCommand { get; set; } = default!;
+        public ICommand RemoveTabItemCommand { get; set; } = default!;
     }
 }

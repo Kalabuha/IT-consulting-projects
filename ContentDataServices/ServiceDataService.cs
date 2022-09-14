@@ -60,5 +60,13 @@ namespace ContentDataServices
                 await _serviceRepository.DeleteServiceAsync(id);
             }
         }
+
+        public async Task RemoveServiceToDbAsync(ServiceDataModel? data)
+        {
+            if (data != null)
+            {
+                await _serviceRepository.DeleteServiceAsync(data.Id);
+            }
+        }
     }
 }

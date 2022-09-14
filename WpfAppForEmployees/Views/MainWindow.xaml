@@ -24,11 +24,11 @@
             </MenuItem>
         </Menu>
 
-        <StatusBar x:Name="MainWindowStatusBar" DockPanel.Dock="Bottom" Style="{StaticResource MainStatusBar}">
+        <StatusBar x:Name="MainWindowStatusBar" DockPanel.Dock="Bottom" Style="{StaticResource StatusBarStyles}">
             <TextBlock Text="Статус"/>
         </StatusBar>
 
-        <Border Style="{StaticResource BorderTabControl}">
+        <Border Style="{StaticResource BorderWindowContentStyles}">
             <TabControl x:Name="MainWindowTabControl" Style="{StaticResource MainTabControl}">
                 <TabItem Header="Заявки" Style="{StaticResource MainTabItem}">
                     <local:ApplicationsTabControl x:Name="ApplicationsControl"/>

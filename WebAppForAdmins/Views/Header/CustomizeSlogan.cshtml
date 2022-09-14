@@ -39,22 +39,15 @@
                         foreach (HeaderSloganWebModel slogan in Model.Slogans)
                         {
                             var forLabelSloganContent = $"sloganId-{slogan.Id}";
+                            var isChecked = slogan.IsUsed;
 
                             <li class="select-list-item">
                                 <div class="slogan-select-list-block-item">
-                                    @if (slogan.IsUsed)
-                                    {
-                                        <input class="select-point" type="checkbox" name="id" id="@forLabelSloganContent" value="@slogan.Id" checked />
-                                    }
-                                    else
-                                    {
-                                        <input class="select-point" type="checkbox" name="id" id="@forLabelSloganContent" value="@slogan.Id" />
-                                    }
+                                    <input class="select-point" type="checkbox" name="slogansId" id="@forLabelSloganContent" value="@slogan.Id" checked="@isChecked" />
 
                                     <label class="large-text font-family-2 black-text" for="@forLabelSloganContent">
                                         @slogan.Slogan
                                     </label>
-
 
                                     <div class="select-list-button-block">
                                         <a class="button low-button link-a-button" asp-area="" asp-controller="Header" asp-action="EditSlogan" asp-route-id="@slogan.Id">
@@ -65,7 +58,6 @@
                                             <span class="large-text font-family-2 black-text">&#10006;</span>
                                         </a>
                                     </div>
-
                                 </div>
                             </li>
                         }

@@ -17,7 +17,7 @@ namespace WpfAppForEmployees.DataModelsWpfModelsMappers
                 ProjectTitle = data.ProjectTitle,
                 ProjectDescription = data.ProjectDescription,
                 IsPublishedAsBool = data.IsPublished,
-                LinkToCustomerSite = data.LinkToCustomerSite,
+                LinkToCustomerSite = string.IsNullOrEmpty(data.LinkToCustomerSite) ? "Ссылка не указана" : data.LinkToCustomerSite,
                 CustomerCompanyLogoAsBitmap = ImageWpfDataConverter.ConvertImageFromBytesToBitmap(data.CustomerCompanyLogoAsByte)
             };
         }

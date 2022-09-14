@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfAppForEmployees.Views.MainWindowTabs"
+             xmlns:local="clr-namespace:WpfAppForEmployees.Views.MainWindowTabs.Controllers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding ProjectsTabViewModel, Source={StaticResource Locator}}">
@@ -14,12 +14,9 @@
             <ColumnDefinition Style="{StaticResource TabControlGridRigthColumn}"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Style="{StaticResource TabControlLeftColumnGrid_BottomRow}"/>
-            </Grid.RowDefinitions>
-
+        <DockPanel Grid.Column="0">
+            <local:MainWindowTabCudButtonsPanel DockPanel.Dock="Bottom"/>
+            
             <ListView ItemsSource="{Binding TabItems}" SelectedItem="{Binding SelectedTabItem}" Style="{StaticResource TabControlLeftListView}">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource TabControlListViewHeaderGridView}">
@@ -29,24 +26,30 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-
-            <Grid Grid.Row="1" Style="{StaticResource CrudButtonsGrid}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Style="{StaticResource GridColumnCrudButtonWidth}"/>
-                    <ColumnDefinition Style="{StaticResource GridColumnCrudButtonWidth}"/>
-                    <ColumnDefinition Style="{StaticResource GridColumnCrudButtonWidth}"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Content="Add" Style="{StaticResource TabControlCrudButtons_LeftButton}"/>
-                <Button Grid.Column="1" Content="Edit" Style="{StaticResource TabControlCrudButtons_CenterButton}"/>
-                <Button Grid.Column="2" Content="Del" Style="{StaticResource TabControlCrudButtons_RigthButton}"/>
-            </Grid>
-        </Grid>
+        </DockPanel>
 
         <GridSplitter Grid.Column="1" Style="{StaticResource TabControlMainGrid_GridSplitter}"/>
 
-        <DataGrid Grid.Column="2" Style="{StaticResource TabControlRigthDataGrid}">
+        <ScrollViewer Grid.Column="2">
+            <Grid Style="{StaticResource TabControlRigthGridColumn_Grid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        </DataGrid>
+                <TextBlock Grid.Row="0" Text="{Binding SelectedTabItem.ProjectTitle}" Style="{StaticResource TabSelectedItemTitle_TextBlock}"/>
+                <TextBlock Grid.Row="1" Text="{Binding SelectedTabItem.LinkToCustomerSite}" Style="{StaticResource TabSelectedItemLink_TextBlock}"/>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.35*" MinWidth="100"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{Binding SelectedTabItem.ProjectDescription}" Style="{StaticResource TabSelectedItemDescription_TextBlock}"/>
+                    <Image Grid.Column="1" Source="{Binding SelectedTabItem.CustomerCompanyLogoAsBitmap}" Style="{StaticResource TabSelectedItemLogo_Image}"/>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>

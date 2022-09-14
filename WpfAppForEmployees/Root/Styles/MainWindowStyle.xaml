@@ -14,15 +14,25 @@
         <Setter Property="TextElement.FontFamily" Value="Arial"/>
     </Style>
 
-    <!--Elements-->
-    <Style x:Key="MainWindow" TargetType="Window">
-        <Setter Property="Background" Value="White" />
-        <Setter Property="Height" Value="450" />
-        <Setter Property="MinHeight" Value="300" />
+    <!--MainWindowAndTabs-->
+    <Style x:Key="WindowsBackgroundWhite" TargetType="Window">
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <Style x:Key="MainWindow" TargetType="Window" BasedOn="{StaticResource WindowsBackgroundWhite}">
+        <Setter Property="Height" Value="600" />
+        <Setter Property="MinHeight" Value="400" />
         <Setter Property="Width" Value="800" />
         <Setter Property="MinWidth" Value="600" />
     </Style>
-    
+
+    <Style x:Key="TabItemManagerWindow" TargetType="Window" BasedOn="{StaticResource WindowsBackgroundWhite}">
+        <Setter Property="Height" Value="460"/>
+        <Setter Property="MinHeight" Value="400"/>
+        <Setter Property="Width" Value="700"/>
+        <Setter Property="MinWidth" Value="500"/>
+    </Style>
+
     <Style x:Key="MainMenu" TargetType="Menu" BasedOn="{StaticResource CommonFontFamilyCalibri}">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="Black"/>
@@ -30,11 +40,11 @@
         <Setter Property="Margin" Value="0 0 0 16"/>
     </Style>
 
-    <Style x:Key="BorderTabControl" TargetType="Border">
+    <Style x:Key="BorderWindowContentStyles" TargetType="Border">
         <Setter Property="BorderThickness" Value="6 0 6 0"/>
         <Setter Property="BorderBrush" Value="White"/>
     </Style>
-    
+
     <Style x:Key="MainTabControl" TargetType="TabControl">
         <Setter Property="Background" Value="Black"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -62,12 +72,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        
+
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontWeight" Value="Bold" />
     </Style>
 
-    <Style x:Key="MainStatusBar" TargetType="StatusBar" BasedOn="{StaticResource CommonFontFamilyArial}">
+    <Style x:Key="StatusBarStyles" TargetType="StatusBar" BasedOn="{StaticResource CommonFontFamilyArial}">
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="Black" />
@@ -85,7 +95,7 @@
     </Style>
 
     <Style x:Key="TabControlMainGrid_GridSplitter" TargetType="GridSplitter">
-        <Setter Property="Width" Value="3"/>
+        <Setter Property="Width" Value="6"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="ShowsPreview" Value="False"/>
@@ -95,7 +105,7 @@
 
     <Style x:Key="TabControlLeftListView" TargetType="ListView" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="TextElement.Foreground" Value="#dcdcdc"/>
+        <Setter Property="TextElement.Foreground" Value="#a5a5a5"/>
         <Setter Property="TextElement.FontSize" Value="16"/>
     </Style>
 
@@ -105,29 +115,16 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="Padding" Value="8 0 8 0"/>
     </Style>
-    
-    <Style x:Key="TabControlRigthDataGrid" TargetType="DataGrid" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
-        <Setter Property="BorderThickness" Value="0"/>
-    </Style>
-    
-    <Style x:Key="TabControlLeftColumnGrid_BottomRow" TargetType="RowDefinition">
-        <Setter Property="Height" Value="30"/>
-    </Style>
 
-    <Style x:Key="CrudButtonsGrid" TargetType="Grid">
+    <Style x:Key="ButtonsPanel_Grid" TargetType="Grid">
         <Setter Property="Background" Value="White"/>
     </Style>
 
-    <Style x:Key="GridColumnCrudButtonWidth" TargetType="ColumnDefinition">
-        <Setter Property="Width" Value="*"/>
-        <Setter Property="MaxWidth" Value="86"/>
-    </Style>
-    
     <Style x:Key="CommonButton" TargetType="Button">
         <Setter Property="Button.Background" Value="#aed3f2"/>
         <Setter Property="TextElement.FontSize" Value="16"/>
     </Style>
-    
+
     <Style x:Key="TabControlCrudButtons_LeftButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
         <Setter Property="Margin" Value="8 4 4 4"/>
     </Style>
@@ -139,8 +136,114 @@
     <Style x:Key="TabControlCrudButtons_RigthButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
         <Setter Property="Margin" Value="4 4 8 4"/>
     </Style>
-    
-    <Style x:Key="TabItemTextBox" TargetType="TextBlock">
+
+    <Style x:Key="TabControlRigthGridColumn_Grid" TargetType="Grid" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
+    </Style>
+
+    <Style x:Key="TabSelectedItemAlignment_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource CommonFontFamilyCalibri}">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemBigBoldText_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemAlignment_TextBlock}">
+        <Setter Property="FontSize" Value="23"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemMiddleText_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemAlignment_TextBlock}">
+        <Setter Property="FontSize" Value="19"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemSmallText_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemAlignment_TextBlock}">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemTitle_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemBigBoldText_TextBlock}">
+        <Setter Property="Margin" Value="14 8 14 10"/>
         <Setter Property="Foreground" Value="#dcdcdc"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemLink_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemSmallText_TextBlock}">
+        <Setter Property="Margin" Value="14 0 14 10"/>
+        <Setter Property="Foreground" Value="Yellow"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemDescription_TextBlock" TargetType="TextBlock" BasedOn="{StaticResource TabSelectedItemMiddleText_TextBlock}">
+        <Setter Property="Margin" Value="14 0 14 10"/>
+        <Setter Property="Foreground" Value="#dcdcdc"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemLogo_Image" TargetType="Image">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="MaxHeight" Value="300"/>
+        <Setter Property="Margin" Value="0 0 14 0"/>
+    </Style>
+
+    <Style x:Key="TabSelectedItemPicture_Image" TargetType="Image">
+        <Setter Property="Margin" Value="16 0 16 10"/>
+    </Style>
+
+    <!--TabItemManagerWindows-->
+    <Style x:Key="TabItemManagerWindow_Grid" TargetType="Grid" BasedOn="{StaticResource CommonBackgroundOxfordBlue}">
+    </Style>
+
+    <SolidColorBrush x:Key="TabItemManagerWindowTransparency_SolidColorBrush" Opacity="0"/>
+
+    <Style x:Key="TabItemManagerWindowBrushes_TextBox" TargetType="TextBox" BasedOn="{StaticResource CommonFontFamilyCalibri}">
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="False">
+                <Setter Property="BorderBrush" Value="White"/>
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True">
+                <Setter Property="BorderBrush" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Background" Value="{StaticResource TabItemManagerWindowTransparency_SolidColorBrush}"/>
+        <Setter Property="CaretBrush" Value="DeepSkyBlue"/>
+        <Setter Property="Padding" Value="6 2 6 4"/>
+        <Setter Property="Margin" Value="14 0 14 30"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowTitle_TextBox" TargetType="TextBox" BasedOn="{StaticResource TabItemManagerWindowBrushes_TextBox}">
+        <Setter Property="Foreground" Value="#dcdcdc"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowLink_TextBox" TargetType="TextBox" BasedOn="{StaticResource TabItemManagerWindowBrushes_TextBox}">
+        <Setter Property="Foreground" Value="Yellow"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowDescription_TextBox" TargetType="TextBox" BasedOn="{StaticResource TabItemManagerWindowBrushes_TextBox}">
+        <Setter Property="Foreground" Value="#dcdcdc"/>
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowPrompts_Label" TargetType="Label" BasedOn="{StaticResource CommonFontFamilyArial}">
+        <Setter Property="Foreground" Value="#a5a5a5"/>
+        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="14 0 14 0"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowValidErrorsMessages_Label" TargetType="Label" BasedOn="{StaticResource CommonFontFamilyArial}">
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="MinHeight" Value="30"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowLogo_Image" TargetType="Image">
+        <Setter Property="Margin" Value="0 0 14 10"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowSelectFile_Button" TargetType="Button">
+        <Setter Property="Margin" Value="0 0 14 10"/>
+    </Style>
+
+    <Style x:Key="TabItemManagerWindowBottomButton" TargetType="Button" BasedOn="{StaticResource CommonButton}">
+        <Setter Property="Margin" Value="10"/>
     </Style>
 </ResourceDictionary>

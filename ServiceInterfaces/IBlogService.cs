@@ -8,8 +8,10 @@ namespace ServiceInterfaces
         public Task<List<BlogDataModel>> GetPublishedBlogDatasAsync();
         public Task<BlogDataModel?> GetBlogDataByIdAsync(int id);
 
-        public Task AddBlogToDbAsync(BlogDataModel data);
-        public Task EditBlogToDbAsync(BlogDataModel data);
+        public Task AddBlogToDbAsync(BlogDataModel? data);
+        public Task EditBlogToDbAsync(BlogDataModel? data);
         public Task RemoveBlogToDbAsync(int id);
+        public Task RemoveBlogToDbAsync(BlogDataModel? data);
+
     }
 }

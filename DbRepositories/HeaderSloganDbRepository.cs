@@ -42,7 +42,7 @@ namespace DbRepositories
                 return false;
             }
 
-            var updated = data.HeaderSloganDataToEntity();
+            var updated = data.HeaderSloganDataToEntity(entity);
             await UpdateEntityAsync(updated);
             return true;
         }

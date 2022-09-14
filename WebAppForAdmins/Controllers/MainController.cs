@@ -16,8 +16,11 @@ namespace WebAppForAdmins.Controllers
         private readonly ILogger<MainController> _logger;
         private readonly IMainPageService _mainPageService;
 
+        private readonly string _startPathToDefaultData;
+
         public MainController(ILogger<MainController> logger, IMainPageService mainPageService)
         {
+            _startPathToDefaultData = @"..\DefaultDataServices\DefaultData\txt";
             _logger = logger;
             _mainPageService = mainPageService;
         }
@@ -478,7 +481,7 @@ namespace WebAppForAdmins.Controllers
                     else
                     {
                         textSelectViewModel.SelectedTextId = 0;
-                        textDatas.Add(await _mainPageService.GetDefaultMainPageTextData());
+                        textDatas.Add(await _mainPageService.GetDefaultMainPageTextData(_startPathToDefaultData));
                     }
 
                     var textModels = textDatas.Select(t => t.TextDataToModel())
@@ -490,7 +493,7 @@ namespace WebAppForAdmins.Controllers
                 }
             }
 
-            var defaultMainPageTextData = await _mainPageService.GetDefaultMainPageTextData();
+            var defaultMainPageTextData = await _mainPageService.GetDefaultMainPageTextData(_startPathToDefaultData);
             var defaultMainPageTextModel = defaultMainPageTextData.TextDataToModel();
 
             textSelectViewModel.SelectedTextId = 0;
@@ -555,7 +558,7 @@ namespace WebAppForAdmins.Controllers
                     else
                     {
                         actionSelectViewModel.SelectedActionId = 0;
-                        actionDatas.Add(await _mainPageService.GetDefaultMainPageActionData());
+                        actionDatas.Add(await _mainPageService.GetDefaultMainPageActionData(_startPathToDefaultData));
                     }
 
                     var actionModels = actionDatas.Select(a => a.ActionDataToModel())
@@ -567,7 +570,7 @@ namespace WebAppForAdmins.Controllers
                 }
             }
 
-            var defaultMainPageActionData = await _mainPageService.GetDefaultMainPageActionData();
+            var defaultMainPageActionData = await _mainPageService.GetDefaultMainPageActionData(_startPathToDefaultData);
             var defaultMainPageActionModel = defaultMainPageActionData.ActionDataToModel();
 
             actionSelectViewModel.SelectedActionId = 0;

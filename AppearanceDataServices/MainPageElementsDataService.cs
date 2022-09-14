@@ -8,6 +8,8 @@ namespace AppearanceDataServices
 {
     internal class MainPageElementsDataService : DefaultDataService, IMainPageService
     {
+        private readonly string _pathToDefaultTextData;
+
         private readonly IMainPagePresetRepository _presetRepository;
 
         private readonly IMainPageActionRepository _actionRepository;
@@ -24,6 +26,8 @@ namespace AppearanceDataServices
             IMainPagePhraseRepository phraseRepository,
             IMainPageTextRepository textRepository)
         {
+            _pathToDefaultTextData = @"..\DefaultDataServices\DefaultData\txt";
+
             _presetRepository = presetRepository;
 
             _actionRepository = actionRepository;
@@ -277,23 +281,23 @@ namespace AppearanceDataServices
             }
         }
 
-        public async Task<MainPageTextDataModel> GetDefaultMainPageTextData()
+        public async Task<MainPageTextDataModel> GetDefaultMainPageTextData(string startPathToDefaultData)
         {
             var defaultMainPageTextData = new MainPageTextDataModel
             {
                 Id = 0,
-                Text = await GetDefaultTextFromFileAsync("text.txt")
+                Text = await GetDefaultTextFromFileAsync(startPathToDefaultData, "text.txt")
             };
 
             return defaultMainPageTextData;
         }
 
-        public async Task<MainPageActionDataModel> GetDefaultMainPageActionData()
+        public async Task<MainPageActionDataModel> GetDefaultMainPageActionData(string startPathToDefaultData)
         {
             var defaultMainPageActionData = new MainPageActionDataModel
             {
                 Id = 0,
-                Action = await GetDefaultTextFromFileAsync("action.txt")
+                Action = await GetDefaultTextFromFileAsync(startPathToDefaultData, "action.txt")
             };
 
             return defaultMainPageActionData;

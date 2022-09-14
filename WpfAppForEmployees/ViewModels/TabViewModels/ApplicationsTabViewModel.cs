@@ -14,6 +14,7 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels
         public ApplicationsTabViewModel(IApplicationService applicationService)
         {
             _applicationService = applicationService;
+
         }
 
         public async Task LoadData()
@@ -23,5 +24,7 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels
 
             TabItems = new ObservableCollection<ApplicationWpfModel>(applications);
         }
+
+
     }
 }

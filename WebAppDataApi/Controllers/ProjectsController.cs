@@ -40,7 +40,7 @@ namespace WebAppDataApi.Controllers
         [HttpPost]
         public async Task<ActionResult> Post(ProjectDataModel project)
         {
-            await _projectService.AddProjectToDbAsync(project);
+            await _projectService.AddProjectToDbAsync(project, "..\\DefaultDataServices\\DefaultData\\img");
 
             return Ok();
         }
