@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class ProjectEntityAndDataModelMapper
     {
-        public static ProjectDataModel ProjectEntityToData(this ProjectEntity entity)
+        public static ProjectDataModel ProjectEntityToData(ProjectEntity entity)
         {
             return new ProjectDataModel
             {
@@ -18,7 +18,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static ProjectEntity ProjectDataToEntity(this ProjectDataModel data, ProjectEntity? entity = null)
+        public static ProjectEntity ProjectDataToEntity(ProjectDataModel data, ProjectEntity? entity = null)
         {
             entity ??= new ProjectEntity();
 

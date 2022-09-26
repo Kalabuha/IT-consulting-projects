@@ -7,16 +7,16 @@ namespace ContentDataServices
 {
     internal class ApplicationDataService : IApplicationService
     {
-        private readonly IApplicationRepository _applicationRepository;
+        private readonly IRepository<ApplicationDataModel> _applicationRepository;
 
-        public ApplicationDataService(IApplicationRepository applicationRepository)
+        public ApplicationDataService(IRepository<ApplicationDataModel> applicationRepository)
         {
             _applicationRepository = applicationRepository;
         }
 
         public async Task<List<ApplicationDataModel>> GetAllApplicationsDataAsync()
         {
-            var applications = (await _applicationRepository.GetAllApplicationAsync())
+            var applications = (await _applicationRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return applications;
@@ -29,7 +29,7 @@ namespace ContentDataServices
                 return new List<ApplicationDataModel>();
             }
 
-            var applications = (await _applicationRepository.GetAllApplicationAsync())
+            var applications = (await _applicationRepository.GetAllDataModelsAsync())
                 .Where(a => statuses.Contains(a.Status) && start <= a.DateReceiptApplication && a.DateReceiptApplication <= end)
                 .ToList();
 
@@ -38,7 +38,7 @@ namespace ContentDataServices
 
         public async Task<ApplicationDataModel?> GetApplicationDataById(int id)
         {
-            var application = await _applicationRepository.GetApplicationAsync(id);
+            var application = await _applicationRepository.GetDataModelAsync(id);
 
             return application;
         }
@@ -47,19 +47,21 @@ namespace ContentDataServices
         {
             if (data != null)
             {
-                var applicationNumber = await _applicationRepository.AddApplicationAsync(data);
-                return applicationNumber;
+                var newApplication = await _applicationRepository.AddDataModelAsync(data);
+                return newApplication.Number;
             }
 
             return 0;
         }
 
-        public async Task EditApplicationToDb(ApplicationDataModel? data)
+        public async Task<bool> EditApplicationToDb(ApplicationDataModel? data)
         {
             if (data != null)
             {
-                await _applicationRepository.UpdateApplicationAsync(data);
+                return await _applicationRepository.UpdateDataModelAsync(data);
             }
+
+            return false;
         }
     }
 }

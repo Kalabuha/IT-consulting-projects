@@ -19,7 +19,7 @@ namespace WebAppForGuests.Controllers
         [HttpGet]
         public async Task<ActionResult<BlogsViewModel>> Index()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             ViewBag.PageH1 = menuData.Blogs;
 
             var blogDatas = await _blogService.GetPublishedBlogDatasAsync();

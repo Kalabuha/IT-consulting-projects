@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class SloganEntityAndDataModelMapper
     {
-        public static HeaderSloganDataModel HeaderSloganEntityToData(this HeaderSloganEntity entity)
+        public static HeaderSloganDataModel HeaderSloganEntityToData(HeaderSloganEntity entity)
         {
             return new HeaderSloganDataModel
             {
@@ -15,7 +15,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static HeaderSloganEntity HeaderSloganDataToEntity(this HeaderSloganDataModel data, HeaderSloganEntity? entity = null)
+        public static HeaderSloganEntity HeaderSloganDataToEntity(HeaderSloganDataModel data, HeaderSloganEntity? entity = null)
         {
             entity ??= new HeaderSloganEntity();
 

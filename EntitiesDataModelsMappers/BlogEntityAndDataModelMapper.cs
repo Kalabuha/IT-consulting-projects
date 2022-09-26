@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class BlogEntityAndDataModelMapper
     {
-        public static BlogDataModel BlogEntityToData(this BlogEntity entity)
+        public static BlogDataModel BlogEntityToData(BlogEntity entity)
         {
             return new BlogDataModel
             {
@@ -19,7 +19,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static BlogEntity BlogDataToEntity(this BlogDataModel data, BlogEntity? entity = null)
+        public static BlogEntity BlogDataToEntity(BlogDataModel data, BlogEntity? entity = null)
         {
             entity ??= new BlogEntity();
 

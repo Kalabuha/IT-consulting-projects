@@ -11,11 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApiModels\ApiModels.csproj" />
     <ProjectReference Include="..\ContentDataServices\ContentDataServices.csproj" />
+    <ProjectReference Include="..\DataModelsApiModelsMappers\DataModelsApiModelsMappers.csproj" />
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
     <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
-    <ProjectReference Include="..\WebServices\WebServices.csproj" />
   </ItemGroup>
 
 </Project>

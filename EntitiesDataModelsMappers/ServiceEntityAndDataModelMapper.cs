@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class ServiceEntityAndDataModelMapper
     {
-        public static ServiceDataModel ServiceEntityToData(this ServiceEntity entity)
+        public static ServiceDataModel ServiceEntityToData(ServiceEntity entity)
         {
             return new ServiceDataModel
             {
@@ -16,7 +16,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static ServiceEntity ServiceDataToEntity(this ServiceDataModel data, ServiceEntity? entity = null)
+        public static ServiceEntity ServiceDataToEntity(ServiceDataModel data, ServiceEntity? entity = null)
         {
             entity ??= new ServiceEntity();
 

@@ -4,14 +4,14 @@ namespace ServiceInterfaces
 {
     public interface IBlogService
     {
-        public Task<List<BlogDataModel>> GetAllBlogDatasAsync();
-        public Task<List<BlogDataModel>> GetPublishedBlogDatasAsync();
-        public Task<BlogDataModel?> GetBlogDataByIdAsync(int id);
+        Task<List<BlogDataModel>> GetAllBlogDatasAsync();
+        Task<List<BlogDataModel>> GetPublishedBlogDatasAsync();
+        Task<BlogDataModel?> GetBlogDataByIdAsync(int id);
 
-        public Task AddBlogToDbAsync(BlogDataModel? data);
-        public Task EditBlogToDbAsync(BlogDataModel? data);
-        public Task RemoveBlogToDbAsync(int id);
-        public Task RemoveBlogToDbAsync(BlogDataModel? data);
+        Task AddBlogToDbAsync(BlogDataModel? data);
+        Task<bool> EditBlogToDbAsync(BlogDataModel? data);
+        Task<bool> RemoveBlogToDbAsync(int id);
+        Task<bool> RemoveBlogToDbAsync(BlogDataModel? data);
 
     }
 }

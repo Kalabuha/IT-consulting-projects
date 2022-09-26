@@ -1,29 +1,35 @@
-﻿using System.Net.Http.Json;
-using ApiRepositories.Base;
+﻿using ApiRepositories.Base;
 using RepositoryInterfaces;
+using DataModelsApiModelsMappers;
 using DataModels;
+using ApiModels;
 
 namespace ApiRepositories
 {
-    public class ApplicationApiRepository : BaseApiRepository<ApplicationDataModel>, IApplicationRepository
+    public class ApplicationApiRepository : BaseApiRepository<ApplicationApiModel>, IApplicationRepository
     {
         public ApplicationApiRepository(HttpClient httpClient) : base(httpClient, "api/Applications") { }
 
         public async Task<ApplicationDataModel?> GetApplicationAsync(int id)
         {
-            return await GetEntityAsync(id);
+            var api = await GetEntityAsync(id);
+            return api?.ApplicationApiToData();
         }
 
         public async Task<ApplicationDataModel[]> GetAllApplicationAsync()
         {
-            var applications = await _httpClient.GetFromJsonAsync<ApplicationDataModel[]>(_requestUri);
-            applications ??= Array.Empty<ApplicationDataModel>();
-            return applications;
+            var datas = (await GetEntitiesAsync())
+                .Select(a => a.ApplicationApiToData())
+                .ToArray();
+
+            return datas;
         }
 
         public async Task<int> AddApplicationAsync(ApplicationDataModel data)
         {
-            if (await AddEntityAsync(data))
+            var api = data.ApplicationDataToApi();
+
+            if (await AddEntityAsync(api))
             {
                 return data.Number;
             }
@@ -33,7 +39,8 @@ namespace ApiRepositories
 
         public async Task<bool> UpdateApplicationAsync(ApplicationDataModel data)
         {
-            return await UpdateEntityAsync(data);
+            var api = data.ApplicationDataToApi();
+            return await UpdateEntityAsync(api);
         }
 
         public async Task<bool> DeleteApplicationAsync(int id)

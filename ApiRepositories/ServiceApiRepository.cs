@@ -1,30 +1,35 @@
-﻿using System.Net.Http.Json;
-using ApiRepositories.Base;
+﻿using ApiRepositories.Base;
 using RepositoryInterfaces;
-using Entities;
+using DataModelsApiModelsMappers;
 using DataModels;
+using ApiModels;
 
 namespace ApiRepositories
 {
-    internal class ServiceApiRepository : BaseApiRepository<ServiceDataModel>, IServiceRepository
+    internal class ServiceApiRepository : BaseApiRepository<ServiceApiModel>, IServiceRepository
     {
         public ServiceApiRepository(HttpClient httpClient) : base(httpClient, "api/Services") { }
 
         public async Task<ServiceDataModel?> GetServiceAsync(int id)
         {
-            return await GetEntityAsync(id);
+            var api = await GetEntityAsync(id);
+            return api?.ServiceApiToData();
         }
 
         public async Task<ServiceDataModel[]> GetAllServiceAsync()
         {
-            var services = await _httpClient.GetFromJsonAsync<ServiceDataModel[]>(_requestUri);
-            services ??= Array.Empty<ServiceDataModel>();
-            return services;
+            var datas = (await GetEntitiesAsync())
+                .Select(s => s.ServiceApiToData())
+                .ToArray();
+
+            return datas;
         }
 
         public async Task<int> AddServiceAsync(ServiceDataModel data)
         {
-            if (await AddEntityAsync(data))
+            var api = data.ServiceDataToApi();
+
+            if (await AddEntityAsync(api))
             {
                 return data.Id;
             }
@@ -34,7 +39,8 @@ namespace ApiRepositories
 
         public async Task<bool> UpdateServiceAsync(ServiceDataModel data)
         {
-            return await UpdateEntityAsync(data);
+            var api = data.ServiceDataToApi();
+            return await UpdateEntityAsync(api);
         }
 
         public async Task<bool> DeleteServiceAsync(int id)

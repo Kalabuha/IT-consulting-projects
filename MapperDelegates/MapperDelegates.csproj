@@ -7,15 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ApiRepositories\ApiRepositories.csproj" />
     <ProjectReference Include="..\DataModels\DataModels.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
-    <ProjectReference Include="..\RepositoryInterfaces\RepositoryInterfaces.csproj" />
-    <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
   </ItemGroup>
 
 </Project>

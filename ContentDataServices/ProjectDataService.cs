@@ -8,16 +8,16 @@ namespace ContentDataServices
 {
     internal class ProjectDataService : DefaultDataService, IProjectService
     {
-        private readonly IProjectRepository _projectRepository;
+        private readonly IRepository<ProjectDataModel> _projectRepository;
 
-        public ProjectDataService(IProjectRepository projectRepository)
+        public ProjectDataService(IRepository<ProjectDataModel> projectRepository)
         {
             _projectRepository = projectRepository;
         }
 
         public async Task<List<ProjectDataModel>> GetAllProjectDatasAsync()
         {
-            var datas = (await _projectRepository.GetAllProjectsAsync())
+            var datas = (await _projectRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return datas;
@@ -25,7 +25,7 @@ namespace ContentDataServices
 
         public async Task<List<ProjectDataModel>> GetPublishedProjectDatasAsync()
         {
-            var projects = (await _projectRepository.GetAllProjectsAsync())
+            var projects = (await _projectRepository.GetAllDataModelsAsync())
                 .Where(p => p.IsPublished)
                 .ToList();
 
@@ -34,13 +34,13 @@ namespace ContentDataServices
 
         public async Task<ProjectDataModel?> GetProjectDataByIdAsync(int id)
         {
-            var project = await _projectRepository.GetProjectAsync(id);
+            var project = await _projectRepository.GetDataModelAsync(id);
 
             return project;
         }
 
         // Для Db репозитория - перед сохранением необходимо убедится, что есть картинка и добавить её если она отстутствует.
-        public async Task AddProjectToDbAsync(ProjectDataModel? data, string startPathToDefaultData)
+        public async Task AddProjectToDbAndAddDefaultImageAsync(ProjectDataModel? data, string startPathToDefaultData)
         {
             if (data != null)
             {
@@ -51,7 +51,7 @@ namespace ContentDataServices
                     data.CustomerCompanyLogoAsByte = defaultCompanyLogoAsByte;
                 }
 
-                await _projectRepository.AddProjectAsync(data);
+                await _projectRepository.AddDataModelAsync(data);
             }
         }
 
@@ -60,32 +60,33 @@ namespace ContentDataServices
         {
             if (data != null)
             {
-                await _projectRepository.AddProjectAsync(data);
+                await _projectRepository.AddDataModelAsync(data);
             }
         }
 
-        public async Task EditProjectToDbAsync(ProjectDataModel? data)
+        public async Task<bool> EditProjectToDbAsync(ProjectDataModel? data)
         {
             if (data != null)
             {
-                await _projectRepository.UpdateProjectAsync(data);
+                return await _projectRepository.UpdateDataModelAsync(data);
             }
+
+            return false;
         }
 
-        public async Task RemoveProjectToDbAsync(int id)
+        public async Task<bool> RemoveProjectToDbAsync(int id)
         {
             if (id > 0)
             {
-                await _projectRepository.DeleteProjectAsync(id);
+                return await _projectRepository.DeleteDataModelAsync(id);
             }
+
+            return false;
         }
 
-        public async Task RemoveProjectToDbAsync(ProjectDataModel? data)
+        public async Task<bool> RemoveProjectToDbAsync(ProjectDataModel? data)
         {
-            if (data != null)
-            {
-                await _projectRepository.DeleteProjectAsync(data.Id);
-            }
+            return await RemoveProjectToDbAsync(data != null ? data.Id : 0);
         }
     }
 }

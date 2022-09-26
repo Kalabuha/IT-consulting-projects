@@ -12,19 +12,13 @@ namespace WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels.Base
         where TWpfModel : BaseWpfModel
         where TDataModel : BaseDataModel
     {
-        public BaseManagerWindowViewModel()
-        {
-            ResetButtonVisibility = Visibility.Visible;
-            IsEditingEnable = true;
-
-            ContentExecuteCudActionButton = "Подтвердить";
-        }
+        public string Title { get; set; } = "Проект";
 
         public Func<TDataModel, Task>? ExecuteCudAction;
-        public string ContentExecuteCudActionButton { get; set; }
-        public bool IsEditingEnable { get; set; }
+        public string ExecuteCudButtonContent { get; set; } = "Подтвердить";
+        public bool IsEditingEnable { get; set; } = true;
         public Visibility SelectFileButtonVisibility => IsEditingEnable ? Visibility.Visible : Visibility.Hidden;
-        public Visibility ResetButtonVisibility { get; set; }
+        public Visibility ResetCudButtonVisibility { get; set; } = Visibility.Visible;
 
         private TWpfModel? _managerItem;
         public TWpfModel? ManagerItem

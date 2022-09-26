@@ -19,7 +19,7 @@ namespace WebAppForGuests.Controllers
 
         public async Task<ActionResult<ContactsViewModel>> Index()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             ViewBag.PageH1 = menuData.Contacts;
 
             var contactData = await _contactService.GetPublishedContactDataAsync();

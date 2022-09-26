@@ -19,7 +19,7 @@ namespace WebAppForGuests.Controllers
         // GET: ServicesController
         public async Task<ActionResult<ServicesViewModel>> Index()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             ViewBag.PageH1 = menuData.Services;
 
             var serviceDatas = await _serviceService.GetPublishedServiceDatasAsync();

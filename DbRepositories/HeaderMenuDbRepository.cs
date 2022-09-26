@@ -8,55 +8,21 @@ using Entities;
 
 namespace DbRepositories
 {
-    internal class HeaderMenuDbRepository : BaseDbRepository<HeaderMenuEntity>, IHeaderMenuRepository
+    internal class HeaderMenuDbRepository : BaseDbRepository<HeaderMenuEntity, HeaderMenuDataModel>, IRepository<HeaderMenuDataModel>
     {
-        public HeaderMenuDbRepository(DbContextProfiСonnector context) : base(context) { }
+        public HeaderMenuDbRepository(DbContextProfiСonnector context)
+            : base(context,
+                  MenuEntityAndDataModelMapper.HeaderMenuEntityToData,
+                  MenuEntityAndDataModelMapper.HeaderMenuDataToEntity)
+        { }
 
-        public async Task<HeaderMenuDataModel?> GetHeaderMenuAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            return entity?.HeaderMenuEntityToData();
-        }
-
-        public async Task<HeaderMenuDataModel[]> GetAllHeaderMenusAsync()
+        public async Task<HeaderMenuDataModel[]> GetAllDataModelsAsync()
         {
             var headerMenuSets = await Context.HeaderMenus
-                .Select(m => m.HeaderMenuEntityToData())
+                .Select(m => MapEntityToData(m))
                 .ToArrayAsync();
 
             return headerMenuSets;
-        }
-
-        public async Task<int> AddHeaderMenuAsync(HeaderMenuDataModel data)
-        {
-            var entity = data.HeaderMenuDataToEntity();
-            await AddEntityAsync(entity);
-            return entity.Id;
-        }
-
-        public async Task<bool> UpdateHeaderMenuAsync(HeaderMenuDataModel data)
-        {
-            var entity = await GetEntityAsync(data.Id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            var updated = data.HeaderMenuDataToEntity(entity);
-            await UpdateEntityAsync(updated);
-            return true;
-        }
-
-        public async Task<bool> DeleteHeaderMenuAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            await RemoveEntityAsync(entity);
-            return true;
         }
     }
 }

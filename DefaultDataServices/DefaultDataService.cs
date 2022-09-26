@@ -4,8 +4,6 @@ namespace DefaultDataServices
 {
     public abstract class DefaultDataService
     {
-        protected readonly string _directoryDefaultImageFiles = @"..\DefaultDataServices\DefaultData\img";
-
         protected async Task<string> GetDefaultTextFromFileAsync(string startFilePath, string nameTxtFile)
         {
             string defaultString = string.Empty;

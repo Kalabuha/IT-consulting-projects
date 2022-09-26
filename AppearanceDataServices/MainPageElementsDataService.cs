@@ -8,26 +8,22 @@ namespace AppearanceDataServices
 {
     internal class MainPageElementsDataService : DefaultDataService, IMainPageService
     {
-        private readonly string _pathToDefaultTextData;
+        private readonly IRepository<MainPagePresetDataModel> _presetRepository;
 
-        private readonly IMainPagePresetRepository _presetRepository;
-
-        private readonly IMainPageActionRepository _actionRepository;
-        private readonly IMainPageButtonRepository _buttonRepository;
-        private readonly IMainPageImageRepository _imageRepository;
-        private readonly IMainPagePhraseRepository _phraseRepository;
-        private readonly IMainPageTextRepository _textRepository;
+        private readonly IRepository<MainPageActionDataModel> _actionRepository;
+        private readonly IRepository<MainPageButtonDataModel> _buttonRepository;
+        private readonly IRepository<MainPageImageDataModel> _imageRepository;
+        private readonly IRepository<MainPagePhraseDataModel> _phraseRepository;
+        private readonly IRepository<MainPageTextDataModel> _textRepository;
 
         public MainPageElementsDataService(
-            IMainPagePresetRepository presetRepository,
-            IMainPageActionRepository actionRepository,
-            IMainPageButtonRepository buttonRepository,
-            IMainPageImageRepository imageRepository,
-            IMainPagePhraseRepository phraseRepository,
-            IMainPageTextRepository textRepository)
+            IRepository<MainPagePresetDataModel> presetRepository,
+            IRepository<MainPageActionDataModel> actionRepository,
+            IRepository<MainPageButtonDataModel> buttonRepository,
+            IRepository<MainPageImageDataModel> imageRepository,
+            IRepository<MainPagePhraseDataModel> phraseRepository,
+            IRepository<MainPageTextDataModel> textRepository)
         {
-            _pathToDefaultTextData = @"..\DefaultDataServices\DefaultData\txt";
-
             _presetRepository = presetRepository;
 
             _actionRepository = actionRepository;
@@ -39,7 +35,7 @@ namespace AppearanceDataServices
 
         public async Task<List<MainPagePresetDataModel>> GetAllPresetDatasAsync()
         {
-            var presets = (await _presetRepository.GetAllMainPagePresetsAsync())
+            var presets = (await _presetRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return presets;
@@ -47,7 +43,7 @@ namespace AppearanceDataServices
 
         public async Task<MainPagePresetDataModel?> GetPublishedPresetDataAsync()
         {
-            var publishedPreset = (await _presetRepository.GetAllMainPagePresetsAsync())
+            var publishedPreset = (await _presetRepository.GetAllDataModelsAsync())
                 .FirstOrDefault(p => p.IsPublished);
 
             return publishedPreset;
@@ -55,40 +51,47 @@ namespace AppearanceDataServices
 
         public async Task<MainPagePresetDataModel?> GetPresetDataByIdAsync(int id)
         {
-            var preset = await _presetRepository.GetMainPagePresetAsync(id);
+            var preset = await _presetRepository.GetDataModelAsync(id);
 
             return preset;
         }
 
         public async Task PublishPresetAsync(int id)
         {
-            var preset = await _presetRepository.GetMainPagePresetAsync(id);
-            if (preset == null)
+            var presets = await _presetRepository.GetAllDataModelsAsync();
+            if (!presets.Any(p => p.Id == id))
             {
                 return;
             }
 
-            var publishPresets = (await _presetRepository.GetAllMainPagePresetsAsync())
-                .Where(p => p.IsPublished)
-                .ToArray();
-
-            foreach (var publishPreset in publishPresets)
+            foreach (var preset in presets)
             {
-                publishPreset.IsPublished = false;
-                await _presetRepository.UpdateMainPagePresetAsync(publishPreset);
-            }
+                if (preset.Id == id)
+                {
+                    preset.IsPublished = true;
+                }
+                else
+                {
+                    if (preset.IsPublished)
+                    {
+                        preset.IsPublished = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
 
-            preset.IsPublished = true;
-            await _presetRepository.UpdateMainPagePresetAsync(preset);
+                await _presetRepository.UpdateDataModelAsync(preset);
+            }
         }
 
         public async Task<int> AddMainPagePresetToDbAsync(MainPagePresetDataModel? data)
         {
             if (data != null)
             {
-                var id = await _presetRepository.AddMainPagePresetAsync(data);
-
-                return id;
+                var newPreset = await _presetRepository.AddDataModelAsync(data);
+                return newPreset.Id;
             }
 
             return 0;
@@ -98,7 +101,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _presetRepository.UpdateMainPagePresetAsync(data);
+                await _presetRepository.UpdateDataModelAsync(data);
             }
         }
 
@@ -106,7 +109,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _presetRepository.DeleteMainPagePresetAsync(data.Id);
+                await _presetRepository.DeleteDataModelAsync(data.Id);
             }
         }
 
@@ -120,23 +123,23 @@ namespace AppearanceDataServices
             BaseDataModel? element;
             if (typeof(TMainPageData) == typeof(MainPageActionDataModel))
             {
-                element = await _actionRepository.GetMainPageActionAsync(id.Value);
+                element = await _actionRepository.GetDataModelAsync(id.Value);
             }
             else if (typeof(TMainPageData) == typeof(MainPageButtonDataModel))
             {
-                element = await _buttonRepository.GetMainPageButtonAsync(id.Value);
+                element = await _buttonRepository.GetDataModelAsync(id.Value);
             }
             else if (typeof(TMainPageData) == typeof(MainPageImageDataModel))
             {
-                element = await _imageRepository.GetMainPageImageAsync(id.Value);
+                element = await _imageRepository.GetDataModelAsync(id.Value);
             }
             else if (typeof(TMainPageData) == typeof(MainPagePhraseDataModel))
             {
-                element = await _phraseRepository.GetMainPagePhraseAsync(id.Value);
+                element = await _phraseRepository.GetDataModelAsync(id.Value);
             }
             else if (typeof(TMainPageData) == typeof(MainPageTextDataModel))
             {
-                element = await _textRepository.GetMainPageTextAsync(id.Value);
+                element = await _textRepository.GetDataModelAsync(id.Value);
             }
             else
             {
@@ -153,7 +156,7 @@ namespace AppearanceDataServices
                 return null;
             }
 
-            var preset = await _presetRepository.GetMainPagePresetAsync(id.Value);
+            var preset = await _presetRepository.GetDataModelAsync(id.Value);
             if (preset == null)
             {
                 return null;
@@ -162,23 +165,23 @@ namespace AppearanceDataServices
             BaseDataModel? element;
             if (typeof(TMainPageData) == typeof(MainPageActionDataModel))
             {
-                element = preset.ActionId.HasValue ? await _actionRepository.GetMainPageActionAsync(preset.ActionId.Value) : null;
+                element = preset.ActionId.HasValue ? await _actionRepository.GetDataModelAsync(preset.ActionId.Value) : null;
             }
             else if (typeof(TMainPageData) == typeof(MainPageButtonDataModel))
             {
-                element = preset.ButtonId.HasValue ? await _buttonRepository.GetMainPageButtonAsync(preset.ButtonId.Value) : null;
+                element = preset.ButtonId.HasValue ? await _buttonRepository.GetDataModelAsync(preset.ButtonId.Value) : null;
             }
             else if (typeof(TMainPageData) == typeof(MainPageImageDataModel))
             {
-                element = preset.ImageId.HasValue ? await _imageRepository.GetMainPageImageAsync(preset.ImageId.Value) : null;
+                element = preset.ImageId.HasValue ? await _imageRepository.GetDataModelAsync(preset.ImageId.Value) : null;
             }
             else if (typeof(TMainPageData) == typeof(MainPagePhraseDataModel))
             {
-                element = preset.PhraseId.HasValue ? await _phraseRepository.GetMainPagePhraseAsync(preset.PhraseId.Value) : null;
+                element = preset.PhraseId.HasValue ? await _phraseRepository.GetDataModelAsync(preset.PhraseId.Value) : null;
             }
             else if (typeof(TMainPageData) == typeof(MainPageTextDataModel))
             {
-                element = preset.TextId.HasValue ? await _textRepository.GetMainPageTextAsync(preset.TextId.Value) : null;
+                element = preset.TextId.HasValue ? await _textRepository.GetDataModelAsync(preset.TextId.Value) : null;
             }
             else
             {
@@ -193,23 +196,23 @@ namespace AppearanceDataServices
             IEnumerable<BaseDataModel> elements;
             if (typeof(TMainPageData) == typeof(MainPageActionDataModel))
             {
-                elements = await _actionRepository.GetAllMainPageActionsAsync();
+                elements = await _actionRepository.GetAllDataModelsAsync();
             }
             else if (typeof(TMainPageData) == typeof(MainPageButtonDataModel))
             {
-                elements = await _buttonRepository.GetAllMainPageButtonsAsync();
+                elements = await _buttonRepository.GetAllDataModelsAsync();
             }
             else if (typeof(TMainPageData) == typeof(MainPageImageDataModel))
             {
-                elements = await _imageRepository.GetAllMainPageImagesAsync();
+                elements = await _imageRepository.GetAllDataModelsAsync();
             }
             else if (typeof(TMainPageData) == typeof(MainPagePhraseDataModel))
             {
-                elements = await _phraseRepository.GetAllMainPagePhrasesAsync();
+                elements = await _phraseRepository.GetAllDataModelsAsync();
             }
             else if (typeof(TMainPageData) == typeof(MainPageTextDataModel))
             {
-                elements = await _textRepository.GetAllMainPageTextsAsync();
+                elements = await _textRepository.GetAllDataModelsAsync();
             }
             else
             {
@@ -225,27 +228,27 @@ namespace AppearanceDataServices
             if (typeof(TMainPageData) == typeof(MainPageActionDataModel))
             {
                 var action = (MainPageActionDataModel)element;
-                await _actionRepository.AddMainPageActionAsync(action);
+                await _actionRepository.AddDataModelAsync(action);
             }
             else if (typeof(TMainPageData) == typeof(MainPageButtonDataModel))
             {
                 var button = (MainPageButtonDataModel)element;
-                await _buttonRepository.AddMainPageButtonAsync(button);
+                await _buttonRepository.AddDataModelAsync(button);
             }
             else if (typeof(TMainPageData) == typeof(MainPageImageDataModel))
             {
                 var image = (MainPageImageDataModel)element;
-                await _imageRepository.AddMainPageImageAsync(image);
+                await _imageRepository.AddDataModelAsync(image);
             }
             else if (typeof(TMainPageData) == typeof(MainPagePhraseDataModel))
             {
                 var phrase = (MainPagePhraseDataModel)element;
-                await _phraseRepository.AddMainPagePhraseAsync(phrase);
+                await _phraseRepository.AddDataModelAsync(phrase);
             }
             else if (typeof(TMainPageData) == typeof(MainPageTextDataModel))
             {
                 var textData = (MainPageTextDataModel)element;
-                await _textRepository.AddMainPageTextAsync(textData);
+                await _textRepository.AddDataModelAsync(textData);
             }
             else
             {
@@ -257,23 +260,23 @@ namespace AppearanceDataServices
         {
             if (typeof(TMainPageData) == typeof(MainPageActionDataModel))
             {
-                await _actionRepository.DeleteMainPageActionAsync(id);
+                await _actionRepository.DeleteDataModelAsync(id);
             }
             else if (typeof(TMainPageData) == typeof(MainPageButtonDataModel))
             {
-                await _buttonRepository.DeleteMainPageButtonAsync(id);
+                await _buttonRepository.DeleteDataModelAsync(id);
             }
             else if (typeof(TMainPageData) == typeof(MainPageImageDataModel))
             {
-                await _imageRepository.DeleteMainPageImageAsync(id);
+                await _imageRepository.DeleteDataModelAsync(id);
             }
             else if (typeof(TMainPageData) == typeof(MainPagePhraseDataModel))
             {
-                await _phraseRepository.DeleteMainPagePhraseAsync(id);
+                await _phraseRepository.DeleteDataModelAsync(id);
             }
             else if (typeof(TMainPageData) == typeof(MainPageTextDataModel))
             {
-                await _textRepository.DeleteMainPageTextAsync(id);
+                await _textRepository.DeleteDataModelAsync(id);
             }
             else
             {

@@ -21,7 +21,7 @@ namespace WebAppForGuests.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             ViewBag.PageH1 = menuData.Projects;
 
             var datas = await _projectService.GetPublishedProjectDatasAsync();

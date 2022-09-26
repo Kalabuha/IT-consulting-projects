@@ -31,7 +31,6 @@
     <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
     <ProjectReference Include="..\WebModels\WebModels.csproj" />
-    <ProjectReference Include="..\WebServices\WebServices.csproj" />
   </ItemGroup>
 
 </Project>

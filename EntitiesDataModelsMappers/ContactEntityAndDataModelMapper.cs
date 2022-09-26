@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class ContactEntityAndDataModelMapper
     {
-        public static ContactDataModel ContactEntityToData(this ContactEntity entity)
+        public static ContactDataModel ContactEntityToData(ContactEntity entity)
         {
             return new ContactDataModel
             {
@@ -19,7 +19,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static ContactEntity ContactDataToEntity(this ContactDataModel data, ContactEntity? entity = null)
+        public static ContactEntity ContactDataToEntity(ContactDataModel data, ContactEntity? entity = null)
         {
             entity ??= new ContactEntity();
 

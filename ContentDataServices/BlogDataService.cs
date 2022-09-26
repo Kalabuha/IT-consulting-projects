@@ -6,23 +6,23 @@ namespace ContentDataServices
 {
     internal class BlogDataService : IBlogService
     {
-        private readonly IBlogRepository _blogRepository;
+        private readonly IRepository<BlogDataModel> _blogRepository;
 
-        public BlogDataService(IBlogRepository blogRepository)
+        public BlogDataService(IRepository<BlogDataModel> blogRepository)
         {
             _blogRepository = blogRepository;
         }
 
         public async Task<BlogDataModel?> GetBlogDataByIdAsync(int id)
         {
-            var blog = await _blogRepository.GetBlogAsync(id);
+            var blog = await _blogRepository.GetDataModelAsync(id);
 
             return blog;
         }
 
         public async Task<List<BlogDataModel>> GetAllBlogDatasAsync()
         {
-            var blogs = (await _blogRepository.GetAllBlogsAsync())
+            var blogs = (await _blogRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return blogs;
@@ -30,7 +30,7 @@ namespace ContentDataServices
 
         public async Task<List<BlogDataModel>> GetPublishedBlogDatasAsync()
         {
-            var blogs = (await _blogRepository.GetAllBlogsAsync())
+            var blogs = (await _blogRepository.GetAllDataModelsAsync())
                 .Where(b => b.IsPublished)
                 .ToList();
 
@@ -42,32 +42,33 @@ namespace ContentDataServices
             if (data != null)
             {
                 data.PublicationDate = DateTime.Now;
-                await _blogRepository.AddBlogAsync(data);
+                await _blogRepository.AddDataModelAsync(data);
             }
         }
 
-        public async Task EditBlogToDbAsync(BlogDataModel? data)
+        public async Task<bool> EditBlogToDbAsync(BlogDataModel? data)
         {
             if (data != null)
             {
-                await _blogRepository.UpdateBlogAsync(data);
+                return await _blogRepository.UpdateDataModelAsync(data);
             }
+
+            return false;
         }
 
-        public async Task RemoveBlogToDbAsync(int id)
+        public async Task<bool> RemoveBlogToDbAsync(int id)
         {
             if (id > 0)
             {
-                await _blogRepository.DeleteBlogAsync(id);
+                return await _blogRepository.DeleteDataModelAsync(id);
             }
+
+            return false;
         }
 
-        public async Task RemoveBlogToDbAsync(BlogDataModel? data)
+        public async Task<bool> RemoveBlogToDbAsync(BlogDataModel? data)
         {
-            if (data != null)
-            {
-                await _blogRepository.DeleteBlogAsync(data.Id);
-            }
+            return await RemoveBlogToDbAsync(data != null ? data.Id : 0);
         }
     }
 }

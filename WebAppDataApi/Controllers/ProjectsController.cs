@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceInterfaces;
+using DataModelsApiModelsMappers;
+using ApiModels;
 using DataModels;
 
 namespace WebAppDataApi.Controllers
@@ -38,41 +40,72 @@ namespace WebAppDataApi.Controllers
 
         // POST api/<ProjectsController>
         [HttpPost]
-        public async Task<ActionResult> Post(ProjectDataModel project)
+        public async Task<ActionResult> Post(ProjectApiModel api)
         {
-            await _projectService.AddProjectToDbAsync(project, "..\\DefaultDataServices\\DefaultData\\img");
+            if (!CheckIsValidProjectPostRequest(api))
+            {
+                return BadRequest();
+            }
+
+            var data = api.ProjectApiToData();
+            await _projectService.AddProjectToDbAndAddDefaultImageAsync(data, "..\\DefaultDataServices\\DefaultData\\img");
 
             return Ok();
         }
 
         // PUT api/<ProjectsController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(ProjectDataModel project)
+        public async Task<ActionResult> Put(ProjectApiModel api)
         {
-            var editedProject = _projectService.GetProjectDataByIdAsync(project.Id);
-            if (editedProject == null)
+            if (!CheckIsValidProjectPostRequest(api))
+            {
+                return BadRequest();
+            }
+
+            var data = api.ProjectApiToData();
+            if (await _projectService.EditProjectToDbAsync(data))
+            {
+                return Ok();
+            }
+            else
             {
                 return NotFound();
             }
-
-            await _projectService.EditProjectToDbAsync(project);
-
-            return Ok();
         }
 
         // DELETE api/<ProjectsController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var deletedProject = _projectService.GetProjectDataByIdAsync(id);
-            if (deletedProject == null)
+            if (await _projectService.RemoveProjectToDbAsync(id))
+            {
+                return Ok();
+            }
+            else
             {
                 return NotFound();
             }
+        }
 
-            await _projectService.RemoveProjectToDbAsync(id);
+        private bool CheckIsValidProjectPostRequest(ProjectApiModel api)
+        {
+            if (CheckStringIsNullOrEmptyOrWhiteSpace(api.ProjectTitle))
+                return false;
 
-            return Ok();
+            if (CheckStringIsNullOrEmptyOrWhiteSpace(api.ProjectDescription))
+                return false;
+
+            return true;
+        }
+
+        private bool CheckStringIsNullOrEmptyOrWhiteSpace(string? str)
+        {
+            if (string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

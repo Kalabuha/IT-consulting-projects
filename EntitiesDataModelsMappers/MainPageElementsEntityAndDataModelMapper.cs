@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class MainPageElementsEntityAndDataModelMapper
     {
-        public static MainPagePresetDataModel MainPagePresetEntityToData(this MainPagePresetEntity entity)
+        public static MainPagePresetDataModel MainPagePresetEntityToData(MainPagePresetEntity entity)
         {
             return new MainPagePresetDataModel
             {
@@ -21,7 +21,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPagePresetEntity MainPagePresetDataToEntity(this MainPagePresetDataModel data, MainPagePresetEntity? entity = null)
+        public static MainPagePresetEntity MainPagePresetDataToEntity(MainPagePresetDataModel data, MainPagePresetEntity? entity = null)
         {
             entity ??= new MainPagePresetEntity();
 
@@ -38,7 +38,7 @@ namespace EntitiesDataModelsMappers
             return entity;
         }
 
-        public static MainPageActionDataModel MainPageActionEntityToData(this MainPageActionEntity entity)
+        public static MainPageActionDataModel MainPageActionEntityToData(MainPageActionEntity entity)
         {
             return new MainPageActionDataModel
             {
@@ -47,7 +47,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPageActionEntity MainPageActionDataToEntity(this MainPageActionDataModel data, MainPageActionEntity? entity = null)
+        public static MainPageActionEntity MainPageActionDataToEntity(MainPageActionDataModel data, MainPageActionEntity? entity = null)
         {
             entity ??= new MainPageActionEntity();
 
@@ -57,7 +57,7 @@ namespace EntitiesDataModelsMappers
             return entity;
         }
 
-        public static MainPageButtonDataModel MainPageButtonEntityToData(this MainPageButtonEntity entity)
+        public static MainPageButtonDataModel MainPageButtonEntityToData(MainPageButtonEntity entity)
         {
             return new MainPageButtonDataModel
             {
@@ -66,7 +66,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPageButtonEntity MainPageButtonDataToEntity(this MainPageButtonDataModel data, MainPageButtonEntity? entity = null)
+        public static MainPageButtonEntity MainPageButtonDataToEntity(MainPageButtonDataModel data, MainPageButtonEntity? entity = null)
         {
             entity ??= new MainPageButtonEntity();
 
@@ -76,7 +76,7 @@ namespace EntitiesDataModelsMappers
             return entity;
         }
 
-        public static MainPageImageDataModel MainPageImageEntityToData(this MainPageImageEntity entity)
+        public static MainPageImageDataModel MainPageImageEntityToData(MainPageImageEntity entity)
         {
             return new MainPageImageDataModel
             {
@@ -85,7 +85,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPageImageEntity MainPageImageDataToEntity(this MainPageImageDataModel data, MainPageImageEntity? entity = null)
+        public static MainPageImageEntity MainPageImageDataToEntity(MainPageImageDataModel data, MainPageImageEntity? entity = null)
         {
             entity ??= new MainPageImageEntity();
 
@@ -95,7 +95,7 @@ namespace EntitiesDataModelsMappers
             return entity;
         }
 
-        public static MainPagePhraseDataModel MainPagePhraseEntityToData(this MainPagePhraseEntity entity)
+        public static MainPagePhraseDataModel MainPagePhraseEntityToData(MainPagePhraseEntity entity)
         {
             return new MainPagePhraseDataModel
             {
@@ -104,7 +104,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPagePhraseEntity MainPagePhraseDataToEntity(this MainPagePhraseDataModel data, MainPagePhraseEntity? entity = null)
+        public static MainPagePhraseEntity MainPagePhraseDataToEntity(MainPagePhraseDataModel data, MainPagePhraseEntity? entity = null)
         {
             entity ??= new MainPagePhraseEntity();
 
@@ -114,7 +114,7 @@ namespace EntitiesDataModelsMappers
             return entity;
         }
 
-        public static MainPageTextDataModel MainPageTextEntityToData(this MainPageTextEntity entity)
+        public static MainPageTextDataModel MainPageTextEntityToData(MainPageTextEntity entity)
         {
             return new MainPageTextDataModel
             {
@@ -123,7 +123,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static MainPageTextEntity MainPageTextDataToEntity(this MainPageTextDataModel data, MainPageTextEntity? entity = null)
+        public static MainPageTextEntity MainPageTextDataToEntity(MainPageTextDataModel data, MainPageTextEntity? entity = null)
         {
             entity ??= new MainPageTextEntity();
 

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using DbRepositories.Extensions;
 using AppearanceDataServices.Extensions;
 using ContentDataServices.Extensions;
-using WebServices.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +23,6 @@ builder.Services.RegisterDbContext(connectionString);
 builder.Services.RegisterDbRepositories();
 builder.Services.RegisterAppearanceDataServices();
 builder.Services.RegisterContentDataServices();
-builder.Services.RegisterWebServices();
 
 var app = builder.Build();
 

@@ -7,12 +7,12 @@ namespace AppearanceDataServices
 {
     internal class MainPageHeaderDataService : DefaultDataService, IHeaderService
     {
-        private readonly IHeaderMenuRepository _headerMenuRepository;
-        private readonly IHeaderSloganRepository _sloganRepository;
+        private readonly IRepository<HeaderMenuDataModel> _headerMenuRepository;
+        private readonly IRepository<HeaderSloganDataModel> _sloganRepository;
 
         private readonly Random _random;
 
-        public MainPageHeaderDataService(IHeaderMenuRepository menuRepository, IHeaderSloganRepository sloganRepository)
+        public MainPageHeaderDataService(IRepository<HeaderMenuDataModel> menuRepository, IRepository<HeaderSloganDataModel> sloganRepository)
         {
             _headerMenuRepository = menuRepository;
             _sloganRepository = sloganRepository;
@@ -22,15 +22,15 @@ namespace AppearanceDataServices
 
         public async Task<List<HeaderMenuDataModel>> GetAllHeaderMenuDatasAsync()
         {
-            var headerMenusArray = await _headerMenuRepository.GetAllHeaderMenusAsync();
+            var headerMenusArray = await _headerMenuRepository.GetAllDataModelsAsync();
             var headerMenusList = headerMenusArray.ToList();
 
             return headerMenusList;
         }
 
-        public async Task<HeaderMenuDataModel> GetUsedHeaderMenuDataAsync()
+        public async Task<HeaderMenuDataModel> GetUsedOrDefaultHeaderMenuDataAsync()
         {
-            var headerMenusArray = await _headerMenuRepository.GetAllHeaderMenusAsync();
+            var headerMenusArray = await _headerMenuRepository.GetAllDataModelsAsync();
             var usedHeaderMenu = headerMenusArray.FirstOrDefault(m => m.IsPublished);
 
             usedHeaderMenu ??= new HeaderMenuDataModel
@@ -49,32 +49,40 @@ namespace AppearanceDataServices
 
         public async Task StartUsingHeaderMenuAsync(int id)
         {
-            var newUsedHeaderMenu = await _headerMenuRepository.GetHeaderMenuAsync(id);
-            if (newUsedHeaderMenu == null)
+            var usedMenu = await _headerMenuRepository.GetDataModelAsync(id);
+            if (usedMenu == null)
             {
                 return;
             }
 
-            var allHeaderMenus = await _headerMenuRepository.GetAllHeaderMenusAsync();
-            foreach (var headerMenu in allHeaderMenus)
+            var menus = await _headerMenuRepository.GetAllDataModelsAsync();
+            foreach (var menu in menus)
             {
-                if (headerMenu.IsPublished)
+                if (menu.Id == id)
                 {
-                    headerMenu.IsPublished = false;
+                    menu.IsPublished = true;
+                }
+                else
+                {
+                    if (menu.IsPublished)
+                    {
+                        menu.IsPublished = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
-                await _headerMenuRepository.UpdateHeaderMenuAsync(headerMenu);
+                await _headerMenuRepository.UpdateDataModelAsync(menu);
             }
-
-            newUsedHeaderMenu.IsPublished = true;
-            await _headerMenuRepository.UpdateHeaderMenuAsync(newUsedHeaderMenu);
         }
 
         public async Task AddMenuToDbAsync(HeaderMenuDataModel? data)
         {
             if (data != null)
             {
-                await _headerMenuRepository.AddHeaderMenuAsync(data);
+                await _headerMenuRepository.AddDataModelAsync(data);
             }
         }
 
@@ -82,7 +90,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _headerMenuRepository.UpdateHeaderMenuAsync(data);
+                await _headerMenuRepository.UpdateDataModelAsync(data);
             }
         }
 
@@ -90,20 +98,20 @@ namespace AppearanceDataServices
         {
             if (id > 0)
             {
-                await _headerMenuRepository.DeleteHeaderMenuAsync(id);
+                await _headerMenuRepository.DeleteDataModelAsync(id);
             }
         }
 
         public async Task<HeaderSloganDataModel?> GetHeaderSloganDataByIdAsync(int id)
         {
-            var slogan = await _sloganRepository.GetHeaderSloganAsync(id);
+            var slogan = await _sloganRepository.GetDataModelAsync(id);
 
             return slogan;
         }
 
         public async Task<List<HeaderSloganDataModel>> GetAllHeaderSloganDatasAsync()
         {
-            var slogans = (await _sloganRepository.GetAllHeaderSlogansAsync())
+            var slogans = (await _sloganRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return slogans;
@@ -111,7 +119,7 @@ namespace AppearanceDataServices
 
         public async Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync(string startPathToDefaultData)
         {
-            var allSlogans = await _sloganRepository.GetAllHeaderSlogansAsync();
+            var allSlogans = await _sloganRepository.GetAllDataModelsAsync();
 
             var usedSlogans = allSlogans
                 .Where(s => s.IsUsed)
@@ -131,12 +139,12 @@ namespace AppearanceDataServices
 
         public async Task StartUsingHeaderSlogansAsync(int[] slogansId)
         {
-            if (slogansId == null || slogansId.Length == 0)
+            if (slogansId == null)
             {
                 return;
             }
 
-            var allSlogans = await _sloganRepository.GetAllHeaderSlogansAsync();
+            var allSlogans = await _sloganRepository.GetAllDataModelsAsync();
             foreach (var slogan in allSlogans)
             {
                 if (slogansId.Contains(slogan.Id))
@@ -155,7 +163,7 @@ namespace AppearanceDataServices
                     }
                     slogan.IsUsed = false;
                 }
-                await _sloganRepository.UpdateHeaderSloganAsync(slogan);
+                await _sloganRepository.UpdateDataModelAsync(slogan);
             }
         }
 
@@ -163,7 +171,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _sloganRepository.AddHeaderSloganAsync(data);
+                await _sloganRepository.AddDataModelAsync(data);
             }
         }
 
@@ -171,7 +179,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _sloganRepository.UpdateHeaderSloganAsync(data);
+                await _sloganRepository.UpdateDataModelAsync(data);
             }
         }
 
@@ -179,7 +187,7 @@ namespace AppearanceDataServices
         {
             if (id > 0)
             {
-                await _sloganRepository.DeleteHeaderSloganAsync(id);
+                await _sloganRepository.DeleteDataModelAsync(id);
             }
         }
 

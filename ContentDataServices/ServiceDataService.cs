@@ -6,16 +6,16 @@ namespace ContentDataServices
 {
     internal class ServiceDataService : IServiceService
     {
-        private readonly IServiceRepository _serviceRepository;
+        private readonly IRepository<ServiceDataModel> _serviceRepository;
 
-        public ServiceDataService(IServiceRepository serviceRepository)
+        public ServiceDataService(IRepository<ServiceDataModel> serviceRepository)
         {
             _serviceRepository = serviceRepository;
         }
 
         public async Task<List<ServiceDataModel>> GetAllServiceDatasAsync()
         {
-            var services = (await _serviceRepository.GetAllServiceAsync())
+            var services = (await _serviceRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return services;
@@ -23,7 +23,7 @@ namespace ContentDataServices
 
         public async Task<List<ServiceDataModel>> GetPublishedServiceDatasAsync()
         {
-            var services = (await _serviceRepository.GetAllServiceAsync())
+            var services = (await _serviceRepository.GetAllDataModelsAsync())
                 .Where(s => s.IsPublished)
                 .ToList();
 
@@ -32,7 +32,7 @@ namespace ContentDataServices
 
         public async Task<ServiceDataModel?> GetServiceDataByIdAsync(int id)
         {
-            var service = await _serviceRepository.GetServiceAsync(id);
+            var service = await _serviceRepository.GetDataModelAsync(id);
 
             return service;
         }
@@ -41,32 +41,33 @@ namespace ContentDataServices
         {
             if (data != null)
             {
-                await _serviceRepository.AddServiceAsync(data);
+                await _serviceRepository.AddDataModelAsync(data);
             }
         }
 
-        public async Task EditServiceToDbAsync(ServiceDataModel? data)
+        public async Task<bool> EditServiceToDbAsync(ServiceDataModel? data)
         {
             if (data != null)
             {
-                await _serviceRepository.UpdateServiceAsync(data);
+                return await _serviceRepository.UpdateDataModelAsync(data);
             }
+
+            return false;
         }
 
-        public async Task RemoveServiceToDbAsync(int id)
+        public async Task<bool> RemoveServiceToDbAsync(int id)
         {
             if (id > 0)
             {
-                await _serviceRepository.DeleteServiceAsync(id);
+                return await _serviceRepository.DeleteDataModelAsync(id);
             }
+
+            return false;
         }
 
-        public async Task RemoveServiceToDbAsync(ServiceDataModel? data)
+        public async Task<bool> RemoveServiceToDbAsync(ServiceDataModel? data)
         {
-            if (data != null)
-            {
-                await _serviceRepository.DeleteServiceAsync(data.Id);
-            }
+            return await RemoveServiceToDbAsync(data != null ? data.Id : 0);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync(_startPathToDefaultData);
 
             var menuModel = menuData.MenuDataToModel();
@@ -89,7 +89,7 @@ namespace WebAppForAdmins.Controllers
         [HttpGet]
         public async Task<IActionResult> EditUsedMenu()
         {
-            var data = await _headerService.GetUsedHeaderMenuDataAsync();
+            var data = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             if (data.Id > 0)
             {
                 var model = data.MenuDataToModel();
@@ -116,7 +116,7 @@ namespace WebAppForAdmins.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteUsedMenuPost()
         {
-            var data = await _headerService.GetUsedHeaderMenuDataAsync();
+            var data = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             if (data.Id > 0)
             {
                 await _headerService.RemoveMenuToDbAsync(data.Id);

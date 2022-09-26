@@ -36,7 +36,7 @@ namespace WebAppForGuests.Controllers
         {
             var viewModel = new MainPageViewModel();
 
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             viewModel.PageH1 = menuData.Main;
 
             var mainPagePreset = await _mainPageService.GetPublishedPresetDataAsync();

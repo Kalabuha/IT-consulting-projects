@@ -5,7 +5,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class MenuEntityAndDataModelMapper
     {
-        public static HeaderMenuDataModel HeaderMenuEntityToData(this HeaderMenuEntity entity)
+        public static HeaderMenuDataModel HeaderMenuEntityToData(HeaderMenuEntity entity)
         {
             return new HeaderMenuDataModel
             {
@@ -19,7 +19,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static HeaderMenuEntity HeaderMenuDataToEntity(this HeaderMenuDataModel data, HeaderMenuEntity? entity = null)
+        public static HeaderMenuEntity HeaderMenuDataToEntity(HeaderMenuDataModel data, HeaderMenuEntity? entity = null)
         {
             entity ??= new HeaderMenuEntity();
 

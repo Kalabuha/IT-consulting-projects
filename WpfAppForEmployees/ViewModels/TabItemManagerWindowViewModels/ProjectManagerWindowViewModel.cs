@@ -5,6 +5,7 @@ using WpfAppForEmployees.WpfModels;
 using WpfAppForEmployees.Commands;
 using WpfAppForEmployees.DataModelsWpfModelsMappers;
 using DataModels;
+using WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels.ManagerWindowSettings;
 
 namespace WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels
 {
@@ -16,14 +17,15 @@ namespace WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels
             ResetCudActionCommand = new ActionCommand(OnResetCudAction, CanResetCudAction);
         }
 
-        public void InitializeProjectManagerWindowViewModel(
-            ProjectWpfModel project,
-            Func<ProjectDataModel, Task> executeCudAction,
-            string contentExecuteCudActionButton)
+        public void InitializeViewModel(ProjectManagerWindowSettings settings, ProjectWpfModel project)
         {
             ManagerItem = project;
-            ExecuteCudAction = executeCudAction;
-            ContentExecuteCudActionButton = contentExecuteCudActionButton;
+
+            Title = settings.WindowTitle;
+            ExecuteCudAction = settings.ExecuteCudAction;
+            ExecuteCudButtonContent = settings.ExecuteCudButtonContent;
+            ResetCudButtonVisibility = settings.ResetCudButtonVisibility;
+            IsEditingEnable = settings.IsEditingEnable;
         }
 
         private async void OnExecuteCudAction(object parameter)

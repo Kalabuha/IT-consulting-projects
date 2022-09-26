@@ -21,13 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enums", "Enums\Enums.csproj", "{0FEF86F7-AE2A-4EE2-96C6-2EB6F36717DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServices", "WebServices\WebServices.csproj", "{5B44CFC2-6750-4EF6-A689-6F56A1508656}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbRepositories", "DbRepositories\DbRepositories.csproj", "{6DA1DADB-9284-46EA-9D80-9A4C121BD4E9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiRepositories", "ApiRepositories\ApiRepositories.csproj", "{8974F87B-A02F-4609-B499-ECF07FC28EFF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiServices", "ApiServices\ApiServices.csproj", "{43234AFC-6647-48A3-AE5D-3D75B958F8F5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonDataConverters", "CommonDataConverters\CommonDataConverters.csproj", "{F58F7CD2-23A6-42EE-B68C-99B2F5258617}"
 EndProject
@@ -47,9 +43,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentDataServices", "Cont
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DefaultDataServices", "DefaultDataServices\DefaultDataServices.csproj", "{DA0C0CAE-EF03-497E-94A2-1509C3CE5FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModelsWebModelsMappers", "DataModelsWebModelsMappers\DataModelsWebModelsMappers.csproj", "{2BE12412-3CBC-445D-8BC1-433336076ED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModelsWebModelsMappers", "DataModelsWebModelsMappers\DataModelsWebModelsMappers.csproj", "{2BE12412-3CBC-445D-8BC1-433336076ED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiesDataModelsMappers", "EntitiesDataModelsMappers\EntitiesDataModelsMappers.csproj", "{6FDA10DC-72FA-4BFF-8988-C186D55AEFE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntitiesDataModelsMappers", "EntitiesDataModelsMappers\EntitiesDataModelsMappers.csproj", "{6FDA10DC-72FA-4BFF-8988-C186D55AEFE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiModels", "ApiModels\ApiModels.csproj", "{5AA51B21-C972-4D2E-BB27-EF72F16E0EE1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModelsApiModelsMappers", "DataModelsApiModelsMappers\DataModelsApiModelsMappers.csproj", "{2729054A-FE47-4584-81DE-75D075B57329}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperDelegates", "MapperDelegates\MapperDelegates.csproj", "{A956B821-0B3D-418B-B8A3-F1EE5BA8DF09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,10 +95,6 @@ Global
 		{0FEF86F7-AE2A-4EE2-96C6-2EB6F36717DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEF86F7-AE2A-4EE2-96C6-2EB6F36717DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEF86F7-AE2A-4EE2-96C6-2EB6F36717DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B44CFC2-6750-4EF6-A689-6F56A1508656}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B44CFC2-6750-4EF6-A689-6F56A1508656}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B44CFC2-6750-4EF6-A689-6F56A1508656}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B44CFC2-6750-4EF6-A689-6F56A1508656}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6DA1DADB-9284-46EA-9D80-9A4C121BD4E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6DA1DADB-9284-46EA-9D80-9A4C121BD4E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DA1DADB-9284-46EA-9D80-9A4C121BD4E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,10 +103,6 @@ Global
 		{8974F87B-A02F-4609-B499-ECF07FC28EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8974F87B-A02F-4609-B499-ECF07FC28EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8974F87B-A02F-4609-B499-ECF07FC28EFF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{43234AFC-6647-48A3-AE5D-3D75B958F8F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43234AFC-6647-48A3-AE5D-3D75B958F8F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43234AFC-6647-48A3-AE5D-3D75B958F8F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43234AFC-6647-48A3-AE5D-3D75B958F8F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F58F7CD2-23A6-42EE-B68C-99B2F5258617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F58F7CD2-23A6-42EE-B68C-99B2F5258617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F58F7CD2-23A6-42EE-B68C-99B2F5258617}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -153,6 +147,18 @@ Global
 		{6FDA10DC-72FA-4BFF-8988-C186D55AEFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FDA10DC-72FA-4BFF-8988-C186D55AEFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FDA10DC-72FA-4BFF-8988-C186D55AEFE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA51B21-C972-4D2E-BB27-EF72F16E0EE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA51B21-C972-4D2E-BB27-EF72F16E0EE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA51B21-C972-4D2E-BB27-EF72F16E0EE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA51B21-C972-4D2E-BB27-EF72F16E0EE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2729054A-FE47-4584-81DE-75D075B57329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2729054A-FE47-4584-81DE-75D075B57329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2729054A-FE47-4584-81DE-75D075B57329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2729054A-FE47-4584-81DE-75D075B57329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A956B821-0B3D-418B-B8A3-F1EE5BA8DF09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A956B821-0B3D-418B-B8A3-F1EE5BA8DF09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A956B821-0B3D-418B-B8A3-F1EE5BA8DF09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A956B821-0B3D-418B-B8A3-F1EE5BA8DF09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,55 +8,21 @@ using Entities;
 
 namespace DbRepositories
 {
-    internal class ServiceDbRepository : BaseDbRepository<ServiceEntity>, IServiceRepository
+    internal class ServiceDbRepository : BaseDbRepository<ServiceEntity, ServiceDataModel>, IRepository<ServiceDataModel>
     {
-        public ServiceDbRepository(DbContextProfiСonnector context) : base(context) { }
+        public ServiceDbRepository(DbContextProfiСonnector context)
+            : base(context,
+                  ServiceEntityAndDataModelMapper.ServiceEntityToData,
+                  ServiceEntityAndDataModelMapper.ServiceDataToEntity)
+        { }
 
-        public async Task<ServiceDataModel?> GetServiceAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            return entity?.ServiceEntityToData();
-        }
-
-        public async Task<ServiceDataModel[]> GetAllServiceAsync()
+        public async Task<ServiceDataModel[]> GetAllDataModelsAsync()
         {
             var services = await Context.Services
-                .Select(s => s.ServiceEntityToData())
+                .Select(s => MapEntityToData(s))
                 .ToArrayAsync();
 
             return services;
-        }
-
-        public async Task<int> AddServiceAsync(ServiceDataModel data)
-        {
-            var entity = data.ServiceDataToEntity();
-            await AddEntityAsync(entity);
-            return entity.Id;
-        }
-
-        public async Task<bool> UpdateServiceAsync(ServiceDataModel data)
-        {
-            var entity = await GetEntityAsync(data.Id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            var updated = data.ServiceDataToEntity(entity);
-            await UpdateEntityAsync(updated);
-            return true;
-        }
-
-        public async Task<bool> DeleteServiceAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            await RemoveEntityAsync(entity);
-            return true;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace EntitiesDataModelsMappers
 {
     public static class ApplicationEntityAndDataModelMapper
     {
-        public static ApplicationDataModel ApplicationEntityToData(this ApplicationEntity entity)
+        public static ApplicationDataModel ApplicationEntityToData(ApplicationEntity entity)
         {
             return new ApplicationDataModel
             {
@@ -20,7 +20,7 @@ namespace EntitiesDataModelsMappers
             };
         }
 
-        public static ApplicationEntity ApplicationDataToEntity(this ApplicationDataModel data, ApplicationEntity? entity = null)
+        public static ApplicationEntity ApplicationDataToEntity(ApplicationDataModel data, ApplicationEntity? entity = null)
         {
             entity ??= new ApplicationEntity();
 

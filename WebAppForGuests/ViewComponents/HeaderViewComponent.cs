@@ -19,7 +19,7 @@ namespace WebAppForGuests.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var menuData = await _headerService.GetUsedHeaderMenuDataAsync();
+            var menuData = await _headerService.GetUsedOrDefaultHeaderMenuDataAsync();
             var menuModel = menuData.MenuDataToModel();
 
             var sloganData = await _headerService.GetRandomOrDefaultHeaderSloganDataAsync(_startPathToDefaultData);

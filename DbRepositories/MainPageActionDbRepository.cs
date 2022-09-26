@@ -8,55 +8,21 @@ using Entities;
 
 namespace DbRepositories
 {
-    internal class MainPageActionDbRepository : BaseDbRepository<MainPageActionEntity>, IMainPageActionRepository
+    internal class MainPageActionDbRepository : BaseDbRepository<MainPageActionEntity, MainPageActionDataModel>, IRepository<MainPageActionDataModel>
     {
-        public MainPageActionDbRepository(DbContextProfiСonnector context) : base(context) { }
+        public MainPageActionDbRepository(DbContextProfiСonnector context)
+            : base(context,
+                  MainPageElementsEntityAndDataModelMapper.MainPageActionEntityToData,
+                  MainPageElementsEntityAndDataModelMapper.MainPageActionDataToEntity)
+        { }
 
-        public async Task<MainPageActionDataModel?> GetMainPageActionAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            return entity?.MainPageActionEntityToData();
-        }
-
-        public async Task<MainPageActionDataModel[]> GetAllMainPageActionsAsync()
+        public async Task<MainPageActionDataModel[]> GetAllDataModelsAsync()
         {
             var actions = await Context.MainPageActions
-                .Select(a => a.MainPageActionEntityToData())
+                .Select(a => MapEntityToData(a))
                 .ToArrayAsync();
 
             return actions;
-        }
-
-        public async Task<int> AddMainPageActionAsync(MainPageActionDataModel data)
-        {
-            var entity = data.MainPageActionDataToEntity();
-            await AddEntityAsync(entity);
-            return entity.Id;
-        }
-
-        public async Task<bool> UpdateMainPageActionAsync(MainPageActionDataModel data)
-        {
-            var entity = await GetEntityAsync(data.Id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            var updated = data.MainPageActionDataToEntity(entity);
-            await UpdateEntityAsync(updated);
-            return true;
-        }
-
-        public async Task<bool> DeleteMainPageActionAsync(int id)
-        {
-            var entity = await GetEntityAsync(id);
-            if (entity == null)
-            {
-                return false;
-            }
-
-            await RemoveEntityAsync(entity);
-            return true;
         }
     }
 }

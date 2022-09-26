@@ -1,29 +1,35 @@
-﻿using System.Net.Http.Json;
-using ApiRepositories.Base;
+﻿using ApiRepositories.Base;
 using RepositoryInterfaces;
+using DataModelsApiModelsMappers;
 using DataModels;
+using ApiModels;
 
 namespace ApiRepositories
 {
-    internal class BlogApiRepository : BaseApiRepository<BlogDataModel>, IBlogRepository
+    internal class BlogApiRepository : BaseApiRepository<BlogApiModel>, IBlogRepository
     {
         public BlogApiRepository(HttpClient httpClient) : base(httpClient, "api/Blogs") {}
 
         public async Task<BlogDataModel?> GetBlogAsync(int id)
         {
-            return await GetEntityAsync(id);
+            var api = await GetEntityAsync(id);
+            return api?.BlogApiToData();
         }
 
         public async Task<BlogDataModel[]> GetAllBlogsAsync()
         {
-            var blogs = await _httpClient.GetFromJsonAsync<BlogDataModel[]>(_requestUri);
-            blogs ??= Array.Empty<BlogDataModel>();
-            return blogs;
+            var datas = (await GetEntitiesAsync())
+                .Select(b => b.BlogApiToData())
+                .ToArray();
+
+            return datas;
         }
 
         public async Task<int> AddBlogAsync(BlogDataModel data)
         {
-            if (await AddEntityAsync(data))
+            var api = data.BlogDataToApi();
+
+            if (await AddEntityAsync(api))
             {
                 return data.Id;
             }
@@ -33,7 +39,8 @@ namespace ApiRepositories
 
         public async Task<bool> UpdateBlogAsync(BlogDataModel data)
         {
-            return await UpdateEntityAsync(data);
+            var api = data.BlogDataToApi();
+            return await UpdateEntityAsync(api);
         }
 
         public async Task<bool> DeleteBlogAsync(int id)

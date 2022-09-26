@@ -4,21 +4,21 @@ namespace ServiceInterfaces
 {
     public interface IHeaderService
     {
-        public Task<List<HeaderMenuDataModel>> GetAllHeaderMenuDatasAsync();
-        public Task<HeaderMenuDataModel> GetUsedHeaderMenuDataAsync();
-        public Task StartUsingHeaderMenuAsync(int id);
-        public Task AddMenuToDbAsync(HeaderMenuDataModel data);
-        public Task EditMenuToDbAsync(HeaderMenuDataModel data);
-        public Task RemoveMenuToDbAsync(int id);
+        Task<List<HeaderMenuDataModel>> GetAllHeaderMenuDatasAsync();
+        Task<HeaderMenuDataModel> GetUsedOrDefaultHeaderMenuDataAsync();
+        Task StartUsingHeaderMenuAsync(int id);
+        Task AddMenuToDbAsync(HeaderMenuDataModel data);
+        Task EditMenuToDbAsync(HeaderMenuDataModel data);
+        Task RemoveMenuToDbAsync(int id);
 
-        public Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync(string startPathToDefaultData);
-        public Task<List<HeaderSloganDataModel>> GetAllHeaderSloganDatasAsync();
-        public Task<string> GetDefaultSloganContent(string startPathToDefaultData);
+        Task<HeaderSloganDataModel> GetRandomOrDefaultHeaderSloganDataAsync(string startPathToDefaultData);
+        Task<List<HeaderSloganDataModel>> GetAllHeaderSloganDatasAsync();
+        Task<string> GetDefaultSloganContent(string startPathToDefaultData);
 
-        public Task StartUsingHeaderSlogansAsync(int[] slogansId);
-        public Task<HeaderSloganDataModel?> GetHeaderSloganDataByIdAsync(int id);
-        public Task AddSloganToDbAsync(HeaderSloganDataModel data);
-        public Task EditSloganToDbAsync(HeaderSloganDataModel data);
-        public Task RemoveSloganToDbAsync(int id);
+        Task StartUsingHeaderSlogansAsync(int[] slogansId);
+        Task<HeaderSloganDataModel?> GetHeaderSloganDataByIdAsync(int id);
+        Task AddSloganToDbAsync(HeaderSloganDataModel data);
+        Task EditSloganToDbAsync(HeaderSloganDataModel data);
+        Task RemoveSloganToDbAsync(int id);
     }
 }

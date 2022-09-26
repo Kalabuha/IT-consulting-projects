@@ -1,13 +1,19 @@
 ﻿using DbRepositories.Base;
 using RepositoryInterfaces;
 using DbContextProfi;
+using EntitiesDataModelsMappers;
+using DataModels;
 using Entities;
 
 namespace DbRepositories
 {
-    internal class UserDbRepository : BaseDbRepository<UserEntity>, IUserRepository
+    internal class UserDbRepository : BaseDbRepository<UserEntity, UserDataModel>, IUserRepository
     {
-        public UserDbRepository(DbContextProfiСonnector context) : base(context) {}
+        public UserDbRepository(DbContextProfiСonnector context)
+            : base(context,
+                  UserEntityAndDataModelMapper.UserEntityToData,
+                  UserEntityAndDataModelMapper.UserDataToEntity)
+        {}
 
         public UserEntity? Login(string login, string password)
         {

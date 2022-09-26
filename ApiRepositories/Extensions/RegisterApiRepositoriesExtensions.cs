@@ -10,7 +10,7 @@ namespace ApiRepositories.Extensions
             services
                 .AddHttpClient("Api", client => client.BaseAddress = new Uri(hostApi))
                 .AddTypedClient<IApplicationRepository, ApplicationApiRepository>()
-                .AddTypedClient<IProjectRepository, ProjectApiRepository>()
+                .AddTypedClient<IRepository, ProjectApiRepository>()
                 .AddTypedClient<IServiceRepository, ServiceApiRepository>()
                 .AddTypedClient<IBlogRepository, BlogApiRepository>();
 

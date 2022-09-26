@@ -24,7 +24,6 @@
     <ProjectReference Include="..\DbRepositories\DbRepositories.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\ServiceInterfaces\ServiceInterfaces.csproj" />
-    <ProjectReference Include="..\WebServices\WebServices.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,12 +4,12 @@ namespace ServiceInterfaces
 {
     public interface IServiceService
     {
-        public Task<List<ServiceDataModel>> GetAllServiceDatasAsync();
-        public Task<List<ServiceDataModel>> GetPublishedServiceDatasAsync();
-        public Task<ServiceDataModel?> GetServiceDataByIdAsync(int serviceId);
-        public Task AddServiceToDbAsync(ServiceDataModel? data);
-        public Task EditServiceToDbAsync(ServiceDataModel? data);
-        public Task RemoveServiceToDbAsync(int id);
-        public Task RemoveServiceToDbAsync(ServiceDataModel? data);
+        Task<List<ServiceDataModel>> GetAllServiceDatasAsync();
+        Task<List<ServiceDataModel>> GetPublishedServiceDatasAsync();
+        Task<ServiceDataModel?> GetServiceDataByIdAsync(int serviceId);
+        Task AddServiceToDbAsync(ServiceDataModel? data);
+        Task<bool> EditServiceToDbAsync(ServiceDataModel? data);
+        Task<bool> RemoveServiceToDbAsync(int id);
+        Task<bool> RemoveServiceToDbAsync(ServiceDataModel? data);
     }
 }

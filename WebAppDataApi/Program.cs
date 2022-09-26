@@ -1,7 +1,6 @@
 using DbContextProfi.Extensions;
 using DbRepositories.Extensions;
 using ContentDataServices.Extensions;
-using WebServices.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +16,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.RegisterDbContext(connectionString);
 builder.Services.RegisterDbRepositories();
 builder.Services.RegisterContentDataServices();
-builder.Services.RegisterWebServices();
 builder.Services.AddHttpContextAccessor();
 
 

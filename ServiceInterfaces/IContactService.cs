@@ -4,13 +4,13 @@ namespace ServiceInterfaces
 {
     public interface IContactService
     {
-        public Task<List<ContactDataModel>> GetAllContactDatasAsync();
-        public Task<ContactDataModel?> GetPublishedContactDataAsync();
-        public Task<ContactDataModel?> GetContactDataByIdAsync(int id);
-        public Task PublishContact(int id);
+        Task<List<ContactDataModel>> GetAllContactDatasAsync();
+        Task<ContactDataModel?> GetPublishedContactDataAsync();
+        Task<ContactDataModel?> GetContactDataByIdAsync(int id);
+        Task PublishContact(int id);
 
-        public Task<int> AddContactToDbAsync(ContactDataModel? data);
-        public Task EditContactToDbAsync(ContactDataModel? data);
-        public Task RemoveContactToDbAsync(int id);
+        Task<int> AddContactToDbAsync(ContactDataModel? data);
+        Task EditContactToDbAsync(ContactDataModel? data);
+        Task RemoveContactToDbAsync(int id);
     }
 }

@@ -1,29 +1,35 @@
-﻿using System.Net.Http.Json;
-using ApiRepositories.Base;
+﻿using ApiRepositories.Base;
 using RepositoryInterfaces;
+using DataModelsApiModelsMappers;
 using DataModels;
+using ApiModels;
 
 namespace ApiRepositories
 {
-    internal class ProjectApiRepository : BaseApiRepository<ProjectDataModel>, IProjectRepository
+    internal class ProjectApiRepository : BaseApiRepository<ProjectApiModel>, IRepository
     {
         public ProjectApiRepository(HttpClient httpClient) : base(httpClient, "api/Projects") {}
 
         public async Task<ProjectDataModel?> GetProjectAsync(int id)
         {
-            return await GetEntityAsync(id);
+            var api = await GetEntityAsync(id);
+            return api?.ProjectApiToData();
         }
 
         public async Task<ProjectDataModel[]> GetAllProjectsAsync()
         {
-            var projects = await _httpClient.GetFromJsonAsync<ProjectDataModel[]>(_requestUri);
-            projects ??= Array.Empty<ProjectDataModel>();
-            return projects;
+            var datas = (await GetEntitiesAsync())
+                .Select(p => p.ProjectApiToData())
+                .ToArray();
+
+            return datas;
         }
 
         public async Task<int> AddProjectAsync(ProjectDataModel data)
         {
-            if (await AddEntityAsync(data))
+            var api = data.ProjectDataToApi();
+
+            if (await AddEntityAsync(api))
             {
                 return data.Id;
             }
@@ -33,7 +39,8 @@ namespace ApiRepositories
 
         public async Task<bool> UpdateProjectAsync(ProjectDataModel data)
         {
-            return await UpdateEntityAsync(data);
+            var api = data.ProjectDataToApi();
+            return await UpdateEntityAsync(api);
         }
 
         public async Task<bool> DeleteProjectAsync(int id)

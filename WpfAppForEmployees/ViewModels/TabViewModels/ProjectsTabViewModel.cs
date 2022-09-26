@@ -1,16 +1,16 @@
-﻿using System.Windows;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Linq;
-using ServiceInterfaces;
-using WpfAppForEmployees.ViewModels.TabViewModels.Base;
-using WpfAppForEmployees.DataModelsWpfModelsMappers;
-using WpfAppForEmployees.WpfModels;
+using System.Threading.Tasks;
+using System.Windows;
 using WpfAppForEmployees.Commands;
-using WpfAppForEmployees.Views.TabItemManagerWindows;
+using WpfAppForEmployees.DataModelsWpfModelsMappers;
 using WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels;
-using System;
-using DataModels;
+using WpfAppForEmployees.ViewModels.TabItemManagerWindowViewModels.ManagerWindowSettings;
+using WpfAppForEmployees.ViewModels.TabViewModels.Base;
+using WpfAppForEmployees.Views.TabItemManagerWindows;
+using WpfAppForEmployees.WpfModels;
+using ServiceInterfaces;
 
 namespace WpfAppForEmployees.ViewModels.TabViewModels
 {
@@ -25,9 +25,9 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels
         {
             _projectService = projectService;
 
-            CreateTabItemCommand = new ActionCommand(OnExecuteProjectCreate, CanExecuteProjectCreate);
-            EditTabItemCommand = new ActionCommand(OnExecuteProjectEdit, CanExecuteProjectEdit);
-            RemoveTabItemCommand = new ActionCommand(OnExecuteProjectRemove, CanExecuteProjectRemove);
+            CreateTabItemCommand = new ActionCommand(OnExecuteCreateProject, CanExecuteCreateProject);
+            EditTabItemCommand = new ActionCommand(OnExecuteEditProject, CanExecuteEditProject);
+            RemoveTabItemCommand = new ActionCommand(OnExecuteRemoveProject, CanExecuteRemoveProject);
         }
 
         public async Task LoadData()
@@ -38,88 +38,90 @@ namespace WpfAppForEmployees.ViewModels.TabViewModels
             TabItems = new ObservableCollection<ProjectWpfModel>(projects);
         }
 
-        protected void OnExecuteProjectCreate(object parameter)
+        protected void OnExecuteCreateProject(object parameter)
         {
-            ShowDialogProjectManagerWindow(
-                _projectService.AddProjectToDbAsync,
-                "Создание проекта",
-                "Создать",
-                Visibility.Hidden);
+            var settings = new ProjectManagerWindowSettings
+            {
+                WindowTitle = "Создание проекта",
+                ExecuteCudAction = _projectService.AddProjectToDbAsync,
+                ExecuteCudButtonContent = "Создать",
+                ResetCudButtonVisibility = Visibility.Hidden,
+                IsEditingEnable = true
+            };
+
+            ShowDialogProjectManagerWindow(settings);
         }
 
-        protected bool CanExecuteProjectCreate(object parameter)
+        protected bool CanExecuteCreateProject(object parameter)
         {
             return true;
         }
 
-        protected void OnExecuteProjectEdit(object parameter)
+        protected void OnExecuteEditProject(object parameter)
         {
-            ShowDialogProjectManagerWindow(
-                _projectService.EditProjectToDbAsync,
-                "Изменение проекта",
-                "Изменить",
-                Visibility.Visible,
-                SelectedTabItem);
+            var settings = new ProjectManagerWindowSettings
+            {
+                WindowTitle = "Изменение проекта",
+                ExecuteCudAction = _projectService.EditProjectToDbAsync,
+                ExecuteCudButtonContent = "Изменить",
+                ResetCudButtonVisibility = Visibility.Visible,
+                IsEditingEnable = true
+            };
+
+            ShowDialogProjectManagerWindow(settings, SelectedTabItem);
         }
 
-        protected bool CanExecuteProjectEdit(object parameter)
-        {
-            return SelectedTabItem != null;
-        }
-
-        protected void OnExecuteProjectRemove(object parameter)
-        {
-            ShowDialogProjectManagerWindow(
-                _projectService.RemoveProjectToDbAsync,
-                "Удаление проекта",
-                "Удалить",
-                Visibility.Hidden,
-                SelectedTabItem);
-        }
-
-        protected bool CanExecuteProjectRemove(object parameter)
+        protected bool CanExecuteEditProject(object parameter)
         {
             return SelectedTabItem != null;
         }
 
-        private void ShowDialogProjectManagerWindow(
-            Func<ProjectDataModel, Task> CreateOrUpdateOrDeleteAction,
-            string windowTitle,
-            string executeCutButtonContent,
-            Visibility resetCutButtonVisibility,
-            ProjectWpfModel? project = null)
+        protected void OnExecuteRemoveProject(object parameter)
+        {
+            var settings = new ProjectManagerWindowSettings
+            {
+                WindowTitle = "Удаление проекта",
+                ExecuteCudAction = _projectService.RemoveProjectToDbAsync,
+                ExecuteCudButtonContent = "Удалить",
+                ResetCudButtonVisibility = Visibility.Hidden,
+                IsEditingEnable = false
+            };
+
+            ShowDialogProjectManagerWindow(settings, SelectedTabItem);
+        }
+
+        protected bool CanExecuteRemoveProject(object parameter)
+        {
+            return SelectedTabItem != null;
+        }
+
+        private void ShowDialogProjectManagerWindow(ProjectManagerWindowSettings settings, ProjectWpfModel? project = null)
         {
             project ??= new ProjectWpfModel();
 
             // Сперва обязательно надо создать модель, потом только окно.
-            CreateProjectManagerWindowViewModel(project, CreateOrUpdateOrDeleteAction, executeCutButtonContent, resetCutButtonVisibility);
-            CreateProjectManagerWindow(windowTitle);
+            CreateProjectManagerWindowViewModel(settings, project);
+            CreateProjectManagerWindow();
 
             _projectManagerWindow!.ShowDialog();
         }
 
-        private void CreateProjectManagerWindow(string windowTitle)
+        private void CreateProjectManagerWindow()
         {
             _projectManagerWindow = new ProjectManagerWindow()
             {
                 Owner = Application.Current.MainWindow,
-                Title = windowTitle,
                 DataContext = _projectManagerWindowViewModel
             };
 
             _projectManagerWindow.Closed += OnDialogWindowClosed!;
         }
 
-        private void CreateProjectManagerWindowViewModel(
-            ProjectWpfModel project,
-            Func<ProjectDataModel, Task> executeCudAction,
-            string executeCudButtonContent,
-            Visibility resetCutButtonVisibility)
+        private void CreateProjectManagerWindowViewModel(ProjectManagerWindowSettings settings, ProjectWpfModel project)
         {
+            // ProjectManagerWindowViewModel - ему важно иметь конструктор без параметров.
             _projectManagerWindowViewModel = new ProjectManagerWindowViewModel();
-            _projectManagerWindowViewModel.ResetButtonVisibility = resetCutButtonVisibility;
-            _projectManagerWindowViewModel
-                .InitializeProjectManagerWindowViewModel(project, executeCudAction, executeCudButtonContent);
+            _projectManagerWindowViewModel.InitializeViewModel(settings, project);
         }
 
         private void OnDialogWindowClosed(object sender, EventArgs e)

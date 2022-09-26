@@ -6,23 +6,23 @@ namespace AppearanceDataServices
 {
     internal class ContactDataService : IContactService
     {
-        private readonly IContactRepository _contactRepository;
+        private readonly IRepository<ContactDataModel> _contactRepository;
 
-        public ContactDataService(IContactRepository contactRepository)
+        public ContactDataService(IRepository<ContactDataModel> contactRepository)
         {
             _contactRepository = contactRepository;
         }
 
         public async Task<ContactDataModel?> GetContactDataByIdAsync(int id)
         {
-            var contact = await _contactRepository.GetContactAsync(id);
+            var contact = await _contactRepository.GetDataModelAsync(id);
 
             return contact;
         }
 
         public async Task<List<ContactDataModel>> GetAllContactDatasAsync()
         {
-            var contacts = (await _contactRepository.GetAllContactsAsync())
+            var contacts = (await _contactRepository.GetAllDataModelsAsync())
                 .ToList();
 
             return contacts;
@@ -30,7 +30,7 @@ namespace AppearanceDataServices
 
         public async Task<ContactDataModel?> GetPublishedContactDataAsync()
         {
-            var contact = (await _contactRepository.GetAllContactsAsync())
+            var contact = (await _contactRepository.GetAllDataModelsAsync())
                 .FirstOrDefault(c => c.IsPublished);
 
             return contact;
@@ -38,31 +38,41 @@ namespace AppearanceDataServices
 
         public async Task PublishContact(int id)
         {
-            var publishedContact = await _contactRepository.GetContactAsync(id);
+            var publishedContact = await _contactRepository.GetDataModelAsync(id);
             if (publishedContact == null)
             {
                 return;
             }
 
-            var contacts = await _contactRepository.GetAllContactsAsync();
+            var contacts = await _contactRepository.GetAllDataModelsAsync();
             foreach (var contact in contacts)
             {
-                if (contact.IsPublished && contact.Id != publishedContact.Id)
+                if (contact.Id == id)
                 {
-                    contact.IsPublished = false;
-                    await _contactRepository.UpdateContactAsync(contact);
+                    contact.IsPublished = true;
                 }
-            }
+                else
+                {
+                    if (contact.IsPublished)
+                    {
+                        contact.IsPublished = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
 
-            publishedContact.IsPublished = true;
-            await _contactRepository.UpdateContactAsync(publishedContact);
+                await _contactRepository.UpdateDataModelAsync(contact);
+            }
         }
 
         public async Task<int> AddContactToDbAsync(ContactDataModel? data)
         {
             if (data != null)
             {
-                return await _contactRepository.AddContactAsync(data);
+                var newContact = await _contactRepository.AddDataModelAsync(data);
+                return newContact.Id;
             }
 
             return 0;
@@ -72,7 +82,7 @@ namespace AppearanceDataServices
         {
             if (data != null)
             {
-                await _contactRepository.UpdateContactAsync(data);
+                await _contactRepository.UpdateDataModelAsync(data);
             }
         }
 
@@ -80,7 +90,7 @@ namespace AppearanceDataServices
         {
             if (id > 0)
             {
-                await _contactRepository.DeleteContactAsync(id);
+                await _contactRepository.DeleteDataModelAsync(id);
             }
         }
     }
